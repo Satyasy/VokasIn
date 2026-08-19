@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@theme {
+  /* === Brand: slime-lime (WAJIB, jangan diubah) === */
+  --color-slime-lime-50:  oklch(98.64% 0.035 122.62);
+  --color-slime-lime-100: oklch(97.40% 0.069 123.47);
+  --color-slime-lime-200: oklch(95.18% 0.134 124.74);
+  --color-slime-lime-300: oklch(93.34% 0.189 126.26);
+  --color-slime-lime-400: oklch(91.95% 0.227 128);
+  --color-slime-lime-500: oklch(90.82% 0.246 130.54);
+  --color-slime-lime-600: oklch(76.83% 0.208 130.31);
+  --color-slime-lime-700: oklch(62.10% 0.168 130.20);
+  --color-slime-lime-800: oklch(46.50% 0.124 129.59);
+  --color-slime-lime-900: oklch(29.42% 0.077 127.95);
+  --color-slime-lime-950: oklch(23.92% 0.062 127.07);
+
+  /* === Neutral (hue diselaraskan dengan slime-lime ~125, chroma minim) === */
+  --color-neutral-50:  oklch(98.5% 0.004 125);
+  --color-neutral-100: oklch(96.8% 0.006 125);
+  --color-neutral-200: oklch(92.5% 0.008 125);
+  --color-neutral-300: oklch(87%   0.010 125);
+  --color-neutral-400: oklch(70.5% 0.012 125);
+  --color-neutral-500: oklch(55.5% 0.012 125);
+  --color-neutral-600: oklch(44.5% 0.010 125);
+  --color-neutral-700: oklch(37%   0.009 125);
+  --color-neutral-800: oklch(27%   0.008 125);
+  --color-neutral-900: oklch(21%   0.006 125);
+  --color-neutral-950: oklch(14.5% 0.005 125);
+
+  /* === Semantik === */
+  --color-success:       oklch(72% 0.19 150);
+  --color-success-fg:    oklch(52% 0.15 150);
+  --color-warning:       oklch(80% 0.16 85);
+  --color-error:         oklch(58% 0.22 27);
+  --color-error-bg:      oklch(94% 0.03 27);
+  --color-info:          oklch(62% 0.16 250);
+  --color-info-bg:       oklch(95% 0.03 250);
+
+  /* === Token semantik — light mode === */
+  --color-background:          oklch(99% 0.004 125);
+  --color-foreground:          oklch(21% 0.006 125);
+  --color-card:                oklch(100% 0 0);
+  --color-primary:             var(--color-slime-lime-600);
+  --color-primary-foreground:  oklch(21% 0.02 130); /* near-black, BUKAN putih */
+  --color-muted:                oklch(96.8% 0.006 125);
+  --color-muted-foreground:     oklch(50% 0.012 125);
+  --color-border:               oklch(90% 0.008 125);
+  --color-ring:                 var(--color-slime-lime-600);
+
+  /* === Tipografi === */
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+
+  /* === Easing & durasi (untuk motion, lihat DESIGN.md §6) === */
+  --ease-fluid:   cubic-bezier(0.3, 0, 0, 1);
+  --ease-snappy:  cubic-bezier(0.2, 0, 0, 1);
+  --duration-micro: 150ms;
+  --duration-ui:    250ms;
+}
+
+.dark {
+  --color-background:         oklch(16% 0.01 125);
+  --color-foreground:         oklch(96% 0.005 125);
+  --color-card:                oklch(20% 0.01 125);
+  --color-primary:             var(--color-slime-lime-500);
+  --color-primary-foreground:  oklch(20% 0.02 130); /* tetap near-black */
+  --color-muted:                oklch(26% 0.01 125);
+  --color-muted-foreground:     oklch(70% 0.01 125);
+  --color-border:               oklch(30% 0.01 125);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
+
+/* prefers-reduced-motion base: no-motion is default, animations added only inside the media query (DESIGN.md §6) */
+* {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    animation-duration: revert !important;
+    animation-iteration-count: revert !important;
+    transition-duration: revert !important;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fade-up var(--duration-ui) var(--ease-fluid) both;
+}

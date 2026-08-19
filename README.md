@@ -20,4 +20,4 @@ Platform asisten analitik kurikulum berbasis Human-in-the-Loop yang membantu gur
 5. **Kepemilikan dokumen akhir ada di sekolah.** Ekspor tidak boleh disandera platform.
 6. **Tidak ada klaim "menjamin akurasi mutlak".** NER tetap probabilistik; validasi berbasis rujukan hanya menyaring, bukan menyempurnakan.
 
-Status: draf kerja untuk BEEFEST SDLC 2026. Semua isi berasal dari riset & kritik iteratif — sumber dan justifikasi ada di teks masing-masing dokumen.
+Status: Semua isi berasal dari riset & kritik iteratif — sumber dan justifikasi ada di teks masing-masing dokumen.

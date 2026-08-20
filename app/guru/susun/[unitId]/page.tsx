@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { getUnitKompetensiById, getSaranTopikForUnit } from "@/lib/data-access";
+import { ensureLabCacheFresh } from "@/lib/data-access-db";
 import { SusunModulClient } from "@/components/guru/susun-modul-client";
 
 export default async function SusunModulPage({
@@ -10,6 +11,7 @@ export default async function SusunModulPage({
   params: Promise<{ unitId: string }>;
 }) {
   const { unitId } = await params;
+  await ensureLabCacheFresh();
   const unit = getUnitKompetensiById(unitId);
   if (!unit) notFound();
 

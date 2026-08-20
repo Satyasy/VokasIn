@@ -29,6 +29,7 @@ export interface UnitKompetensi {
   kodeUnit: string; // format resmi SKKNI, mis. "J.611000.001.02"
   judulUnit: string;
   dokumenSkkni: string; // nomor Kepmenaker/Kepmenperin rujukan
+  sumber: string; // kode unit asli + nomor halaman dokumen, untuk verifikasi ulang
   programKeahlianId: string;
   elemenKompetensi: ElemenKompetensi[];
 }
@@ -59,6 +60,7 @@ export interface SkillEntity {
   statusPemetaan: StatusPemetaan;
   unitKompetensiTerkaitId?: string; // terisi jika terpetakan_skkni
   skorKemiripan?: number; // 0-1, hanya relevan bila terpetakan
+  sudahDitinjau?: boolean; // kaprogli sudah meninjau kandidat gap ini (F6)
 }
 
 export type KategoriAlatDibutuhkan = {

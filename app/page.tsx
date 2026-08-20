@@ -97,14 +97,12 @@ export default function Home() {
             <div className="fade-up">
               <Badge variant="brand">Untuk guru produktif & kaprogli SMK</Badge>
               <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-[2.75rem] lg:leading-tight">
-                Asisten penyusunan perangkat ajar untuk guru produktif SMK, agar jobsheet siap
-                pakai tanpa menyusun dari nol.
+                Susun jobsheet SMK dari SKKNI asli — bukan dari nol.
               </h1>
               <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-                VokasIn menyusun kartu saran langsung dari teks Unit Kompetensi dan Kriteria
-                Unjuk Kerja SKKNI resmi. Anda yang menyeret satu per satu ke kanvas modul ajar,
-                memeriksa kelayakan alat lab, lalu mengekspornya — bukan sistem yang
-                meng-auto-generate.
+                Kartu saran ditarik langsung dari teks Unit Kompetensi &amp; KUK resmi. Anda
+                yang menyeret, mengecek alat lab, dan mengekspor — sistem tidak mengarang
+                sendiri.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link
@@ -148,7 +146,16 @@ export default function Home() {
                   kualifikasi.
                 </p>
                 <p className="mt-2 text-xs text-muted-foreground">
-                  Sumber: kasus mitra sertifikasi TBIG, dicatat di PRD.md §2.
+                  Sumber:{" "}
+                  <a
+                    href="https://jatimtimes.com/baca/3331344208/20260524/014200/kurikulum-smk-berkejaran-dengan-akselerasi-teknologi-masihkah-pendidikan-vokasi-relevan-dengan-lapangan-kerja"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-2 hover:text-foreground"
+                  >
+                    JatimTimes, 24 Mei 2026
+                  </a>
+                  .
                 </p>
               </Card>
               <Card className="bg-card">
@@ -158,7 +165,18 @@ export default function Home() {
                   duplikasi pasar menemukan belum ada satu pun alat yang menerjemahkannya
                   otomatis menjadi perangkat ajar siap pakai.
                 </p>
-                <p className="mt-2 text-xs text-muted-foreground">Sumber: PRD.md §2.</p>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Sumber:{" "}
+                  <a
+                    href="https://katalog.data.go.id/dataset/standar-kompetensi-kerja-nasional-indonesia-skkni-yang-ditetapkan-s-d-tw-iii-tahun-2022"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-2 hover:text-foreground"
+                  >
+                    Satu Data Indonesia, per TW III 2022
+                  </a>
+                  .
+                </p>
               </Card>
             </div>
           </div>
@@ -244,7 +262,18 @@ export default function Home() {
                   pendataan/pelaporan (larangan Pasal 66 ayat (1) huruf d &amp; e) — dan
                   tercatat dalam RKAS/ARKAS.
                 </p>
-                <p className="mt-3 text-xs text-muted-foreground">Sumber: PRD.md §11.</p>
+                <p className="mt-3 text-xs text-muted-foreground">
+                  Sumber:{" "}
+                  <a
+                    href="https://peraturan.go.id/files/Permendikdasmen-no-8-tahun-2026.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-2 hover:text-foreground"
+                  >
+                    Permendikdasmen No. 8 Tahun 2026, Pasal 42(1)(c) &amp; Pasal 66(1)(d/e)
+                  </a>
+                  .
+                </p>
               </div>
             </div>
           </Card>

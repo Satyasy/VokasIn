@@ -1,0 +1,3669 @@
+                   LAMPIRAN
+                   KEPUTUSAN MENTERI KETENAGAKERJAAN
+                   REPUBLIK INDONESIA
+                   NOMOR 102 TAHUN 2023
+                   TENTANG
+                   PENETAPAN STANDAR KOMPETENSI KERJA
+                   NASIONAL INDONESIA KATEGORI INFORMASI
+                   DAN KOMUNIKASI GOLONGAN POKOK
+                   AKTIVITAS HOSTING DAN KEGIATAN YANG
+                   BERHUBUNGAN DENGAN ITU (YBDI)
+                   BIDANG CLOUD COMPUTING
+
+                          BAB I
+                   PENDAHULUAN
+
+A. Latar Belakang
+
+Pendayagunaan sarana prasarana sistem komputer sebagai
+
+penunjang sistem informasi mengalami perkembangan dari masa ke
+
+masa. Berawal dari kehadiran komputer mainframe yang terpusat,
+
+terpasang pada sebuah ruang data center, dipergunakan melalui
+
+sejumlah terminal yang terhubung. Sarana seperti ini mempermudah
+
+pengguna, karena operasional sistem komputer menjadi wewenang dan
+
+tanggung jawab para petugas yang berada di data center tersebut.
+
+Kehadiran komputer mikro yang dipergunakan secara individual,
+
+membuat beban sarana komputasi berpindah ke masing-masing
+
+pengguna. Kehadiran jaringan komputer menyebabkan komputer mikro
+
+dapat saling terhubung berbagai sumber daya, baik yang dimiliki oleh
+
+masing-masing komputer mikro maupun server.
+
+Kehadiran internet dan intranet membawa perubahan yang sangat
+
+berarti bagi pengguna perorangan dalam menggunakan sarana
+
+komputasi. Sesama komputer mikro atau alat pengolah data (seperti:
+
+laptop/notebook/tablet/smartphone) saling terhubung dan juga ke
+
+server-server yang berada di berbagai lokasi, dan dikenal sebagai
+
+hubungan ke cloud. Bahkan seringkali asas manfaat lebih menjadi
+
+perhatian utama, tanpa menghiraukan dimana keberadaan sarana
+
+komputasi yang melayani pengguna tersebut. Demikian pula dengan
+
+organisasi dan korporasi yang semula memiliki sarana komputasi
+
+sendiri, dengan membeli sejumlah peralatan komputer dan jaringan,
+
+dan membangun data center, beralih ke penggunaan sarana komputasi
+
+                                             1
+yang dimiliki oleh perusahaan penyedia sarana komputasi yang
+
+berbasis cloud.
+
+Fenomena ini membawa perubahan paradigma, dari berorientasi
+
+membeli produk menjadi membeli layanan, baik berupa layanan untuk
+
+mempergunakan infrastructure, platform, hingga perangkat lunak
+
+(software). Konsekuensinya, diperlukan profesi yang secara khusus
+
+berperan di bidang cloud computing. Dengan demikian, diharapkan
+
+kualitas layanan dan pengamanan serta kewenangan data antara
+
+pemilik/pengguna       dengan  penyedia  layanan  dapat
+
+dipertangungjawabkan.
+
+Di dalam perkembangan pemanfaatan teknologi informasi, saat ini
+
+dikenal dengan Revolusi Industri 4.0. Cloud computing merupakan
+
+salah satu komponen dalam mewujudkan transformasi digital, di
+
+samping teknologi lain seperti Machine Learning, Big Data, Internet of
+
+Thing (IoT), Artificial Intelligence. Cloud computing mampu menyediakan
+
+infrastruktur yang bersifat dinamis mengikuti kebutuhan yang cepat
+
+berubah saat ini. Transformasi digital semakin cepat setiap hari. Ini
+
+didorong oleh kebutuhan baru di kehidupan sehari-hari. Penggunaan
+
+alat Technology Information dan internet tercermin dalam setiap aspek
+
+masyarakat.
+
+Kementerian Komunikasi dan Informatika bekerja dengan para
+
+ahli dari akademisi, pemerintah, dan sektor swasta mengembangkan
+
+sebuah kerangka tingkat tinggi yang menetapkan standar nasional
+
+mewakili pengetahuan dan keterampilan penting yang harus dimiliki
+
+oleh praktisi bidang cloud computing untuk membantu organisasi atau
+
+industri dalam bidang cloud computing dan para pekerja saat ini serta
+
+masa depan.
+
+Atas dasar pertimbangan tersebut di atas, Kementerian
+
+Komunikasi dan Informatika mendorong upaya-upaya yang diperlukan
+
+untuk membangun dasar bagi pengembangan program sertifikasi
+
+bidang cloud computing yang akan diterima secara luas oleh sektor
+
+publik dan swasta. Kementerian Kominfo, Kementerian
+
+Ketenagakerjaan dan lembaga pemerintah lainnya dapat membantu
+
+upaya-upaya ini dengan efektif mengartikulasikan kebutuhan
+
+                                                  2
+masyarakat dan industri terhadap profesi bidang cloud computing.
+Sebagai tindak lanjut dari upaya ini adalah diadakannya program
+pelatihan dan pendidikan di bidang Teknologi Informasi dan
+Komunikasi (TIK) bidang cloud computing untuk membangun angkatan
+kerja yang dapat mencukupi kebutuhan industri nasional.
+
+       Sebagai acuan maka dibutuhkan sebuah kerangka standar bidang
+cloud computing yang menitikberatkan kepada kompetensi yang harus
+dimiliki oleh tiap individu yang melakukan fungsi-fungsi cloud
+computing. Atas dasar kebutuhan inilah disusun Standar Kompetensi
+Kerja Nasional Indonesia (SKKNI) Kategori Teknologi Informasi dan
+Komunikasi Bidang Cloud Computing.
+
+       SKKNI Kategori Teknologi Informasi dan Komunikasi Bidang Cloud
+Computing digunakan untuk memberikan panduan untuk identifikasi
+dan kategorisasi posisi dan sertifikasi personil yang melakukan fungsi
+dalam pekerjaan cloud computing yang mendukung implementasi
+organisasi penyedia layanan cloud computing. Tenaga kerja bidang
+cloud computing termasuk, namun tidak terbatas pada, semua individu
+yang melakukan fungsi dan pekerjaan di bidang penyedia jasa layanan
+cloud computing dalam organisasi sesuai dengan kebijakan, prosedur,
+dan peraturan yang berlaku.
+
+       Standar ini dirumuskan dengan menggunakan acuan sebagai
+berikut.
+1. Undang-Undang Nomor 13 Tahun 2003 tentang Ketenagakerjaan;
+2. Undang-Undang Nomor 11 Tahun 2008 tentang Informasi dan
+
+       Transaksi Elektronik;
+3. Undang-undang Perlindungan Data Pribadi;
+4. Peraturan Pemerintah Nomor 23 Tahun 2004 tentang Badan
+
+       Nasional Sertifikasi Profesi;
+5. Peraturan Pemerintah Nomor 82 Tahun 2012 tentang
+
+       Penyelenggaraan Sistem Transaksi Elektronik;
+6. Peraturan Presiden Nomor 95 tahun 2018 tentang Sistem
+
+       Pemerintahan Berbasis Elektronik;
+7. Peraturan Presiden Nomor 39 tahun 2019 tentang Satu Data
+
+       Indonesia;
+
+                                                                                                         3
+       8. Peraturan Menteri Tenaga Kerja dan Transmigrasi Nomor 5 Tahun
+              2012 tentang Sistem Standardisasi Kompetensi Kerja Nasional;
+
+       9. Peraturan Menteri Tenaga Kerja dan Transmigrasi Nomor 8 Tahun
+              2012 tentang Tata Cara Penetapan Standar Kompetensi Kerja
+              Nasional Indonesia.
+              Penyusunan Standar Kompetensi Kerja Nasional Indonesia (SKKNI)
+
+       Kategori Informasi dan Komunikasi Bidang Cloud Computing
+       mempunyai tujuan sebagai berikut.
+       1. Menetapkan dasar (baseline) keterampilan teknis dan manajemen
+
+              bidang cloud computing bagi SDM yang melaksanakan fungsi cloud
+              computing dalam organisasi.
+       2. Mengembangkan jenis dan skema keterampilan secara formal
+              untuk tenaga kerja bidang cloud computing yang terdiri dari
+              beragam model pelatihan, program magang (on-the-job training),
+              praktek-praktek dan sertifikasi/re-sertifikasi.
+       3. Verifikasi pengetahuan dan keterampilan tenaga kerja bidang
+              cloud computing melalui pengujian sertifikasi standar.
+
+B. Pengertian
+              Cloud computing adalah gabungan pemanfaatan teknologi dengan
+
+       pengembangan komputer berbasis internet. Cloud adalah metafora dari
+       internet, sebagaimana cloud yang sering digambarkan pada diagram
+       jaringan komputer merupakan abstraksi dari infrastruktur kompleks
+       yang disembunyikannya. Cloud computing adalah suatu metoda
+       komputasi di mana kapabilitas terkait teknologi informasi disajikan
+       sebagai suatu layanan (as a service), sehingga pengguna dapat
+       mengaksesnya tanpa perlu mengetahui apa yang ada di dalamnya atau
+       memiliki kendali terhadap infrastruktur teknologi yang mendukungnya.
+
+               Perbedaan terminologi antara cloud computing dan sistem cloud
+      dapat dijelaskan sebagai berikut:
+       1. Cloud computing (komputasi awan) merupakan konsep yang
+
+              berfokus terhadap layanan komputasi yang dilakukan dengan
+              menggunakan virtualisasi jaringan, media penyimpanan (storage),
+              maupun prosesor, sehingga memungkinkan penggunaan bersama
+
+                                                                                                                4
+        sumber daya komputasi tersebut untuk menyediakan layanan
+        secara efektif dan efisien dan dapat meminimalkan biaya total.
+        Pada model komputasi ini sumber daya komputasi diberikan
+        sesuai permintaan (on demand) dari aplikasi hingga data center
+        melalui internet dengan pembayaran yang berdasarkan
+        penggunaan. Akses pada layanan dilakukan melalui internet misal
+        perangkat bantu berbasis web atau aplikasi bukannya dengan
+        akses fisik, sedangkan
+2. Sistem cloud adalah istilah yang mengacu pada teknologi yang
+        digunakan untuk menyediakan layanan komputasi yang
+        menerapkan model komputasi awan.
+        Sumber daya Teknologi Informasi dan Komunikasi (TIK) dalam
+bidang cloud computing berwujud as a Service (aaS) misalnya: jaringan,
+server, penyimpanan, aplikasi, dan layanan sebagai produk dari sistem
+cloud yang dikonfigurasi, juga ditetapkan dan dirilis dengan interaksi
+yang minimal oleh pengelola.
+1. Infrastructure as a Service (IaaS)
+
+               Infrastructure as a Service adalah layanan cloud computing
+        yang menyediakan infrastruktur Information Technology (IT),
+        berupa: Central Processing Unit (CPU), Random Access Memory
+        (RAM), storage, bandwith dan konfigurasi lain. Komponen-
+        komponen tersebut digunakan untuk membangun komputer
+        virtual. Komputer virtual dapat diinstal sistem operasi dan aplikasi
+        sesuai kebutuhan. Keuntungan layanan IaaS ini adalah tidak
+        perlu membeli komputer fisik sehingga lebih menghemat biaya.
+        Konfigurasi komputer virtual juga bisa diubah sesuai kebutuhan.
+        Misalkan saat storage hampir penuh, maka storage bisa ditambah
+        dengan segera.
+2. Platform as a Service (PaaS)
+
+               Platform as a Service adalah layanan yang menyediakan
+        computing platform. Umumnya sudah terdapat sistem operasi,
+        database, web server dan framework aplikasi, agar dapat
+        menjalankan aplikasi yang telah dibuat. Perusahaan yang
+        menyediakan layanan tersebut bertanggung jawab dalam
+
+                                                                                                          5
+        pemeliharaan computing platform ini. Keuntungan layanan PaaS
+        ini bagi pengembang adalah mereka bisa fokus pada aplikasi yang
+        mereka buat tanpa memikirkan tentang pemeliharaan dari
+        computing platform.
+3. Software as a Service (SaaS)
+
+               Software as a Service adalah layanan yang memungkinkan
+        kita bisa menggunakan aplikasi yang telah disediakan secara
+        langsung. Penyedia layanan mengelola infrastruktur dan platform
+        yang menjalankan aplikasi tersebut. Keuntungan dari layanan ini
+        adalah pengguna tidak perlu membeli lisensi untuk mengakses
+        aplikasi tersebut. Pengguna hanya membutuhkan perangkat klien
+        cloud computing yang terhubung ke internet.
+4. Analytics-as-a-Service (AaaS)
+
+               Analytics-as-a-Service (AaaS) adalah layanan yang
+        menyediakan layanan cloud yang dapat melakukan analitik data
+        berbasis langganan. AaaS biasanya menawarkan solusi Business
+        Intelligence (BI) yang sepenuhnya dapat disesuaikan dengan
+        kemampuan end-to-end, mengatur, menganalisis, dan menyajikan
+        data dengan cara yang memungkinkan bahkan profesional non-
+        Teknologi Informasi (non-TI) mendapatkan wawasan dan
+        mengambil keputusan.
+5. Cryptography as a Service, Encryption as a Service
+
+               Suatu layanan cloud yang menyediakan operasi kriptografi
+        yang menggunakan kunci kriptografi, seperti enkripsi dan
+        deskripsi yang dilakukan oleh penyedia CaaS atas nama perangkat
+        melalui API layanan web.
+6. Compute as a service (CaaS)
+
+               Compute as a service (CaaS) adalah ketika sumber daya
+        komputasi disediakan sesuai permintaan melalui sumber daya
+        virtual atau fisik sebagai layanan. Biasanya perhitungan biaya
+        dilakukan dengan model berbasis konsumsi.
+7. Cloud Graphics Processing Units (Cloud GPU)
+
+               Cloud Graphics Processing Units (Cloud GPU) adalah instan
+        komputer dengan akselerasi perangkat keras yang kuat yang
+
+                                                                                                          6
+       berguna untuk menjalankan aplikasi guna menangani beban kerja
+       Artificial Intelligence (AI) dan deep learning yang besar di cloud.
+       Pengguna tidak perlu menggunakan Graphics Processing Units
+       (GPU) fisik di komputernya.
+       Dari penjelasan di atas, berikut ini beberapa manfaat dari cloud
+computing, antara lain:
+1. Agility untuk organisasi dapat ditingkatkan, karena komputasi
+       awan dapat meningkatkan fleksibilitas pengguna dengan
+       penyediaan ulang, penambahan, atau perluasan sumber daya
+       infrastruktur teknologi.
+2. Cost Reduction, cloud publik mengubah pengeluaran modal/CapEx
+       (misalnya, membeli server) menjadi pengeluaran operasional/opex.
+3. Device and location independence, memungkinkan pengguna
+       untuk mengakses sistem menggunakan browser web terlepas dari
+       lokasi mereka atau perangkat apa yang mereka gunakan.
+4. Pemeliharaan lingkungan cloud lebih mudah karena data di-host
+       di server luar yang dikelola oleh penyedia tanpa perlu berinvestasi
+       dalam perangkat keras pusat data. Pemeliharaan Teknologi
+       Informasi (TI) komputasi awan dikelola dan diperbarui oleh tim
+       pemeliharaan Teknologi Informasi (TI) penyedia awan yang
+       mengurangi biaya komputasi awan dibandingkan dengan pusat
+       data lokal.
+5. Multitenancy memungkinkan berbagi sumber daya dan biaya di
+       sejumlah besar pengguna sehingga memungkinkan untuk:
+       a. Sentralisasi infrastruktur di lokasi dengan biaya lebih rendah
+
+          (seperti real estate, listrik, dan lain-lain).
+       b. Peningkatan kapasitas beban puncak (pengguna tidak perlu
+
+          merekayasa dan membayar sumber daya dan peralatan untuk
+          memenuhi tingkat beban setinggi mungkin).
+6. Skalabilitas dan elastisitas melalui penyediaan sumber daya
+       dinamis (sesuai permintaan) hampir secara real-time, di mana
+       pengguna tidak harus merekayasa kondisi beban puncak.
+7. Keamanan dapat ditingkatkan karena sentralisasi data,
+       peningkatan sumber daya yang berfokus pada keamanan tetapi
+
+                                                                                                         7
+        kekhawatiran dapat terus berlanjut tentang hilangnya kendali atas
+        data sensitif tertentu, dan kurangnya keamanan untuk kernel
+        yang disimpan. Keamanan seringkali sebaik atau lebih baik
+        daripada sistem tradisional lainnya, sebagian karena penyedia
+        layanan mampu mencurahkan sumber daya untuk memecahkan
+        masalah keamanan yang tidak mampu ditangani oleh banyak
+        pelanggan atau yang tidak memiliki keterampilan teknis untuk
+        ditangani.
+        Tidak ada satu jenis cloud yang paling tepat untuk semua orang
+ ataupun semua kebutuhan. Beberapa model, jenis dan layanan
+ komputasi telah berevolusi untuk memenuhi teknologi organisasi yang
+ berubah dengan cepat.
+         Layanan cloud dapat menerapkan arsitektur multi-instance untuk
+menjaga isolasi pengelolaan data. Pada arsitektur ini setiap layanan
+berdiri sendiri pada suatu lingkungan yang terisolir.
+         Cloud computing merupakan pengembangan pada dunia Teknologi
+Informasi dan Komunikasi (TIK) yang relatif baru. Karena kebaruan
+tersebut maka muncul beberapa tantangan dalam operasionalnya,
+sebagai contoh adalah relatif semakin tingginya ketergantungan
+pengguna pada penyedia layanan cloud, dan juga ketergantungan pada
+penggunaan akses internet, yang mencakup aspek keamanan maupun
+aspek kapabilitas infrastruktur cloud. Masalah keamanan dan privasi
+menjadi masalah tersendiri karena jika data telah diletakkan pada
+internet maka semakin banyak ancaman terhadap data yang ada.
+Masalah lain yang timbul adalah munculnya para peretas dari berbagai
+belahan dunia dan membuat penyedia layanan harus lebih berhati-hati
+dalam mengelola sumber daya yang dipakai dalam cloud computing.
+         Sehubungan dengan tantangan-tantangan tersebut di atas,
+diperlukan kompetensi yang memadai dari para pelaku profesi dalam
+industri layanan cloud sebagaimana dipersyaratkan, agar tenaga kerja
+yang ada memiliki unjuk kerja yang memuaskan, sehingga dapat
+diharapkan memberikan hasil kerja yang berkualitas.
+
+                                                                                                          8
+1. Public cloud
+            Public cloud merupakan layanan publik yang paling umum dan
+
+   disediakan oleh pihak ketiga. Penyedia akan memiliki dan mengelola
+   sumber daya ketiga tersebut, seperti perangkat lunak server, storage
+   dan jaringan internet. Layanan public cloud ini banyak ditawarkan
+   untuk mengakses layanan ini dapat menggunakan browser web.
+   Penyebaran public cloud sering digunakan untuk menyediakan e-mail
+   berbasis web, aplikasi kantor on-line, penyimpanan, dan lingkungan
+   pengujian dan pengembangan.
+
+            Public cloud ini tidak perlu membeli perangkat keras atau
+   perangkat lunak. Biaya perawatan juga rendah, dan memiliki
+   skalabilitas sesuai dengan kebutuhan. Keandalan jaringan lebih
+   tinggi. Pada cloud publik ini, maka kontrol dan keamanan data agak
+   berkurang. Pengguna tidak tahu dengan pasti lokasi dan batasan
+   organisasi. Pengeluaran dihitung sebagai biaya operasional, sehingga
+   ketika kinerja bertambah dan semakin banyak digunakan maka biaya
+   akan semakin meningkat.
+2. Private Cloud
+
+            Private cloud merupakan layanan cloud yang digunakan secara
+   eksklusif oleh satu bisnis atau organisasi. Cloud pribadi dapat secara
+   fisik ditempatkan di pusat data organisasi tersebut, atau dapat juga
+   di-hosting oleh penyedia layanan pihak ketiga. Tetapi di cloud pribadi,
+   layanan dan infrastruktur selalu dipertahankan di jaringan pribadi
+   dan perangkat keras dan perangkat lunak didedikasikan hanya untuk
+   organisasi tersebut.
+
+            Private cloud dapat memudahkan organisasi untuk
+   menyesuaikan sumber dayanya untuk memenuhi persyaratan
+   Teknologi Informasi (TI) tertentu. Private cloud sering digunakan oleh
+   lembaga pemerintah, lembaga keuangan, organisasi menengah hingga
+   besar lainnya dengan operasi kritis bisnis yang mencari kontrol yang
+   ditingkatkan atas lingkungan mereka.
+
+            Private cloud ini memiliki fleksibilitas tinggi untuk
+   menyesuaikan dengan kebutuhan organisasi. Kendali keamanan dan
+
+                                                                                                           9
+   privasi lebih tinggi. Dengan skalailitas lebih baik daripada
+   infrastruktur lokal. Private cloud adalah di jaringan pribadi.
+
+            Private cloud ini membutuhkan biaya lebih tinggi, dan
+   membutuhkan tanggung jawab berat dan banyak, termasuk
+   pemeliharaan perangkat keras Teknologi Informasi (TI), perangkat
+   lunak. Permasalahan keamanan dan compliance merupakan tanggung
+   jawab pengguna. Fleksibilitas pada private cloud lebih terbatas.
+3. Hybrid Cloud
+
+            Hybrid cloud menggabungkan antara public dan private cloud,
+   data dari layanan private cloud dan public cloud. Pendekatan ini
+   memberikan lebih banyak opsi dan fleksibilitas untuk
+   mengoptimalkan infrastruktur dan keamanan. Kecepatan akses
+   merupakan manfaat utama.
+
+            Saat permintaan komputasi dan pemrosesan berfluktuasi,
+   layanan hybrid cloud memberi bisnis kemampuan untuk
+   meningkatkan infrastruktur di lokal dengan mulus ke public cloud
+   untuk menangani beban yang bertambah tanpa memberikan semua
+   data sensitif ke public cloud. Pendekatan hybrid cloud ini
+   memungkinkan persyaratan peraturan terkait penyimpanan data
+   sensitif. Kontrol organisasi pada ini baik tanpa mengurangi kontrol
+   data.
+4. Sovereign Cloud
+
+            Sovereign cloud dirancang dan dibangun untuk memberikan
+   keamanan dan akses data yang memenuhi persyaratan ketat dari
+   industri yang diatur dan undang-undang yurisdiksi lokal tentang
+   privasi, akses, dan kontrol data. Layanan sovereign cloud terisolasi
+   dari cloud global, walau menggunakan teknologi yang sama. Layanan
+   sovereign cloud digunakan pada lokasi yang memiliki batas residensi
+   data yang ketat.
+
+            Penyedia sovereign cloud ini perlu memastikan bahwa
+   infrastruktur dan operasi pemrosesannya dilakukan dengan
+   kepatuhan yang ketat terhadap aturan yang berlaku. Hal ini untuk
+   melindungi kebebasan memilih bagi penggunanya, serta kerahasiaan
+   dan kedaulatan data. Aturan ini diberlakukan di negara mana pun
+
+                                                                                                         10
+         penyedia beroperasi dan menawarkan layanannya. Dengan kata lain,
+         penyedia mematuhi peraturan, dan memastikan bahwa data
+         dilindungi dari intervensi apa pun selain yang dilakukan pelanggan.
+         Suatu penyedia layanan sovereign cloud memastikan bahwa tidak ada
+         hak ekstrateritorial yang berlaku untuk data, dan bahwa data
+         tersebut tidak digunakan oleh pihak ketiga, apakah itu untuk
+         mendukung algoritma Artificial Intelligence (AI), atau berkontribusi
+         pada pengayaan platform monolitik.
+
+C. Tujuan Penggunaan SKKNI
+               Standar Kompetensi dibutuhkan oleh beberapa lembaga/institusi
+
+      yang berkaitan dengan pengembangan sumber daya manusia, sesuai
+      dengan kebutuhan masing-masing:
+      1. Untuk institusi pendidikan dan pelatihan
+
+            a. Memberikan informasi untuk pengembangan program dan
+                kurikulum.
+
+            b. Sebagai acuan dalam penyelenggaraan pelatihan, penilaian, dan
+                sertifikasi.
+
+    2. Untuk dunia usaha/industri dan penggunaan tenaga kerja
+             a. Membantu dalam rekrutmen.
+             b. Membantu penilaian unjuk kerja.
+             c. Membantu dalam menyusun uraian jabatan.
+             d. Membantu dalam mengembangkan program pelatihan yang
+                  spesifik berdasar kebutuhan dunia usaha/industri.
+
+      3. Untuk institusi penyelenggara pengujian dan sertifikasi
+             a. Sebagai acuan dalam merumuskan paket-paket program
+                  sertifikasi sesuai dengan kualifikasi dan levelnya.
+             b. Sebagai acuan dalam penyelenggaraan pelatihan penilaian dan
+                  sertifikasi.
+
+                                                                                                              11
+D. Komite Standar Kompetensi
+               Susunan Tim Komite Standar Kompetensi Kerja Nasional
+
+      Indonesia (SKKNI) Sektor Komunikasi dan Informatika melalui
+      keputusan Kepala Badan Penelitian dan Pengembangan Sumber Daya
+      Manusia Kementerian Komunikasi dan Informatika Nomor 36 Tahun
+      2022 tanggal 1 Maret 2022 dapat dilihat pada Tabel 1.
+
+Tabel 1. Susunan Tim Komite SKKNI Sektor Komunikasi dan
+Informatika
+
+NO.  NAMA                    INSTANSI/LEMBAGA     JABATAN
+                                            3      DALAM
+1    2                                                TIM
+
+                                                        4
+
+1. Kepala Badan Litbang      Kementerian Kominfo  Pengarah
+       SDM
+
+2. Kepala Puslitbang         Kementerian Kominfo  Ketua
+       APTIKA IKP
+
+3. Sekretaris Badan          Kementerian Kominfo  Sekretaris
+       Litbang SDM
+
+4. Direktur Tata Kelola      Kementerian Kominfo  Anggota
+       Aplikasi Informatika
+
+5. Kepala Biro               Kementerian Kominfo  Anggota
+       Perencanaan
+
+6. Sekretaris Ditjen         Kementerian Kominfo  Anggota
+       Aplikasi dan
+       Informatika
+
+7. Sekretaris Ditjen         Kementerian Kominfo  Anggota
+       Informasi dan
+       Komunikasi Publik
+
+8 Sekretaris Ditjen          Kementerian Kominfo  Anggota
+      Penyelenggaraan Pos
+      dan Informatika
+
+9. Sekretaris Ditjen         Kementerian Kominfo  Anggota
+
+     Sumber Daya Perangkat
+
+     Pos dan Informatika
+
+                                                            12
+NO.  NAMA                          INSTANSI/LEMBAGA        JABATAN
+                                                            DALAM
+1               2                                 3            TIM
+                                Indonesia Cyber Security         4
+10. Ketua Indonesia Cyber       Forum (ICSF)
+        Security Forum          )                         Anggota
+                                Ikatan Profesi Komputer
+11. Ketua Umum Ikatan           dan Informatika (IPKIN)   Anggota
+        Profesi Komputer dan
+        Informatika Indonesia   Masyarakat Telematika     Anggota
+                                Indonesia (Mastel)
+12. Ketua Masyarakat
+        Telematika Indonesia
+
+13. Ketua Asosiasi Praktisi     Asosiasi Praktisi         Anggota
+        Perlindungan Data       Perlindungan Data
+        Indonesia               Indonesia (APPDI)
+
+14. Ketua Umum Ikatan           Ikatan Ahli Informatika   Anggota
+        Ahli Informatika        Indonesia (IAII)
+        Indonesia
+
+15. Ketua Asosiasi              Asosiasi Profesional      Anggota
+        Profesional Desain      Desain komunikasi
+        Komunikasi Visual       Visual Indonesia (AIDIA)
+        Indonesia
+
+16. Ketua Asosiasi Desainer Asosiasi Desainer Grafis Anggota
+
+     Grafis Indonesia           Indonesia (ADGI)
+
+17. Ketua Asosiasi Cloud        Asosiasi Cloud Computing Anggota
+        Computing Indonesia     Indonesia (ACCI)
+
+18. Ketua Umum Asosiasi         Asosiasi Pendidikan       Anggota
+        Pendidikan Tinggi Ilmu  Tinggi Ilmu Komputer
+        Komputer (APTIKOM)      (APTIKOM)
+
+19. Ketua Umum Persatuan Ketua Umum Persatuan             Anggota
+
+     Perusahaan Periklanan Perusahaan Periklanan
+
+     Indonesia                  Indonesia (P3I)
+
+20. Ketua Asosiasi Digital      Asosiasi Digital Marketing Anggota
+        Marketing Indonesia     Indonesia
+
+                                                                    13
+Tabel 2. Susunan Tim Penyusun SKKNI Bidang Cloud Computing.
+
+NO.          NAMA              INSTANSI/                  JABATAN
+                               LEMBAGA                  DALAM TIM
+
+1               2                        3                      4
+                                                        Ketua
+1. Prof. Dr. Ir. Eko K.        Universitas
+       Budiardjo, M.Sc.        Indonesia/IPKIN          Anggota
+
+2. Adi Affandi                 Ditjen Aplikasi          Anggota
+                               Informatika              Anggota
+
+3. Ir. Ashari Abidin, MT       ASPILUKI                 Anggota
+                                                        Anggota
+4. Dr.rer.nat I Made Wiryana, Univ. Gunadarma           Anggota
+       S.Kom.,S.Si., M.App.Sc.
+                                                        Anggota
+5. Dondy Bappedyanto           Infinys                  Anggota
+6. Alex Budianto                                        Anggota
+7. Haryono                     ACCI
+                               Ikatan Ahli
+8. Utian Ayuba                 Informatika
+9. Nurcholis                   Indonesia (IAII)
+10. Dr. Lucia Sri Istiyowati,  Btech
+
+        S.Kom., M.Kom.         BSSN
+
+                               Perbanas/Aptikom
+
+Tabel 3. Susunan Tim Verifikator SKKNI Bidang Cloud Computing:
+
+NO.          NAMA              INSTANSI/LEMBAGA          JABATAN
+                                                        DALAM TIM
+
+1               2                              3             4
+                               Kementerian Kominfo       Ketua
+1. Willy Wize Ananda Zen       Kementerian Kominfo      Anggota
+                               Kementerian Kominfo      Anggota
+2. Cut Medika Zellatifanny     Kementerian Kominfo      Anggota
+                               Kementerian Kominfo      Anggota
+3. Argasi Susena               Kementerian Kominfo      Anggota
+                                                        Anggota
+4. Lidya Agustina              Ikatan Ahli Informatika
+                               Indonesia (IAII)
+5. Annisa Muthia Yana A.
+
+6. Delanie Arestha Swondy
+
+7. Siswanto
+
+                                                                 14
+                                    BAB II
+STANDAR KOMPETENSI KERJA NASIONAL INDONESIA
+
+A. Pemetaan Standar Kompetensi
+
+    TUJUAN   FUNGSI             FUNGSI               FUNGSI DASAR
+     UTAMA   KUNCI              UTAMA
+
+Merancang    Merencanaka        Menyiapkan    Menentukan terminologi
+arsitektur,  narsitektur        konsep        dan konsep cloud
+layanan,     sarana dan         arsitektur    computing
+perangkat    prasarana          cloud
+lunak dan    cloud              computing     Menentukan teknologi
+sarana       computing                        cloud computing
+komputasi
+cloud                                         Menjabarkan berbagai
+computing                                     jenis perangkat keras
+                                              cloud computing
+
+                                              Menentukan berbagai tipe
+                                              data center
+
+                                Menyusun      Merekayasa arsitektur
+                                dokumen       virtualisasi sistem public
+                                rancangan     /private/hybrid/sovereign
+                                arsitektur    cloud
+                                cloud
+                                computing     Merekayasa arsitektur
+                                              skalabilitas sistem cloud
+
+             Membentuk          Membuat       Menentukan alur proses
+             infrastruktur,     virtualisasi  jenis layanan pada cloud
+             platform dan       sesuai        computing
+             perangkat          kebutuhan
+             lunak                            Membangun virtualisasi
+             sebagai
+             layanan pada                     sesuai        kebutuhan
+             cloud
+             computing                        organisasi pada public
+             (Fokus pada
+             Iaas, PaaS,                      /private/hybrid/sovereign
+             dan SaaS)
+                                              cloud
+
+                                              Mengimplementasikan
+                                              kebutuhan organisasi
+                                              pada layanan cloud
+
+                                              Membangun         topologi
+                                              jaringan
+
+                                              Mengimplementasi     yang
+                                              layanan cloud
+                                              spesifik
+
+                                Membuat       Menyiapkan    adaptasi
+                                perangkat
+                                lunak yang    untuk deployment di
+                                multitenancy
+                                              sistem cloud
+
+                                              Menerapkan rancangan
+
+                                              adaptasi          untuk
+
+                                                                   15
+   TUJUAN      FUNGSI           FUNGSI    FUNGSI DASAR
+   UTAMA        KUNCI           UTAMA
+
+           Mengatur        Mengoperasik   deployment di sistem
+           sarana dan      an sarana dan  cloud
+           prasarana       prasarana
+           cloud           cloud          Menentukan kebutuhan
+           computing       computing      pengguna akan solusi
+                                          berbasis cloud
+                           Menjaga
+                           keamanan       Mengelola aktivitas rutin
+                           lingkungan     pada iaas, paas, dan saas
+                           cloud
+                                          Memantau sarana dan
+                                          prasarana agar bisa
+                                          digunakan oleh pengguna
+                                          sesuai Service Level
+                                          Agreement (SLA)
+
+                                          Memberikan dukungan
+                                          teknis atas masalah
+                                          pengguna
+
+                                          Melakukan  antisipasi
+
+                                          gangguan dan ancaman
+
+                                          terhadap sistem cloud
+
+                                          Mengelola insiden pada
+                                          sistem cloud
+
+B. Daftar Unit Kompetensi
+
+NO.  KODE UNIT                           JUDUL UNIT KOMPETENSI
+
+1          2                                                3
+
+1. J.63HOS00.001.2         Menentukan Terminologi dan Konsep Cloud
+                           Computing
+2. J.63HOS00.002.2
+3. J.63HOS00.003.2         Menentukan Teknologi Cloud Computing
+
+4. J.63HOS00.004.2         Menjabarkan Berbagai Jenis Perangkat Keras
+5. J.63HOS00.005.2         Cloud Computing
+
+6. J.63HOS00.006.2         Menentukan Berbagai Tipe Data Center
+
+7. J.63HOS00.007.2         Merekayasa Arsitektur Virtualisasi Sistem
+                           Public/Private/Hybrid/Sovereign Cloud
+8. J.63HOS00.008.2
+                           Merekayasa Arsitektur Skalabilitas Sistem
+                           Cloud
+
+                           Menentukan Alur Proses Jenis Layanan pada
+                           Cloud Computing
+
+                           Membangun Virtualisasi Sesuai Kebutuhan
+                           Organisasi pada Public/Private/Hybrid/
+                           Sovereign Cloud
+
+                                                                 16
+NO.  KODE UNIT                     JUDUL UNIT KOMPETENSI
+
+1    2                                                3
+
+9. J.63HOS00.009.1   Mengimplementasikan Kebutuhan Organisasi
+                     pada Layanan Cloud
+10. J.63HOS00.010.2
+11. J.63HOS00.011.1  Membangun Topologi Jaringan
+
+12. J.63HOS00.012.2  Mengimplementasi layanan cloud yang
+                     spesifik
+13. J.63HOS00.013.2
+                     Menyiapkan Adaptasi untuk Deployment di
+14. J.63HOS00.014.2  Sistem Cloud
+
+15. J.63HOS00.015.2  Menerapkan Rancangan Adaptasi untuk
+                     Deployment di Sistem Cloud
+16. J.63HOS00.016.2
+                     Menentukan Kebutuhan Pengguna akan
+17. J.63HOS00.017.2  Solusi berbasis Cloud
+18. J.63HOS00.018.2
+19. J.63HOS00.019.2  Mengelola Aktivitas Rutin pada IaaS, PaaS,
+                     dan SaaS
+
+                     Memantau Sarana dan Prasarana Agar Bisa
+                     Digunakan oleh Pengguna Sesuai Service
+                     Level Agreement (SLA)
+
+                     Memberikan Dukungan Teknis Atas Masalah
+                     Pengguna
+
+                     Melakukan Antisipasi Gangguan dan
+                     Ancaman terhadap Sistem Cloud
+
+                     Mengelola Insiden pada Sistem Cloud
+
+                     17
+C. Uraian Unit Kompetensi
+
+KODE UNIT  :      J.63HOS00.001.2
+                  Menentukan Terminologi dan Konsep Cloud
+JUDUL UNIT :      Computing
+                  Unit kompetensi ini berhubungan dengan
+DESKRIPSI UNIT :  pengetahuan, keterampilan, dan sikap kerja yang
+                  dibutuhkan dalam mengidentifikasi terminologi dan
+                  konsep cloud computing, menguraikan terminologi dan
+                  konsep cloud computing serta menetapkan jaminan
+                  kualitas pada cloud computing.
+
+ELEMEN KOMPETENSI             KRITERIA UNJUK KERJA
+
+1. Mengidentifikasi           1.1 Manfaat cloud computing bagi
+    terminologi dan konsep
+    cloud computing           perusahaan          dan  individu
+
+                              dideskripsikan sesuai jenis layanan
+
+                              yang ditawarkan.
+
+                              1.2 Pengertian model cloud computing
+                                     deployment dideskripsikan secara
+                                     lengkap sesuai standar.
+
+2. Menguraikan terminologi 2.1 Terminologi dan konsep cloud
+
+dan konsep cloud              computing dideskripsikan sesuai
+
+computing                     jenis layanan yang ditawarkan.
+
+                              2.2 Karakteristik cloud computing yang
+                                     memenuhi persyaratan pelanggan
+                                     diuraikan sesuai persyaratan
+                                     pelanggan.
+
+                              2.3 Model pengantaran layanan
+                                     dideskripsikan sesuai standar.
+
+                              2.4 Karakteristik model pengantaran
+
+                              layanan     ditentukan          sesuai
+
+                              persyaratan cloud.
+
+3. Menetapkan jaminan         3.1 Kriteria SLA cloud computing
+    kualitas pada cloud com-         dideskripsikan sesuai dengan
+    puting                           layanan yang ditawarkan.
+
+                              3.2 Metode pengukuran SLA cloud
+                                     computing ditentukan sesuai dengan
+                                     parameter pada SLA (availability,
+                                     reliability, dan performance).
+
+                                                              18
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk mengidentifikasi terminologi
+              dan konsep cloud computing, menguraikan terminologi dan konsep
+              cloud computing serta menetapkan jaminan kualitas pada cloud
+              computing.
+
+     1.2 Terminologi dan konsep cloud computing, meliputi Scaling
+              horizontal (scale out dan scale in), scaling for failover dan scaling
+              vertical (scale up dan scale down), dan layers virtualisasi, indikator
+              performance, tipe virtualisasi, mekanisme virtualisasi dan tipe
+              kapasitas virtualisasi (hardware layer, operating system layer,
+              virtualization provider layer, virtualization machine layer,
+              application dan service).
+
+     1.3 Karakteristik cloud computing, meliputi: on demand usage,
+              platform, dan elasticity. On demand usage artinya resources cloud
+              computing dapat tersedia bagi pengguna ketika dibutuhkan untuk
+              specific projects, routine work atau long-term technological,
+              resources yang dimaksud adalah storage capacity, computational
+              speed dan software applications. Elasticity yang dimaksud adalah
+              kemampuan dari sebuah aplikasi yang secara otomatis
+              menyesuaikan terhadap sumber daya infrastruktur yang
+              digunakan untuk mengakomodasi berbagai macam workload dan
+              prioritas, serta memantau kinerja dalam sebuah context-aware
+              environment.
+
+     1.4 Model pengantaran layanan, meliputi: komponen, manfaat, dan
+              fitur pada Infrastructure as a Service (IaaS), Platform as a Service
+              (PaaS), dan Software as a Service (SaaS).
+
+     1.5 Model cloud computing deployment, meliputi: public cloud, private
+              cloud, hybrid cloud, dan sovereign cloud.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+              2.1.1 Alat tulis kantor
+              2.1.2 Alat pengolah data
+
+                                                                                                              19
+              2.1.3 Perangkat lunak bantu perkantoran, seperti: pengolah
+                         kata, lembar kerja, dan perangkat lunak bantu gambar
+
+     2.2 Perlengkapan
+              (Tidak ada.)
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+     4.1 Norma
+              (Tidak ada.)
+     4.2 Standar
+              4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+                         Manajemen layanan Bagian 9: Pedoman penerapan SNI
+                         ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+                         9:2015, IDT)
+
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              mendeskripsikan terminologi dan konsep cloud computing yang
+              dibutuhkan dalam sebuah organisasi/perusahaan).
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu
+              kepada kriteria unjuk kerja.
+
+     1.3 Demonstrasi secara konseptual disampaikan dengan
+              menggunakan Bahasa Indonesia dalam rangka aktualisasi
+              pelaksanaan pekerjaan.
+
+     1.4 Metode-metode lain yang relevan.
+
+2. Persyaratan kompetensi
+     (Tidak ada.)
+
+3. Pengetahuan dan keterampilan yang diperlukan
+     3.1 Pengetahuan
+
+                                                                                                              20
+              3.1.1 Konsep networking layer
+              3.1.2 Konsep data center architecture
+              3.1.3 Konsep dan implementasi Quality of Services (QoS)
+              3.1.4 Topologi jaringan hub/mesh
+     3.2 Keterampilan
+              3.2.1 Membuat model/diagram dengan menggunakan perangkat
+
+                         lunak bantu gambar
+4. Sikap kerja yang diperlukan
+
+     4.1 Teliti dalam mendefinisikan biaya dan manfaat cloud computing
+5. Aspek kritis
+
+     5.1 Ketepatan dalam mendeskripsikan pengertian model cloud
+              computing deployment secara lengkap sesuai standar
+
+                                                                                                              21
+KODE UNIT  :      J.63HOS00.002.2
+                  Menentukan Teknologi Cloud Computing
+JUDUL UNIT :      Unit kompetensi ini berhubungan dengan
+                  pengetahuan, keterampilan, dan sikap kerja yang
+DESKRIPSI UNIT :  dibutuhkan dalam mengidentifikasi teknologi cloud
+                  computing, menguraikan teknologi cloud computing dan
+                  menetapkan teknologi cloud computing.
+
+ELEMEN KOMPETENSI         KRITERIA UNJUK KERJA
+
+1. Mengidentifikasi       1.1 Karakteristik cloud computing
+    teknologi cloud com-         dideskripsikan sesuai kebutuhan.
+    puting
+                          1.2 Mekanisme     cloud    computing
+                                                   karakteristik
+                          dideskripsikan sesuai
+
+                          cloud computing.
+
+                          1.3 Web services dideskripsikan sesuai
+                                 standar.
+
+                          1.4 Teknologi penyimpanan data pada
+                                 cloud computing dideskripsikan sesuai
+                                 dengan layanan yang ditawarkan.
+
+                          1.5 Jumlah dan kapasitas perangkat
+
+                          jaringan          dideskripsikan  untuk
+
+                          kebutuhan sistem cloud computing.
+
+2. Menguraikan            2.1 Implementasi  Web             Services
+    teknologi cloud com-
+    puting                dideskripsikan sesuai framework dan
+
+                          bahasa pemrograman yang digunakan.
+
+                          2.2 Berbagai tipe komputasi cloud
+                                 dideskripsikan karakteristiknya.
+
+3. Menetapkan teknologi 3.1 Pengukuran integration dalam pengujian
+
+cloud computing           sistem cloud computing ditentukan
+
+                          sesuai jenis layanan.
+
+                          3.2 Pengukuran    performance     dalam
+
+                          pengujian sistem cloud computing
+
+                          ditentukan sesuai jenis layanan.
+
+                          3.3 Pengukuran beban (stress) dalam
+                                 pengujian sistem cloud computing
+                                 ditentukan sesuai jenis layanan.
+
+                                                              22
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk mengidentifikasi teknologi
+              cloud computing, menguraikan teknologi cloud computing dan
+              menetapkan teknologi cloud computing.
+
+     1.2 Karakteristik cloud computing, meliputi: resiliency, ubiquitous ac-
+              cess, elasticity, dan multitenancy.
+              1.2.1 Resiliency merupakan kemampuan failover dari implemen-
+                         tasi yang menerapkan mekanisme redudansi dari sum-
+                         berdaya Teknologi Informasi (Information Technology re-
+                         sources) yang terpasang pada beberapa lokasi fisik. Sumber
+                         daya Information Technology (IT) tersebut telah dikonfigura-
+                         si sehingga proses failover tersebut berlangsung secara
+                         otomatis dan tidak terasa. Pada model komputasi cloud,
+                         karakteristik resiliensi ini dapat mengacu pada proses re-
+                         dundansi dari sumber daya IT yang berada pada sistem
+                         cloud yang sama (tetapi berbeda lokasi fisik), atau pada be-
+                         berapa sistem cloud yang berbeda. Pengguna cloud dapat
+                         meningkatkan keandalan dan ketersediaan aplikasi dengan
+                         memanfaatkan karakter resiliensi cloud ini.
+              1.2.2 Ubiquitous access merupakan kemampuan suatu layanan
+                         cloud, sehingga dapat diakses secara luas. Menyediakan
+                         ubiquitous access untuk suatu layanan cloud membutuh-
+                         kan dukungan terhadap berbagai bentuk perangkat (de-
+                         vice), protokol, antar muka (interface), dan teknologi kea-
+                         manan (security). Untuk memungkinkan tingkat akses yang
+                         bertaraf ubiquitous, arsitektur layanan cloud harus dis-
+                         esuaikan dengan kebutuhan khusus dari berbagai kon-
+                         sumen dari layanan cloud tersebut.
+
+     1.3 Mekanisme cloud computing, meliputi: virtual server, failover sys-
+              tem, multi-device broker, dan resource replication.
+
+     1.4 Web services meliputi arsitektur dan jenis antar muka, seperti:
+              Representational State Transfer (REST), Simple Object Access Proto-
+              col (SOAP), google Remote Procedure Call (gRPC).
+
+                                                                                                              23
+     1.5 Teknologi penyimpanan data, meliputi: level, struktur, jumlah, dan
+              kapasistas perangkat penyimpanan.
+
+     1.6 Jenis Layanan, meliputi: Infrastructure as a Service (IaaS), Platform
+              as a Service (PaaS) dan Software as a Service (SaaS).
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+              2.1.1 Alat tulis kantor
+              2.1.2 Alat pengolah data
+              2.1.3 Perangkat lunak bantu perkantoran seperti pengolah kata,
+                         lembar kerja, dan perangkat lunak bantu gambar
+     2.2 Perlengkapan
+              (Tidak ada.)
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+     4.1 Norma
+              (Tidak ada.)
+     4.2 Standar
+              4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+                         Manajemen layanan Bagian 9: Pedoman penerapan SNI
+                         ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+                         9:2015, IDT)
+
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              mendeskripsikan teknologi cloud computing yang dibutuhkan
+              dalam sebuah organisasi/perusahaan. Penilaian dapat dilakukan
+              di Tempat Uji.
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu
+              kepada Kriteria Unjuk Kerja.
+
+                                                                                                              24
+     1.3 Demonstrasi secara konseptual disampaikan dengan
+              menggunakan Bahasa Indonesia dalam rangka aktualisasi
+              pelaksanaan pekerjaan.
+
+     1.4 Metode-metode lain yang relevan.
+2. Persyaratan kompetensi
+
+     (Tidak ada.)
+3. Pengetahuan dan keterampilan yang diperlukan
+
+     3.1 Pengetahuan
+              3.1.1 Konsep cloud computing
+              3.1.2 Konsep security
+              3.1.3 Konsep quality assurance
+              3.1.4 Ancaman keamanan dan mekanisme penanggulangannya
+
+     3.2 Keterampilan
+              3.2.1 Membuat model/diagram dengan menggunakan perangkat
+                         lunak bantu
+
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam menguraikan implementasi layanan cloud computing
+
+5. Aspek kritis
+     5.1 Ketepatan dalam mendeskripsikan karakteristik cloud computing
+              sesuai kebutuhan
+
+                                                                                                              25
+KODE UNIT  :      J.63HOS00.003.2
+
+JUDUL UNIT :      Menjabarkan Berbagai Jenis Perangkat Keras Cloud
+
+                  Computing
+
+DESKRIPSI UNIT :  Unit kompetensi ini berhubungan dengan
+
+                  pengetahuan, keterampilan, dan sikap kerja yang
+
+                  dibutuhkan dalam mengidentifikasi fungsi perangkat
+
+                  keras untuk sistem cloud dan menguraikan jenis
+
+                  perangkat yang memenuhi fungsi cloud yang
+
+                  dibutuhkan              pada             implementasi
+
+                  public/private/hybrid/Sovereign cloud.
+
+ELEMEN KOMPETENSI                  KRITERIA UNJUK KERJA
+
+1. Mengidentifikasi fungsi  1.1 Berbagai        perangkat    keras
+     perangkat keras untuk                                 dengan
+     sistem cloud             dideskripsikan    sesuai
+
+                              pemanfaatan pada cloud.
+
+                            1.2 Perangkat keras penyimpan data
+                                  diuraikan sesuai dengan pemanfaatan
+                                  pada cloud.
+
+                            1.3 Perangkat interkoneksi dalam
+                                  jaringan wireless dan wire diuraikan
+                                  sesuai dengan pemanfaatan pada cloud.
+
+2. Menguraikan jenis        2.1 Berbagai penggunaan jenis perangkat
+     perangkat yang me-           keras pada sistem cloud computing
+     menuhi fungsi cloud          dideskripsikan sesuai dengan fungsinya
+                                  pada sistem cloud.
+
+                            2.2 Berbagai jenis perangkat keras
+                                  penyimpanan data (hard disk/SSD,
+                                  dlsb) dideskripsikan sesuai dengan
+                                  jenis fungsinya pada pada sistem cloud.
+
+                            2.3 Berbagai router dan switch pada sistem
+                                  cloud diuraikan.
+
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk mengidentifikasi fungsi
+              perangkat keras untuk sistem cloud dan menguraikan jenis
+              perangkat yang memenuhi fungsi cloud yang dibutuhkan pada
+              implementasi public/private/hybrid/sovereign cloud.
+
+                                                           26
+     1.2 Perangkat keras mencakup perangkat unit pemrosesan, perangkat
+              keras volatile memory (penyimpanan data internal dan eksternal,
+              kapasitas penyimpanan, kecepatan transfer data, aspek keamanan
+              data), dan perangkat keras pendukung (misal perangkat keras
+              pendukung keamanan, jaringan) disertai dengan fungsi dari
+              masing-masing perangkat tersebut.
+
+     1.3 Perangkat keras penyimpan data dapat, berupa: block storage, ob-
+              ject storage, dan file storage.
+
+     1.4 Perangkat interkoneksi tersebut mencakup jenis-jenis perangkat
+              yang dibutuhkan dalam merakit jaringan wireless dan wire, cara
+              kerja dari perangkat interkoneksi tersebut dengan perangkat
+              lainnya dalam jaringan.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+              2.1.1 Alat tulis kantor
+              2.1.2 Alat pengolah data
+              2.1.3 Perangkat lunak bantu
+     2.2 Perlengkapan
+              (Tidak ada.)
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+     4.1 Norma
+              (Tidak ada.)
+     4.2 Standar
+              4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+                         Manajemen layanan Bagian 9: Pedoman penerapan SNI
+                         ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+                         9:2015, IDT)
+
+                                                                                                              27
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              mendeskripsikan perangkat keras yang dibutuhkan di dalam
+              membangun suatu sistem jaringan dan sistem cloud computing
+              dalam suatu perusahaan/organisasi.
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu
+              kepada Kriteria Unjuk Kerja.
+
+     1.3 Demonstrasi secara konseptual dan praktikal disampaikan dengan
+              menggunakan Bahasa Indonesia dalam rangka aktualisasi
+              pelaksanaan pekerjaan.
+
+     1.4 Metode-metode lain yang relevan.
+
+2. Persyaratan kompetensi
+     (Tidak ada.)
+
+3. Pengetahuan dan keterampilan yang diperlukan
+     3.1 Pengetahuan
+              3.1.1 Konsep dan topologi jaringan komputer
+              3.1.2 Perangkat keras jaringan komputer
+              3.1.3 Perangkat keras server
+     3.2 Keterampilan
+              3.2.1 Membuat model/diagram dengan menggunakan perangkat
+                         lunak bantu
+
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam mendeskripsikan berbagai perangkat sistem cloud
+              computing
+
+5. Aspek kritis
+     5.1 Ketepatan dalam menguraikan perangkat keras sesuai dengan
+              pemanfaatan pada cloud
+
+                                                                                                              28
+KODE UNIT  :      J.63HOS00.004.2
+                  Menentukan Berbagai Tipe Data Center
+JUDUL UNIT :      Unit kompetensi ini berhubungan dengan
+                  pengetahuan, keterampilan, dan sikap kerja yang
+DESKRIPSI UNIT :  dibutuhkan dalam mengidentifikasi berbagai tipe tier
+                  data center pada public/private/hybrid/sovereign
+                  cloud, menguraikan fasilitas data center yang
+                  dibutuhkan public/private/hybrid/sovereign cloud, dan
+                  menetapkan region pada cloud computing.
+
+ELEMEN KOMPETENSI            KRITERIA UNJUK KERJA
+
+1. Mengidentifikasi          1.1 Tipe tier data center dideskripsikan
+   berbagai tipe tier data        sesuai dengan jenis layanan.
+   center pada public
+   /private/hybrid/Soverei   1.2 Perbedaan dari tipe tier data center
+   gn cloud                       dideskripsikan sesuai dengan jenis
+                                  layanan.
+
+2. Menguraikan fasilitas     2.1 Fasilitas utama pada data center
+   data center yang
+   dibutuhkan                sesuai    dengan  kebutuhan
+   pub-
+   lic/private/hybrid/Sover  dideskripsikan sesuai dengan jenis
+   eign cloud
+                             layanan.
+
+                             2.2 Fasilitas penunjang pada data center
+
+                             sesuai    dengan  kebutuhan
+
+                             dideskripsikan sesuai dengan jenis
+
+                             layanan.
+
+3. Menetapkan Region         3.1 Region dideskripsikan sesuai dengan
+   pada cloud computing            fungsinya pada cloud computing.
+
+                             3.2 Pemanfaatan multi region dirumuskan
+                                  dalam konteks high availability dan
+                                  scalability pada cloud computing.
+
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk mengidentifikasi berbagai tipe
+            tier data center pada public/private/hybrid/sovereign cloud,
+            menguraikan fasilitas data center yang dibutuhkan
+            public/private/hybrid/sovereign cloud, dan menetapkan region pada
+            cloud computing.
+
+                                                   29
+     1.2 Tipe tier data center mencakup tiering data center, metodologi
+            standar yang digunakan terkait dengan definisi waktu proses dari
+            data center, dan tier yang terkait dengan kinerja data center.
+
+     1.3 Perbedaan dari tipe tier mencakup waktu proses minimum dari data
+            center, redundancy requirements.
+
+     1.4 Fasilitas utama dari data center mencakup desain topologi, sistem
+            mekanikal seperti cooling system, sistem elektrikal seperti power
+            dan desain infrastruktur yaitu cable plant.
+
+     1.5 Region merupakan jaringan komunikasi virtual yang dapat
+            menghubungkan cloud computing satu dengan yang lain dengan
+            wilayah yang berbeda.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+            2.1.1 Alat tulis kantor
+            2.1.2 Alat pengolah data
+            2.1.3 Perangkat lunak bantu
+     2.2 Perlengkapan
+            (Tidak ada.)
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+     4.1 Norma
+             (Tidak ada.)
+     4.2 Standar
+            4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+                       Manajemen layanan Bagian 9: Pedoman penerapan SNI
+                       ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+                       9:2015, IDT)
+
+                                                                                                              30
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+            mendeskripsikan berbagai tipe tier data center dan fasilitas data
+            center dalam sebuah organisasi/perusahaan.
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu kepada
+            Kriteria Unjuk Kerja.
+
+     1.3 Demonstrasi secara konseptual disampaikan dengan menggunakan
+            Bahasa Indonesia dalam rangka aktualisasi pelaksanaan pekerjaan.
+
+     1.4 Metode-metode lain yang relevan.
+
+2. Persyaratan kompetensi
+     (Tidak ada.)
+
+3. Pengetahuan dan keterampilan yang diperlukan
+     3.1 Pengetahuan
+            3.1.1 Konsep topologi dan jaringan
+            3.1.2 Konsep data center
+     3.2 Keterampilan
+            3.2.1 Membuat model/diagram dengan menggunakan perangkat
+                       lunak bantu
+            3.2.2 Menggunakan aplikasi simulasi jaringan
+
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam mengidentifikasi berbagai tipe tier data center pada pub-
+            lic/private/hybrid/Sovereign cloud
+
+5. Aspek kritis
+     5.1 Ketepatan dalam menguraikan fasilitas utama data center yang
+            sesuai dengan jenis layanan
+
+                                                                                                              31
+KODE UNIT  :      J.63HOS00.005.2
+                  Merekayasa Arsitektur Virtualisasi Sistem
+JUDUL UNIT :      Public/Private/Hybrid/Sovereign Cloud
+                  Unit kompetensi ini berhubungan dengan
+DESKRIPSI UNIT :  pengetahuan, keterampilan, dan sikap kerja yang
+                  dibutuhkan dalam mengidentifikasi kebutuhan
+                  arsitektur virtualisasi cloud, memilih arsitektur
+                  virtualisasi cloud, dan menyusun rancangan arsitektur
+                  virtualisasi cloud.
+
+ELEMEN KOMPETENSI                  KRITERIA UNJUK KERJA
+
+1. Mengidentifikasi Kebutuhan 1.1 Tipe virtualisasi sistem cloud
+
+arsitektur virtualisasi cloud      dideskripsikan sesuai kebutuhan
+
+                                   organisasi.
+
+                                   1.2 Lapisan arsitektur virtualisasi
+                                         sistem cloud dideskripsikan
+                                         sesuai kebutuhan organisasi.
+
+                                   1.3 Kebutuhan  jenis         sekuriti
+
+                                   dideskripsikan sesuai dengan
+
+                                   kebutuhan dan jenis organisasi.
+
+                                   1.4 Kebijakan sekuriti dideskripsikan
+                                         sesuai dengan jenis organisasi.
+
+2. Memilih arsitektur              2.1 Mekanisme virtualisasi sistem
+    virtualisasi cloud
+                                   cloud        ditentukan      sesuai
+
+                                   kebutuhan organisasi.
+
+                                   2.2 Mekanisme Hyper Converged
+                                         Infrastructure (HCI) sistem cloud
+                                         ditentukan sesuai kebutuhan
+                                         organisasi.
+
+                                   2.3 Kapasitas virtualisasi   sistem
+                                                                sesuai
+                                   cloud        ditentukan
+
+                                   kebutuhan organisasi.
+
+                                   2.4 Model      implementasi  dan
+
+                                   kebijakan sekuriti ditentukan
+
+                                   sesuai dengan jenis organisasi
+
+                                   dan layanan.
+
+3. Menyusun rancangan              3.1 Rancangan virtualisasi dibuat
+    arsitektur virtualisasi cloud        cloud sesuai best practice.
+
+                                   3.2 Rancangan virtualisasi yang
+                                         disepakati oleh pengguna dan
+                                         penyedia layanan ditetapkan
+                                         sesuai best practice.
+
+                                                                            32
+ELEMEN KOMPETENSI          KRITERIA UNJUK KERJA
+
+                   3.3 Rancangan virtualisasi diuraikan
+                         sesuai best practice secara
+                         lengkap ke dalam satu dokumen.
+
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk mengidentifikasi kebutuhan
+            arsitektur virtualisasi cloud, memilih arsitektur virtualisasi cloud,
+            dan menyusun rancangan arsitektur virtualisasi cloud.
+
+     1.2 Virtualisasi merupakan software yang memisahkan physical
+            infrastructure untuk menciptakan berbagai sumber daya yang
+            merupakan teknologi fundamental cloud computing. Virtualisasi
+            mencakup multiple operating systems dan multiple applications pada
+            server yang sama pada waktu yang sama, memaksimalkan sumber
+            daya dan IT budget integration.
+
+     1.3 Lapisan arsitektur virtualisasi merupakan lapisan yang
+            mengizinkan pengguna untuk melakukan request computing
+            resources dengan mengakses appropriate resources dan deploy
+            virtual machine pada hardware dalam jumlah besar. Kompetensi
+            yang dibutuhkan mencakup pemahaman manajemen virtualisasi
+            secara prinsipil seperti load balancing, pemahaman mengenai
+            virtualization platform, storage, connecting storage pada virtualization
+            host, konfigurasi host dan pengalokasian storage secara benar.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+            2.1.1 Alat tulis kantor
+            2.1.2 Alat pengolah data
+            2.1.3 Perangkat lunak bantu perkantoran seperti pengolah kata,
+                       lembar kerja, dan perangkat lunak bantu gambar
+     2.2 Perlengkapan
+            (Tidak ada.)
+
+                                                         33
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+     4.1 Norma
+            (Tidak ada.)
+     4.2 Standar
+            4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+                       Manajemen layanan Bagian 9: Pedoman penerapan SNI
+                       ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+                       9:2015, IDT)
+
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+            mendeskripsikan perancangan arsitektur virtualisasi sistem cloud
+            dalam sebuah organisasi/perusahaan. Penilaian dapat dilakukan di
+            Tempat Uji Kompetensi (TUK).
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu kepada
+            Kriteria Unjuk Kerja.
+
+     1.3 Demonstrasi secara konseptual disampaikan dengan menggunakan
+            Bahasa Indonesia dalam rangka aktualisasi pelaksanaan pekerjaan.
+
+     1.4 Metode-metode lain yang relevan.
+
+2. Persyaratan kompetensi
+     (Tidak ada.)
+
+3. Pengetahuan dan keterampilan yang dibutuhkan
+     3.1 Pengetahuan
+            3.1.1 Konsep arsitektur sistem cloud
+            3.1.2 Konsep virtualisasi sistem cloud
+     3.2 Keterampilan
+            3.2.1 Melakukan pemodelan arsitektur virtualisasi sistem cloud
+                      dengan menggunakan perangkat lunak bantu pengujian
+
+                                                                                                              34
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam menyusun tipe dan mekanisme virtualisasi sistem cloud
+            sesuai dengan kebutuhan organisasi
+     4.2 Bekerja sama dalam tim perancangan arsitektur virtualisasi sistem
+            cloud
+
+5. Aspek kritis
+     5.1 Ketepatan dalam mengdeskripsi tipe virtualisasi sistem cloud yang
+            sesuai kebutuhan organisasi
+     5.2 Ketepatan dalam menentukan kapasitas virtualisasi sistem cloud
+            sesuai kebutuhan organisasi
+
+                                                                                                              35
+KODE UNIT  :      J.63HOS00.006.2
+                  Merekayasa Arsitektur Skalabilitas Sistem Cloud
+JUDUL UNIT :      Unit kompetensi ini berhubungan dengan
+                  pengetahuan, keterampilan, dan sikap kerja yang
+DESKRIPSI UNIT :  dibutuhkan dalam mengidentifikasi kebutuhan
+                  skalabilitas sistem cloud, merumuskan skalabilitas
+                  sistem cloud, dan menyusun rancangan arsitektur
+                  skalabilitas sistem cloud.
+
+ELEMEN KOMPETENSI            KRITERIA UNJUK KERJA
+
+1. Mengidentifikasi          1.1 Skalabilitas vertikal untuk processing
+    Kebutuhan skalabilitas         unit dideskripsikan secara lengkap
+    sistem cloud                   sesuai jenis layanan.
+
+                             1.2 Skalabilitas horisontal untuk biaya
+                                   dideskripsikan secara lengkap sesuai
+                                   jenis layanan.
+
+                             1.3 Skalabilitas gabungan (diagonal)
+                                   dideskripsikan secara lengkap sesuai
+                                   jenis layanan.
+
+2. Merumuskan skalabilitas   2.1 Memory capacity assurance diuraikan
+    sistem cloud                   secara lengkap sesuai jenis beban
+                                   kerja.
+
+                             2.2 Graphics Processing Units (GPU)
+                                   capacity assurance diuraikan
+                                   secara lengkap sesuai jenis beban
+                                   kerja.
+
+                             2.3 Skalabilitas jaringan sistem cloud
+                                   diuraikan secara lengkap sesuai jenis
+                                   beban kerja.
+
+                             2.4 Skalabilitas perangkat keras
+                                   penyimpanan data diuraikan secara
+                                   lengkap sesuai jenis beban kerja.
+
+3. Menyusun rancangan        3.1 Skalabilitas jaringan dirancang sesuai
+    arsitektur skalabilitas        jenis beban kerja.
+    sistem cloud
+                             3.2 Skalabilitas  perangkat  keras
+
+                             penyimpanan data dirancang sesuai
+
+                             dengan beban kerja.
+
+                             3.3 Rancangan skalabilitas sistem
+                                   cloud ditetapkan sesuai best practice.
+
+                             3.4 Rancangan skalabilitas sistem cloud
+
+                             diuraikan sesuai best practice secara
+                             lengkap ke dalam satu dokumen.
+
+                                                          36
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk mengidentifikasi kebutuhan
+              skalabilitas sistem cloud, merumuskan skalabilitas sistem cloud,
+              dan menyusun rancangan arsitektur skalabilitas sistem cloud.
+
+     1.2 Skalabilitas yaitu dengan cloud computing kita bisa menambah
+              kapasitas penyimpanan data kita tanpa harus membeli peralatan
+              tambahan, misalnya: hardisk, dan lain-lain. Kita cukup
+              menambah kapasitas yang disediakan oleh penyedia layanan cloud
+              computing.
+
+     1.3 Perangkat keras penyimpanan data, meliputi: storage workload
+              management, storage capacity assurance, dan storage performance
+              assurance.
+              1.3.1 Storage workload management merupakan pengelolaan
+                         beban kerja dari sistem penyimpanan pada cloud. Sehingga
+                         memungkinkan pengguna dapat mengakses media
+                         penyimpanan dengan baik. Ketika suatu data diakses oleh
+                         banyak pengguna maka sistem cloud akan melakukan
+                         duplikasi dan caching secara otomatis sehingga beban kerja
+                         akan terbagi di sistem strorage cloud.
+              1.3.2 Storage capacity assurance merupakan jaminan kapasitas
+                         penyimpanan data, walaupun secara fisik perangkat
+                         penyimpanan data selalu dibatasi oleh ukuran fisik dari
+                         media penyimpanan, sistem cloud akan mampu
+                         memberikan jaminan kapasitas yang diminta pengguna
+                         melebihi kapasitas fisik media penyimpanan, sehingga
+                         sistem cloud harus memiliki karakteristik elastis di dalam
+                         kapasitas penyimpanan.
+              1.3.3 Storage performance assurance merupakan jaminan kinerja
+                         yang diberikan oleh sistem penyimpanan data pada sistem
+                         cloud. Walaupun secara fisik perangkat penyimpan
+                         tersebut terletak pada lokasi yang berbeda, tetapi sistem
+                         cloud harus dapat memberikan jaminan kinerja storage
+
+                                                                                                              37
+                   sehingga ketika terjadi pengaksesan data, kinerja yang
+                   diberikan sesuai dengan yang dijanjikan.
+1.4 Skalabilitas jaringan sistem, meliputi: cloud-enabled networking
+        dan cloud-based networking.
+        1.4.1 Cloud-enabled networking merupakan penyediakan fasilitas
+                   jaringan komputer sebagai suatu Software as a Service
+                   (SaaS). Pada model ini infrastruktur jaringan utama,
+                   seperti: packet forwarding, routing dan layanan jaringan
+                   termasuk data tetap menggunakan jaringan fisik standar.
+                   Sedangkan network management, monitoring, maintenance,
+                   security dan proses administrasi jaringan dilakukan
+                   melalui cloud. Misal penggunaan cloud-based firewall
+                   untuk melindungi jaringan komputer non-cloud.
+        1.4.2 Cloud-based networking adalah semua fungsi dasar
+                   jaringan, termasuk pengalamatan (addressing) dan alur
+                   paket nyata (actual packet path) dilakukan pada cloud dan
+                   menghilangkan kebutuhan perangkat keras lokal selain
+                   koneksi internet. Dikenal juga dengan istilah Network as a
+                   Service (NaaS) sebab penggunaan jaringan mengikuti pola
+                   langganan dan pembelian service seperti solusi Software as
+                   a Service (SaaS). Model NaaS ini dapat juga diterapkan
+                   dengan menggunakan Software-Defined Network (SDN) dan
+                   teknologi virtualisiasi yang menyediakan layanan elastis
+                   dan resilient sehingga dapat melayani layanan jaringan
+                   virtual jamak. NaaS ada juga yang sekedar memberikan
+                   layanan perangkat jairngan virtual atau perangkat network
+                   satu fungsi. Cloud-based Network (CBN) hanya
+                   membutuhkan koneksi internet, dan bekerja pada segala
+                   infrastruktur fisis, seperti wired, wireless, public atau
+                   private. Pembiayaan hanya bergantung penggunaan
+                   sehingga tidak membutuhkan biaya instalasi.
+1.5 Graphics Processing Unit (GPU) adalah perangkat elektronik
+        khusus yang dirancang untuk memanipulasi dan mengubah
+        memori dengan cepat untuk memproses aritmetik dengan cepat.
+
+                                                                                                         38
+     1.6 Rancangan skalabilitas sistem cloud merupakan rancangan yang
+              sesuai best practice dan disepakati oleh pengguna dan penyedia
+              layanan.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+              2.1.1 Alat tulis kantor
+              2.1.2 Alat pengolah data
+              2.1.3 Perangkat lunak bantu perkantoran seperti pengolah kata,
+                         lembar kerja, dan perangkat lunak bantu gambar
+     2.2 Perlengkapan
+              (Tidak ada.)
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+     4.1 Norma
+              (Tidak ada.)
+     4.2 Standar
+              4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+                         Manajemen layanan Bagian 9: Pedoman penerapan SNI
+                         ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+                         9:2015, IDT)
+
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              mendeskripsikan perancangan arsitektur skalabilitas virtualisasi
+              sistem cloud dalam sebuah organisasi/perusahaan. Penilaian
+              dapat dilakukan di Tempat Uji Kompetensi (TUK).
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu
+              kepada kriteria unjuk kerja.
+
+                                                                                                              39
+1.3 Demonstrasi secara konseptual disampaikan dengan
+        menggunakan Bahasa Indonesia dalam rangka aktualisasi
+        pelaksanaan pekerjaan.
+
+1.4 Metode-metode lain yang relevan.
+
+2. Persyaratan kompetensi
+     (Tidak ada.)
+
+3. Pengetahuan dan keterampilan yang dibutuhkan
+     3.1 Pengetahuan
+              3.1.1 Konsep skalabilitas sistem cloud
+              3.1.2 Konsep performance pada cloud computing
+       3.2 Keterampilan
+              3.2.1 Melakukan pemodelan arsitektur skalabilitas sistem cloud
+                         dengan menggunakan perangkat lunak bantu
+
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam mengidentifikasi rancangan skalabilitas virtualisasi
+              sistem cloud
+     4.2 Bekerja sama dalam tim mendokumentasikan rancangan
+              skalabilitas sistem cloud
+
+5. Aspek kritis                                               gabungan
+     5.1 Ketepatan dalam mendeskripsikan skalabilitas
+              (diagonal) secara lengkap sesuai jenis layanan
+
+                                                              40
+KODE UNIT  :      J.63HOS00.007.2
+                  Menentukan Alur Proses Jenis Layanan pada Cloud
+JUDUL UNIT :      Computing
+                  Unit kompetensi ini berhubungan dengan
+DESKRIPSI UNIT :  pengetahuan, keterampilan, dan sikap kerja yang
+                  dibutuhkan dalam mengidentifikasi kebutuhan
+                  organisasi terhadap jenis layanan cloud yang akan
+                  dibangun, merancang jenis layanan cloud yang akan
+                  dibangun sesuai kebutuhan organisasi, dan
+                  mendokumentasikan alur proses jenis layanan.
+
+ELEMEN KOMPETENSI           KRITERIA UNJUK KERJA
+
+1. Mengidentifikasi         1.1 Jenis kebutuhan layanan cloud
+    kebutuhan organisasi          dijabarkan secara lengkap sesuai
+    terhadap jenis layanan        dengan tujuan dan sasaran bisnis
+    cloud yang akan               organisasi.
+    dibangun
+                            1.2 Strategi pengelolaan layanan cloud
+                                  ditentukan sesuai dengan tujuan dan
+                                  sasaran bisnis organisasi.
+
+2. Merancang jenis layanan 2.1 Layanan cloud dipetakan sesuai
+
+cloud yang akan             tujuan dan sasaran bisnis organisasi.
+
+dibangun sesuai             2.2 Kriteria informasi ditentukan sesuai
+kebutuhan organisasi              dengan tujuan dan sasaran bisnis
+
+                            organisasi.
+
+3. Mendokumentasikan        3.1 Rancangan alur proses diuraikan
+    alur proses jenis             sesuai best practice secara lengkap ke
+    layanan                       dalam satu dokumen.
+
+                            3.2 Rancangan alur proses disepakati oleh
+                                  pengguna dan penyedia layanan.
+
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk mengidentifikasi kebutuhan
+              organisasi terhadap jenis layanan cloud yang akan dibangun,
+              merancang jenis layanan cloud yang akan dibangun sesuai
+              kebutuhan organisasi, dan mendokumentasikan alur proses jenis
+              layanan.
+
+                                                                          41
+     1.2 Penjabaran tujuan dan sasaran bisnis organisasi yang
+              dimaksudkan adalah menganalisis siklus hidup proses yang
+              terjadi pada berbagai tingkatan organisasi, menerapkan suatu
+              kerangka kerja yang holistik dan menghasilkan keluaran yang
+              selaras dengan organisasi.
+
+     1.3 Strategi pengelolaan layanan cloud mencakup pada penentuan
+              aspek-aspek strategi yang akan diterapkan dalam mengelola
+              layanan cloud di suatu organisasi agar dapat berpadu padan
+              dengan aktivitas dasar organisasi tersebut.
+
+     1.4 Layanan cloud yang dimaksud adalah teknik-teknik yang
+              digunakan untuk mengidentifikasi dan melakukan pemetaan
+              layanan cloud terhadap aturan-aturan bisnis pada sebuah
+              organisasi.
+
+     1.5 Kriteria informasi mencakup akurat (accurate): informasi harus
+              bebas dari kesalahan-kesalahan, jelas maksudnya karena pada
+              saat penyampaian dari pengirim ke penerima kemungkinan terjadi
+              banyak gangguan (noise) dapat mengubah atau merusak
+              informasi, tepat waktu (timeliness): Informasi datang ke penerima
+              tidak boleh terlambat, relevan (relevance): informasi yang diterima
+              harus bermanfaat, dan lengkap (comprehensiveness) yang
+              ditampilkan pada sisi pengguna.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+              2.1.1 Alat tulis kantor
+              2.1.2 Alat pengolah data
+              2.1.3 Perangkat lunak bantu perkantoran seperti pengolah kata,
+                         lembar kerja, dan perangkat lunak bantu gambar
+              2.1.4 Jaringan internet
+     2.2 Perlengkapan
+              (Tidak ada.)
+
+                                                                                                              42
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+     4.1. Norma
+              (Tidak ada.)
+     4.2. Standar
+              4.2.1. SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+                         Manajemen layanan Bagian 9: Pedoman penerapan SNI
+                         ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+                         9:2015, IDT)
+              4.2.2. SNI ISO/IEC 27017:2015, Teknologi informasi­Teknik
+                         keamanan­Petunjuk praktik kendali keamanan informasi
+                         berdasarkan ISO/IEC 27002 untuk layanan cloud (ISO/IEC
+                         27017:2015, IDT, Eng)
+
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              mendeskripsikan tujuan dan sasaran bisnis organisasi untuk
+              kemudian disinergikan dengan layanan-layanan cloud yang sesuai,
+              kemudian menyusun strategi pengelolaan sistem cloud pada
+              organisasi tersebut. Penilaian dapat dilakukan di Tempat Uji
+              Kompetensi (TUK) dengan cara:
+              1.1.1 Wawancara menggunakan Bahasa Indonesia yang
+                          mengacu kepada kriteria unjuk kerja.
+              1.1.2 Demonstrasi secara konseptual disampaikan dengan
+                          menggunakan Bahasa Indonesia dalam rangka aktualisasi
+                          pelaksanaan pekerjaan.
+              1.1.3 Metode-metode lain yang relevan.
+
+2. Persyaratan kompetensi
+     (Tidak ada.)
+
+                                                                                                              43
+3. Pengetahuan dan keterampilan yang dibutuhkan
+     3.1 Pengetahuan
+              3.1.1 Business requirements analysis
+              3.1.2 Business model analysis
+              3.1.3 Cloud service architecture modeling
+     3.2 Keterampilan
+              3.2.1 Membuat model/diagram dengan menggunakan perangkat
+                         lunak bantu
+
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dan bertanggung jawab dalam melakukan analisis
+              kebutuhan organisasi terhadap jenis layanan cloud yang akan
+              dibangun
+     4.2 Bekerjasama dalam tim mendokumentasikan alur proses jenis
+              layanan
+
+5. Aspek kritis
+     5.1 Ketepatan dalam menentukan strategi pengelolaan layanan cloud
+              yang sesuai dengan tujuan dan sasaran bisnis organisasi
+
+                                                                                                              44
+KODE UNIT  :      J.63HOS00.008.2
+                  Membangun Virtualisasi Sesuai Kebutuhan
+JUDUL UNIT :      Organisasi pada Public/Private/Hybrid/Sovereign
+                  Cloud
+DESKRIPSI UNIT :  Unit kompetensi ini berhubungan dengan
+                  pengetahuan, keterampilan, dan sikap kerja yang
+                  dibutuhkan dalam menerapkan virtualisasi sesuai
+                  dengan rancangan, menguji implementasi virtualisasi,
+                  dan mendokumentasikan implementasi virtualisasi.
+
+      ELEMEN KOMPETENSI       KRITERIA UNJUK KERJA
+1. Menerapkan virtualisasi
+                              1.1 Perangkat keras disusun sesuai
+   sesuai dengan rancangan          perancangan arsitektur cloud
+                                    computing.
+2. Menguji implementasi
+   virtualisasi               1.2 Perangkat lunak virtualisasi
+
+3. Mendokumentasikan          disusun     sesuai  dengan
+   implementasi virtualisasi
+                              perancangan arsitektur cloud
+
+                              computing.
+
+                              1.3 Perangkat penyimpanan data
+                                    disusun sesuai perancangan
+                                    arsitektur cloud computing.
+
+                              2.1 Skenario dan data pengujian
+                                    disusun secara lengkap sesuai
+                                    dengan kebutuhan organisasi.
+
+                              2.2 Implementasi virtualisasi dinilai
+                                    sesuai kriteria performance
+                                    sesuai kebutuhan organisasi.
+
+                              2.3 Implementasi virtualisasi dinilai
+                                    sesuai kriteria reliability sesuai
+                                    kebutuhan organisasi.
+
+                              2.4 Implementasi virtualisasi dinilai
+                                    sesuai kriteria integration sesuai
+                                    kebutuhan organisasi.
+
+                              3.1 Implementasi virtualisasi diuraikan
+                                    secara lengkap ke dalam satu
+                                    dokumen sesuai kebutuhan
+                                    organisasi.
+
+                              3.2 Dokumentasi pengujian diuraikan
+                                    secara lengkap ke dalam satu
+                                    dokumen sesuai kebutuhan
+                                    organisasi.
+
+                                                    45
+ELEMEN KOMPETENSI  KRITERIA UNJUK KERJA
+
+                   3.3 Dokumentasi kesepakatan hasil
+
+                   pengujian              implementasi
+
+                   virtualisasi  dibuat   sesuai
+
+                   kebutuhan organisasi.
+
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk menerapkan virtualisasi sesuai
+              dengan rancangan, menguji implementasi virtualisasi, dan
+              mendokumentasikan implementasi virtualisasi.
+
+     1.2 Perangkat keras yang dimaksud adalah server, CPU, volatile
+              memory, perangkat jaringan, dan Cloud Graphics Processing Units
+              (GPU) sebagai pusat pendukung kerja sistem cloud yang
+              digunakan.
+
+     1.3 Perangkat penyimpanan data yang dimaksud adalah sistem
+              penyimpanan data yang digunakan dalam sistem cloud.
+
+     1.4 Kriteria performance termasuk di dalamnya adalah mengukur
+              operasi input/output per detik (IOPS), kinerja sistem file, caching,
+              penskalaan otomatis, dan hal lain yang berhubungan.
+
+     1.5 Kriteria reliability termasuk di dalamnya adalah keaktifan layanan,
+              dapat diakses dari mana saja dan kapan saja, tidak akan ada
+              interupsi atau downtime, keamanan koneksi, dan hal lain yang
+              berhubungan.
+
+     1.6 Kriteria integration termasuk di dalamnya adalah fleksibilitas,
+              keseragaman, dukungan, fitur dan perangkat lunak tambahan,
+              keterbukaan, dan hal lain yang berhubungan.
+
+     1.7 Dokumen hasil kesepakatan pengujian dapat berupa berita acara
+              User Acceptance Test (UAT), Berita Acara Serat Terima (BAST), dan
+              dokumen sejenis lainnya.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+              2.1.1 Alat tulis kantor
+
+                                          46
+              2.1.2 Alat pengolah data
+              2.1.3 Perangkat lunak bantu perkantoran seperti pengolah kata,
+
+                         lembar kerja, dan perangkat lunak bantu gambar
+              2.1.4 Jaringan internet
+     2.2 Perlengkapan
+              (Tidak ada.)
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+     4.1 Norma
+              (Tidak ada.)
+     4.2 Standar
+              4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+                       Manajemen layanan Bagian 9: Pedoman penerapan SNI
+                       ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+                       9:2015, IDT)
+
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              mengimplementasikan virtualisasi sesuai dengan kebutuhan
+              organisasi. Penilaian dapat dilakukan di Tempat Uji
+              Kompetensi (TUK).
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu
+              kepada Kriteria Unjuk Kerja.
+
+     1.3 Demonstrasi secara konseptual disampaikan dengan
+              menggunakan Bahasa Indonesia dalam rangka aktualisasi
+              pelaksanaan pekerjaan dengan menggunakan alat bantu
+              perangkat lunak.
+
+     1.4 Metode-metode lain yang relevan.
+
+                                                                                                              47
+2. Persyaratan kompetensi
+     (Tidak ada.)
+
+3. Pengetahuan dan keterampilan yang dibutuhkan
+     3.1 Pengetahuan
+              3.1.1 Konsep perangkat keras pada cloud computing
+              3.1.2 Konsep pengukuran Quality of Service (QoS) pada cloud
+                         computing
+     3.2 Keterampilan
+              3.2.1 Mengimplementasikan model virtualisasi cloud computing
+              3.2.2 Melakukan pengujian dengan menggunakan perangkat
+                         lunak bantu
+
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam membangun virtualisasi sesuai dengan rancangan
+     4.2 Bekerjasama dalam tim mendokumentasikan implementasi
+              virtualisasi
+
+5. Aspek kritis
+     5.1 Ketepatan dalam menilai implementasi virtualisasi sesuai kriteria
+              performance kebutuhan organisasi
+
+                                                                                                              48
+KODE UNIT  :      J.63HOS00.009.1
+                  Mengimplementasikan Kebutuhan Organisasi Pada
+JUDUL UNIT :      Layanan Cloud
+                  Unit kompetensi ini berhubungan dengan
+DESKRIPSI UNIT :  pengetahuan, keterampilan, dan sikap kerja yang
+                  dibutuhkan dalam menyiapkan layanan cloud,
+                  menerapkan layanan cloud sesuai kebutuhan
+                  organisasi, dan menguji implementasi layanan cloud.
+
+ELEMEN KOMPETENSI          KRITERIA UNJUK KERJA
+
+1. Menyiapkan layanan cloud 1.1 Komputasi bare metal, virtual machine
+                                                    (instance), dan container dibuat sesuai
+                                                    flavor/spesifikasi yang dibutuhkan
+                                                    organisasi.
+
+                                              1.2 Layanan penyimpanan data dibuat
+                                                    sesuai kebutuhan organisasi.
+
+                                              1.3 Layanan Identity management dibuat
+                                                    sesuai kebutuhan organisasi.
+
+                                              1.4 Layanan Encryption key dibuat
+                                                    sesuai kebutuhan organisasi.
+
+2. Menerapkan layanan      2.1 Kluster container yang telah dibuat
+   cloud sesuai kebutuhan        dapat diakses dan dioperasikan.
+   organisasi
+                           2.2 Layanan  orkestrasi       dibangun
+
+                           menggunakan kluster untuk container.
+
+                           2.3 Aplikasi layanan (server application)
+                                 dapat digunakan dari aplikasi klien
+                                 (client application).
+
+3. Menguji implementasi    3.1 Skenario dan data pengujian disusun
+   layanan cloud                 secara lengkap sesuai sesuai dengan
+                                 kebutuan organisasi.
+
+                           3.2 Implementasi layanan cloud dinilai
+                                 sesuai kriteria penilaian yang sesuai
+                                 dengan kebutuhan organisasi.
+
+4. Mendokumentasikan       4.1 Implementasi layanan cloud diuraikan
+   implementasi layanan
+   cloud                   secara lengkap ke dalam satu
+
+                           dokumen      sesuai      kebutuhan
+
+                           organisasi.
+
+                           4.2 Dokumentasi kesepakatan hasil
+                                 pengujian implementasi layanan cloud
+                                 dibuat sesuai kebutuhan organisasi.
+
+                           4.3 Dokumentasi pengujian diuraikan
+                                 secara lengkap ke dalam satu dokumen
+
+                           sesuai kebutuhan organisasi.
+
+                                                         49
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk menyiapkan layanan cloud,
+              menerapkan layanan cloud sesuai kebutuhan organisasi, dan
+              menguji implementasi layanan cloud.
+
+     1.2 Bare metal merupakan sistem komputer tanpa sistem operasi atau
+              aplikasi yang didedikasikan untuk pelanggan cloud tertentu.
+
+     1.3 Layanan penyimpanan data berupa block storage, object storage,
+              dan file storage yang dapat diakses melalui. layanan cloud lain
+              atau melalui aplikasi klien (client application).
+
+     1.4 Layanan identity management, meliputi: pengguna, grup baru, dan
+              otorisasi hak akses yang dibutuhkan organisasi.
+
+     1.5 Layanan encryption key, meliputi: layanan key management dan
+              layanan cloud sesuai kebutuhan organisasi. Key management
+              merupakan layanan pada cloud computing untuk mengelola kunci
+              enkripsi yang dapat digunakan untuk pengamanan komunikasi
+              lalu lintas data atau penyimpanan data.
+
+     1.6 Orkestrasi merupakan sekumpulan otomasi, manajemen dan
+              koordinasi sistem tertentu. Kode perangkat lunak diintegrasikan
+              dan dibangun menjadi container image secara otomatis. Container
+              image perangkat lunak dapat dijalankan secara otomatis pada
+              layanan komputasi atau kluster container dan dapat diakses
+              untuk kebutuhan lebih lanjut organisasi.
+
+     1.7 Aplikasi layanan cloud adalah aplikasi yang dijalankan diatas
+              aplikasi cloud diantaranya pipelines yang mencakup integrasi,
+              pembangunan, dan pengantaran perangkat lunak didefinisikan
+              dan dieksekusi secara otomatis pada layanan continuous
+              integration/continuous delivery (CI/CD), multi layer function­
+              integration, security system, operation support system, business
+              support system, development support (server application) dapat
+              dipasang dan dijalankan di dalam komputasi bare metal, virtual
+              machine (instance), dan container yang telah dibuat.
+
+     1.8 Kriteria penilaian implementasi layanan cloud meliputi
+              performance reliability, dan integration.
+
+                                                                                                              50
+1.9 Satu dokumen lengkap yang, meliputi: dokumentasi
+        pengelolaansistem dan dokumentasi implementasi layanan cloud.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+              2.1.1 Alat tulis kantor
+              2.1.2 Alat pengolah data
+              2.1.3 Perangkat lunak bantu perkantoran seperti pengolah kata,
+                         lembar kerja, dan perangkat lunak bantu gambar
+              2.1.4 Jaringan Internet
+     2.2 Perlengkapan
+              (Tidak ada.)
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+
+4.1 Norma
+
+(Tidak ada.)
+
+4.2 Standar
+
+4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+
+           Manajemen layanan Bagian 9: Pedoman penerapan SNI
+
+           ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+
+4.2.2      9:2015, IDT)
+           SNI ISO/IEC 27017:2015, Teknologi informasi­Teknik
+           keamanan­Petunjuk praktik kendali keamanan informasi
+
+           berdasarkan ISO/IEC 27002 untuk layanan cloud (ISO/IEC
+
+           27017:2015, IDT, Eng)
+
+                                  51
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              mengimplementasikan layanan cloud sesuai dengan kebutuhan
+              organisasi. Penilaian dapat dilakukan di Tempat Uji
+              Kompetensi (TUK).
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu
+              kepada Kriteria Unjuk Kerja.
+
+     1.3 Demonstrasi secara konseptual disampaikan dengan
+              menggunakan Bahasa Indonesia dalam rangka aktualisasi
+              pelaksanaan pekerjaan dengan menggunakan alat bantu
+              perangkat lunak.
+
+     1.4 Metode-metode lain yang relevan.
+
+2. Persyaratan kompetensi
+     (Tidak ada.)
+
+3. Pengetahuan dan keterampilan yang dibutuhkan
+     3.1 Pengetahuan
+              3.1.1 Jenis penyedia atau perangkat lunak cloud computing
+     3.2 Keterampilan
+              3.2.1 Mengimplementasikan layanan cloud computing
+              3.2.2 Melakukan pengujian layanan cloud computing dengan
+                         menggunakan perangkat lunak bantu
+              3.2.3 Membuat dokumentasi implementasi layanan cloud
+                         computing
+
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam mengimplementasikan layanan identity dan key
+              management
+     4.2 Bertanggung jawab dalam mengimplementasikan layanan komputasi
+
+                                                                                                              52
+5. Aspek kritis
+     5.1 Ketepatan dalam membuat komputasi bare metal, virtual machine
+             (instance), dan container sesuai flavor/spesifikasi yang dibutuhkan
+             organisasi
+     5.2 Ketepatan dalam menilai implementasi layanan cloud sesuai
+             kriteria penilaian yang dibutuhan organisasi
+
+                                                                                                              53
+KODE UNIT  :      J.63HOS00.010.2
+                  Membangun Topologi Jaringan
+JUDUL UNIT :      Unit kompetensi ini berhubungan dengan
+                  pengetahuan, keterampilan, dan sikap kerja yang
+DESKRIPSI UNIT :  dibutuhkan dalam membuat jaringan sesuai dengan
+                  topologi jaringan cloud yang dipilih, menguji
+                  implementasi topologi jaringan cloud, dan
+                  mendokumentasikan implementasi topologi jaringan.
+
+    ELEMEN KOMPETENSI        KRITERIA UNJUK KERJA
+1. Membuat jaringan sesuai
+                             1.1 Perangkat bantu dan komponen
+   dengan topologi jaringan        jaringan ditentukan sesuai dengan
+   cloud yang dipilih              perancangan topologi jaringan cloud.
+
+2. Menguji implementasi      1.2 Jenis topologi jaringan komputer
+   topologi jaringan cloud
+                             diimplementasikan           sesuai
+3. Mendokumentasikan
+   implementasi topologi     perancangan arsitektur cloud
+   jaringan
+                             computing yang ditetapkan.
+
+                             1.3 Berbagai perangkat jaringan virtual
+                                   digunakan dalam topologi jaringan
+                                   cloud yang dibangun.
+
+                             2.1 Kasus pengujian (test case) dan
+                                   skenario pengujian jaringan disusun
+                                   sesuai dengan perancangan topologi
+                                   jaringan.
+
+                             2.2 Jaringan cloud dinilai sesuai dengan
+                                   kasus pengujian dan skenario yang
+                                   telah disusun.
+
+                             3.1 Topologi jaringan diuraikan secara
+                                   lengkap ke dalam satu dokumen
+                                   sesuai kebutuhan organisasi.
+
+                             3.2 Dokumentasi pengujian diuraikan
+
+                             secara lengkap ke dalam satu
+
+                             dokumen      sesuai  kebutuhan
+
+                             organisasi.
+
+                             3.3 Dokumentasi kesepakatan hasil
+                                   pengujian implementasi topologi
+                                   jaringan dibuat sesuai kebutuhan
+                                   organisasi.
+
+                                                         54
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk membuat jaringan sesuai
+              dengan topologi jaringan cloud yang dipilih, menguji implementasi
+              topologi jaringan cloud, dan mendokumentasikan implementasi
+              topologi jaringan.
+
+     1.2 Jenis topologi yang dimaksud adalah bentuk topologi jaringan
+              sebagai format jaringan yang dipilih.
+
+     1.3 Jaringan virtual dimaksud adalah jaringan lojik yang beroperasi di
+              atas cloud.
+
+     1.4 Kasus pengujian dimaksud adalah pengujian implementasi
+              topologi jaringan yang dipilih dalam permasalahan tertentu yang
+              disusun.
+
+     1.5 Skenario pengujian adalah tahapan dan alur terhadap komponen
+              yang ada dalam topologi jaringan yang dipilih.
+
+     1.6 Dokumentasi kesepakatan hasil pengujian dapat berupa berita
+              acara User Acceptance Test (UAT), Berita Acara Serah Terima
+              (BAST), dan dokumen sejenis lainnya.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+              2.1.1 Alat tulis kantor
+              2.1.2 Alat pengolah data
+              2.1.3 Perangkat lunak bantu seperti aplikasi simulasi jaringan
+              2.1.4 Jaringan internet
+     2.2 Perlengkapan
+              (Tidak ada.)
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+     4.1 Norma
+              (Tidak ada.)
+
+                                                                                                              55
+4.2 Standar
+        4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+                   Manajemen layanan Bagian 9: Pedoman penerapan SNI
+                   ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+                   9:2015, IDT)
+
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              untuk mengimplementasikan topologi jaringan cloud sesuai
+              dengan kebutuhan organisasi. Penilaian dapat dilakukan di
+              Tempat Uji Kompetensi (TUK).
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu
+              kepada Kriteria Unjuk Kerja.
+
+     1.3 Demonstrasi secara konseptual disampaikan dengan
+              menggunakan Bahasa Indonesia dalam rangka aktualisasi
+              pelaksanaan pekerjaan dengan menggunakan alat bantu
+              perangkat lunak.
+
+     1.4 Metode-metode lain yang relevan.
+
+2. Persyaratan kompetensi
+     (Tidak ada.)
+
+3. Pengetahuan dan keterampilan yang dibutuhkan             pengujian
+     3.1 Pengetahuan
+              3.1.1 Konsep topologi jaringan
+              3.1.2 Konsep pengujian dan simulasi jaringan
+     3.2 Keterampilan
+              3.2.1 Mengimplementasikan topologi jaringan
+              3.2.2 Menyusun dan melakukan skenario
+                         menggunakan perangkat lunak bantu
+
+                                                            56
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam membangun jaringan sesuai dengan topologi jaringan
+              cloud yang dipilih
+     4.2 Bekerjasama dalam tim untuk mengimplementasikan topologi
+              jaringan
+
+5. Aspek kritis
+     5.1 Ketepatan dalam menyusun kasus pengujian (test case) dan
+              skenario pengujian jaringan sesuai dengan perancangan topologi
+              jaringan
+
+                                                                                                              57
+KODE UNIT  :      J.63HOS00.011.1
+                  Mengimplementasi Layanan Cloud yang Spesifik
+JUDUL UNIT :      Unit kompetensi ini berhubungan dengan
+                  pengetahuan, keterampilan, dan sikap kerja yang
+DESKRIPSI UNIT :  dibutuhkan dalam menyiapkan layanan cloud,
+                  menerapkan layanan cloud sesuai kebutuhan
+                  organisasi, menguji implementasi layanan cloud, dan
+                  mendokumentasikan implementasi layanan cloud.
+
+ELEMEN KOMPETENSI           KRITERIA UNJUK KERJA
+
+1. Menyiapkan layanan       1.1 Komputasi bare metal, virtual machine
+    cloud                         (instance), dan container dibuat sesuai
+                                  kebutuhan spesifik organisasi.
+2. Menerapkan layanan
+    cloud sesuai kebutuhan  1.2 Layanan penyimpanan data dibuat
+    organisasi                    sesuai kebutuhan organisasi.
+
+3. Menguji implementasi     1.3 Layanan identity management dibuat
+    layanan cloud                 sesuai kebutuhan organisasi.
+
+4. Mendokumentasikan        1.4 Layanan encryption key dibuat sesuai
+    implementasi layanan          kebutuhan organisasi.
+    cloud
+                            2.1 Kluster container yang telah dibuat
+                                  dapat diakses dan dioperasikan.
+
+                            2.2 Layanan  orkestrasi  dibangun
+
+                            menggunakan kluster untuk container.
+
+                            2.3 Aplikasi layanan spesifik (server
+                                  application) dapat digunakan dari
+                                  aplikasi klien (client application).
+
+                            3.1 Skenario dan data pengujian disusun
+                                  secara lengkap sesuai sesuai dengan
+                                  kebutuhan spesifik organisasi.
+
+                            3.2 Implementasi layanan cloud dinilai
+                                  sesuai kriteria penilaian yang sesuai
+                                  dengan kebutuhan spesifik organisasi.
+
+                            4.1 Implementasi layanan cloud spesifik
+                                 diuraikan secara lengkap ke dalam satu
+                                 dokumen sesuai kebutuhan spesifik
+                                 organisasi.
+
+                            4.2 Dokumentasi kesepakatan hasil
+                                 pengujian implementasi layanan cloud
+                                 spesifik dibuat sesuai kebutuhan
+                                 organisasi.
+
+                                                                  58
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk menyiapkan layanan cloud,
+              menerapkan layanan cloud sesuai kebutuhan organisasi, menguji
+              implementasi layanan cloud, dan mendokumentasikan
+              implementasi layanan cloud.
+
+     1.2 Kebutuhan spesifik, antara lain: layanan orkestrasi container,
+              layanan penyimpanan data untuk layanan spesifik, perubahan
+              layanan continuous integration/continuous delivery (CI/CD) untuk
+              layanan spesifik, menguji implementasi layanan cloud spesifik, dan
+              mendokumentasikan implementasi layanan cloud spesifik.
+
+     1.3 Bare metal merupakan server fisik.
+     1.4 Orkestrasi merupakan sekumpulan otomasi, manajemen dan
+
+              koordinasi sistem tertentu.
+     1.5 Layanan penyimpanan data, meliputi: data block storage, object
+
+              storage, dan file storage.
+     1.6 Aplikasi layanan spesifik, seperti: metoda DevSecOP ataupun
+
+              MLOps yang digunakan untuk kebutuhan spesifik dipasang dan
+              dijalankan di dalam komputasi bare metal, virtual machine
+              (instance), dan container yang telah dibuat.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+              2.1.1 Alat tulis kantor
+              2.1.2 Alat pengolah data
+              2.1.3 Perangkat lunak bantu perkantoran seperti pengolah kata
+                         dan lembar kerja
+       2.2 Perlengkapan
+              (Tidak ada.)
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+                                                                                                              59
+4. Norma dan standar
+     4.1 Norma
+              (Tidak ada.)
+     4.2 Standar
+                4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+                         Manajemen layanan Bagian 9: Pedoman penerapan SNI
+                         ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+                         9:2015, IDT)
+
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              mengimplementasi layanan cloud sesuai dengan kebutuhan
+              organisasi. Penilaian dapat dilakukan di Tempat Uji Kompetensi
+              (TUK).
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu
+              kepada Kriteria Unjuk Kerja.
+
+     1.3 Demonstrasi secara konseptual disampaikan dengan
+              menggunakan Bahasa Indonesia dalam rangka aktualisasi
+              pelaksanaan pekerjaan dengan menggunakan alat bantu
+              perangkat lunak.
+
+     1.4 Metode-metode lain yang relevan.
+
+2. Persyaratan kompetensi
+     (Tidak ada.)
+
+3. Pengetahuan dan keterampilan yang dibutuhkan
+     3.1 Pengetahuan
+              3.1.1 Jenis penyedia atau perangkat lunak untuk cloud
+                         computing
+     3.2 Keterampilan
+              3.2.1 Mengimplementasikan layanan cloud computing
+              3.2.2 Melakukan pengujian layanan cloud computing dengan
+                         menggunakan perangkat lunak bantu
+
+                                                                                                              60
+              3.2.3 Membuat dokumentasi implementasi layanan cloud
+                         computing
+
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam mengimplementasikan layanan komputasi spesifik
+     4.2 Bekerjasama dalam mengimplementasikan layanan cloud spesifik
+              sesuai kebutuhan organisasi
+
+5. Aspek kritis
+     5.1 Ketepatan dalam membuat komputasi bare metal, virtual machine
+              (instance), dan container sesuai flavor/spesifikasi yang dibutuhkan
+              spesifik organisasi
+     5.2 Ketepatan dalam menilai implementasi layanan cloud sesuai
+              kriteria penilaian yang sesuai dengan kebutuhan spesifik
+              organisasi
+
+                                                                                                              61
+KODE UNIT  :      J.63HOS00.012.2
+                  Menyiapkan Adaptasi untuk Deployment di Sistem
+JUDUL UNIT :      Cloud
+                  Unit kompetensi ini berhubungan dengan
+DESKRIPSI UNIT :  pengetahuan, keterampilan, dan sikap kerja yang
+                  dibutuhkan dalam mengidentifikasi fitur-fitur layanan,
+                  menentukan jenis pengguna, dan mendokumentasikan
+                  adaptasi yang perlu dilakukan untuk sistem cloud.
+
+ELEMEN KOMPETENSI           KRITERIA UNJUK KERJA
+
+1. Mengidentifikasi fitur-  1.1 Aplikasi yang scalable dan reliable
+   fitur layanan                  ditentukan sesuai dengan kebutuhan
+                                  organisasi.
+2. Menentukan jenis
+   pengguna                 1.2 Aplikasi  yang       terstandarisasi
+                                                    lengkap sesuai
+2. Mendokumentasikan        ditentukan secara
+    adaptasi yang perlu
+    dilakukan untuk sistem  tenant yang sama.
+    cloud
+                            1.3 Aplikasi yang mempunyai built-in
+                                  security programming ditentukan
+                                  secara rinci dan sistematis.
+
+                            1.4 Fitur-fitur layanan pada cloud
+                                  computing ditentukan sesuai fungsinya
+                                  masing-masing.
+
+                            2.1 Fitur     identity  management
+
+                            diidentifikasikan berdasarkan jenis
+
+                            pengguna.
+
+                            2.2 Aplikasi dengan model billing yang
+                                  sesuai jenis pengguna diidentifikasikan
+                                  dengan tepat sesuai dengan jenis
+                                  layanan.
+
+                            3.1 Adaptasi dicatat sesuai best practice
+                                  secara lengkap ke dalam satu dokumen
+                                  termasuk hasil pengujiannya (testing).
+
+                            3.2 Dokumentasi adaptasi dibuat oleh
+                                  pengguna dan penyedia layanan.
+
+                                                    62
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk mengidentifikasi fitur-fitur
+              layanan, menentukan jenis pengguna, dan mendokumentasikan
+              adaptasi yang perlu dilakukan untuk sistem cloud.
+
+     1.2 Aplikasi yang scalable dan reliable adalah aplikasi yang dapat
+              disesuaikan ukuran dan cakupan sesuai dengan kebutuhan yang
+              kehandalannya tidak mengalami perubahan kualitas.
+
+     1.3 Aplikasi yang terstandardisasi adalah aplikasi yang memiliki fitur
+              atau komponen layanan yang dibangun dan bekerja sesuai dengan
+              bakuan layanan yang sama, dapat digunakan untuk pengguna
+              lainnya sehingga dapat diterapkan untuk aplikasi lain di tenan
+              yang sama.
+
+     1.4 Built-in security yang dimaksud adalah fitur atau komponen
+              keamanan yang sudah tertanam dalam aplikasi.
+
+     1.5 Fitur-fitur layanan, berupa manajemen identitas, layanan
+              jaringan, layanan komputasi, layanan penyimpanan, dan layanan
+              platform aplikasi.
+
+     1.6 Fitur identity management yang dimaksud adalah komponen
+              layanan untuk pengelolaan identity pengguna dalam sistem cloud.
+
+     1.7 Aplikasi dengan model billing merupakan suatu aplikasi yang
+              berjalan dan dilengkapi dengan sistem billing berdasarkan
+              pemanfaatan aplikasi tersebut. Bukan sekedar berdasarkan lisensi
+              pembelian, persewaan atau kepemilikan aplikasi tersebut. Tetapi
+              lebih kepada penggunaan dan sumber daya cloud yang digunakan
+              oleh aplikasi tersebut, misal penggunaan prosesor, penggunaan
+              jaringan, penggunaan memori dan storage.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+              2.1.1 Alat tulis kantor
+              2.1.2 Alat pengolah data
+              2.1.3 Perangkat alat bantu, aplikasi pengujian komponen
+                         keamanan dan model billing
+
+                                                                                                              63
+     2.2 Perlengkapan
+              (Tidak ada.)
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+     4.1 Norma
+              (Tidak ada.)
+     4.2 Standar
+              4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+                         Manajemen layanan Bagian 9: Pedoman penerapan SNI
+                         ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+                         9:2015, IDT)
+
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              mengidentifikasi adaptasi untuk deployment di environment cloud.
+              Penilaian dapat dilakukan di Tempat Uji Kompetensi (TUK).
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu
+              kepada Kriteria Unjuk Kerja.
+
+     1.3 Demonstrasi secara konseptual disampaikan dengan
+              menggunakan Bahasa Indonesia dalam rangka aktualisasi
+              pelaksanaan pekerjaan.
+
+     1.4 Metode-metode lain yang relevan.
+
+2. Persyaratan kompetensi
+     (Tidak ada.)
+
+3. Pengetahuan dan keterampilan yang dibutuhkan
+     3.1 Pengetahuan
+            3.1.1 Konsep fitur layanan
+            3.1.2 Konsep manajemen akses dan model billing pengguna
+
+                                                                                                              64
+     3.2 Keterampilan
+            3.2.1 Memilih dan menyusun fitur layanan sesuai dengan standar
+                       dan kebutuhan pengguna
+            3.2.2 Mengelola akses pengguna dalam menggunakan fitur
+                       layanan yang dikembangkan
+
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam mengidentifikasi fitur-fitur layanan pada cloud
+     4.2 Disiplin dalam tim merancang adaptasi yang perlu dilakukan untuk
+            sistem cloud
+
+5. Aspek kritis
+     5.1 Ketepatan dalam menentukan fitur-fitur layanan pada cloud
+            computing sesuai fungsinya masing-masing
+
+                                                                                                              65
+KODE UNIT  :      J.63HOS00.013.2
+                  Menerapkan Rancangan Adaptasi untuk Deployment
+JUDUL UNIT :      di Sistem Cloud
+                  Unit kompetensi ini berhubungan dengan
+DESKRIPSI UNIT :  pengetahuan, keterampilan, dan sikap kerja yang
+                  berlaku untuk melakukan adaptasi perangkat lunak
+                  sesuai dengan deployment environment, menguji
+                  perangkat lunak yang dikembangkan sesuai dengan
+                  skenario, dan mendokumentasikan pengembangan
+                  perangkat lunak sesuai dengan deployment
+                  environment.
+
+ELEMEN KOMPETENSI           KRITERIA UNJUK KERJA
+
+1. Melakukan adaptasi       1.1 Metodologi pengembangan perangkat
+   perangkat lunak sesuai         lunak ditentukan sesuai dengan
+   dengan deployment              kebutuhan pengguna dan organisasi.
+   environment
+                            1.2 Kebutuhan  perubahan      atas
+                                                        lunak
+                            komponen       perangkat  dengan
+
+                            diidentifikasikan sesuai
+
+                            deployment environment.
+
+                            1.3 Komponen/layanan cloud dibangun
+                                  sesuai dengan perancangan.
+
+                            1.4 Penerapan pengubahan komponen
+                                 perangkat lunak dijalankan dengan
+                                 versioning management secara
+                                 konsisten.
+
+2. Menguji perangkat lunak  2.1 Skenario dan data pengujian disusun
+   yang dikembangkan              secara lengkap sesuai deployment
+   sesuai dengan skenario         environment.
+
+                            2.2 Pengujian dilakukan sesuai dengan
+                                  skenario.
+
+3. Mendokumentasikan        3.1 Dokumentasi perangkat lunak dicatat
+    pengembangan                  secara lengkap ke dalam satu
+    perangkat lunak sesuai        dokumen.
+    dengan deployment
+    environment             3.2 Dokumentasi pengujian dicatat sesuai
+                                  best practice secara lengkap ke dalam
+                                  satu dokumen.
+
+                            3.3 Dokumentasi pengujian dibuat oleh
+                                  pengguna dan penyedia layanan.
+
+                                                                         66
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk melakukan adaptasi perangkat
+            lunak sesuai dengan deployment environment, menguji perangkat
+            lunak yang dikembangkan sesuai dengan skenario, dan
+            mendokumentasikan pengembangan perangkat lunak sesuai
+            dengan deployment environment.
+
+     1.2 Metodologi pengembangan dapat, berupa: open/close standard atau
+            metode lain yang sesuai.
+
+     1.3 Kebutuhan perubahan, meliputi: perubahan aplikasi terstandarisasi
+            yang diterapkan di tenan yang lain, perubahan komponen
+            perangkat lunak dengan deployment environment.
+
+     1.4 Komponen/layanan cloud meliputi open atau standardisasi, aplikasi
+            dengan fitur identity management yang sesuai dengan access control
+            list, aplikasi yang scalable dan reliable.
+            1.4.1 Access control list merupakan sebuah metode yang
+                         digunakan untuk menyeleksi paket-paket yang keluar
+                         masuk network.
+            1.4.2 Scalable merupakan sifat aplikasi yang apabila
+                         penggunanya banyak, yang perlu dilakukan untuk
+                         memfasilitasinya adalah dengan menambah jumlah
+                         instance, bukan upgrade spesifikasi instance (contoh:
+                         menambah memori mesin, menambah CPU mesin).
+            1.4.3 Reliable merupakan dapat dipercaya, konsisten, keandalan,
+                         kestabilan. Suatu aplikasi yang dites dapat dikatakan
+                         reliabel jika aplikasi tersebut menunjukkan hasil yang
+                         dapat dipercaya dan tidak bertentangan.
+
+     1.5 Versioning management adalah sebuah sistem yang merekam
+            perubahan sebuah file atau sekumpulan file tiap waktu.
+
+     1.6 Skenario merupakan langkah-langkah hipotetik yang difokuskan
+            pada proses-proses kausalitas dan titik-titik kritis keputusan atau
+            merupakan blueprint dari pengembangan perangkat lunak.
+
+                                                                                                              67
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+            2.1.1 Alat tulis kantor
+            2.1.2 Alat pengolah data
+            2.1.3 Perangkat lunak bantu perkantoran seperti pengolah kata,
+                       lembar kerja, dan perangkat lunak bantu gambar
+     2.2 Perlengkapan
+            2.2.1 Alat Tulis Kantor (ATK)
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+     4.1 Norma
+            (Tidak ada.)
+     4.2 Standar
+            4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+                       Manajemen layanan Bagian 9: Pedoman penerapan SNI
+                       ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+                       9:2015, IDT)
+
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              mendeskripsikan mengembangkan perangkat lunak sesuai dengan
+              deployment environment dalam sebuah organisasi/perusahaan.
+              Penilaian dapat dilakukan di Tempat Uji Kompetensi (TUK).
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu
+              kepada Kriteria Unjuk Kerja.
+
+     1.3 Demonstrasi secara konseptual disampaikan dengan
+              menggunakan Bahasa Indonesia dalam rangka aktualisasi
+              pelaksanaan pekerjaan.
+
+     1.4 Metode-metode lain yang relevan.
+
+                                                                                                              68
+2. Persyaratan kompetensi
+     (Tidak ada.)
+
+3. Pengetahuan dan keterampilan yang dibutuhkan
+     3.1 Pengetahuan
+              3.1.1 Konsep/prinsip rekayasa perangkat lunak berbasis pada
+                         komponen dan fitur
+              3.1.2 Konsep pengujian perangkat lunak dan penjaminan
+                         kualitas
+              3.1.3 Konsep interoperabilitas
+     3.2 Keterampilan
+              3.2.1 Menggunakan alat bantu pengembangan berbasis
+                         komputer
+              3.2.2 Menggambarkan diagram menggunakan komputer
+
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam mengadaptasi perangkat lunak sesuai dengan
+              rancangan adaptasi
+     4.2 Disiplin dalam bekerjasama dalam tim pengembangan perangkat
+              lunak
+
+5. Aspek kritis
+     5.1 Ketepatan dalam membangun komponen/layanan cloud sesuai
+              dengan perancangan
+
+                                                                                                              69
+KODE UNIT  :      J.63HOS00.014.2
+                  Menentukan Kebutuhan Pengguna Akan Solusi
+JUDUL UNIT :      Berbasis Cloud
+                  Unit kompetensi ini berhubungan dengan
+DESKRIPSI UNIT :  pengetahuan, keterampilan, dan sikap kerja yang
+                  berlaku untuk menjabarkan kebutuhan pengguna
+                  akan solusi berbasis cloud, memetakan kebutuhan
+                  pengguna dan layanan berbasis cloud,
+                  mendokumentasikan kebutuhan pengguna dan
+                  layanan berbasis cloud.
+
+ELEMEN KOMPETENSI         KRITERIA UNJUK KERJA
+
+1. Menjabarkan kebutuhan  1.1 Jenis pengguna layanan cloud dan
+    pengguna akan solusi        organisasinya dideskripsikan secara
+    berbasis Cloud              lengkap.
+
+                          1.2 Kebutuhan pengguna diuraikan
+                                secara lengkap sesuai proses bisnis
+                                yang berjalan.
+
+2. Memetakan kebutuhan    2.1 Variasi aplikasi yang bisa menjadi
+    pengguna dan layanan        solusi ditentukan secara lengkap
+    berbasis cloud              sesuai dengan jenis layanan yang
+                                tersedia.
+
+                          2.2 Peta layanan cloud dibuat secara
+                                lengkap.
+
+3. Mendokumentasikan      3.1 Dokumentasi kebutuhan pengguna
+    kebutuhan pengguna          terhadap solusi cloud dicatat secara
+    dan layanan berbasis        lengkap ke dalam satu dokumen.
+    cloud
+                          3.2 Peta solusi cloud dicatat dalam satu
+                                dokumen.
+
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk menjabarkan kebutuhan
+              pengguna akan solusi berbasis cloud, memetakan kebutuhan
+              pengguna dan layanan berbasis cloud, mendokumentasikan kebu-
+              tuhan pengguna dan layanan berbasis cloud.
+
+                                                                      70
+     1.2 Solusi cloud adalah solusi sistem informasi yang berbasiskan
+              teknologi cloud yang dapat dipenuhi aplikasi terhadap kebutuhan
+              pengguna.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+              2.1.1 Alat tulis kantor
+              2.1.2 Alat pengolah data
+              2.1.3 Perangkat lunak bantu perkantoran seperti pengolah kata,
+                         lembar kerja, dan perangkat lunak bantu gambar
+     2.2 Perlengkapan
+              (Tidak ada.)
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+     4.1 Norma
+              (Tidak ada.)
+     4.2 Standar
+              4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+                         Manajemen layanan Bagian 9: Pedoman penerapan SNI
+                         ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+                         9:2015, IDT)
+
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              mendeskripsikan kebutuhan aplikasi sesuai kebutuhan pengguna
+              terhadap solusi cloud dalam sebuah organisasi atau perusahaan.
+              Penilaian dapat dilakukan di Tempat Uji Kompetensi (TUK).
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu
+              kepada Kriteria Unjuk Kerja.
+
+                                                                                                              71
+     1.3 Demonstrasi secara konseptual disampaikan dengan
+              menggunakan Bahasa Indonesia dalam rangka aktualisasi
+              pelaksanaan pekerjaan.
+
+     1.4 Metode-metode lain yang relevan.
+2. Persyaratan kompetensi
+
+     (Tidak ada.)
+3. Pengetahuan dan keterampilan yang dibutuhkan
+
+     3.1 Pengetahuan
+              3.1.1 Requirement Engineering
+              3.1.2 Teknik dokumentasi
+
+     3.2 Keterampilan
+              3.2.1 Menuliskan dokumentasi dengan menggunakan perangkat
+                         lunak bantu
+
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam mengidentifikasi kebutuhan pengguna terhadap solusi
+              cloud
+     4.2 Disiplin dalam bekerjasama untuk mendokumentasikan peta
+              kebutuhan aplikasi dari pengguna terhadap solusi cloud
+
+5. Aspek kritis
+     5.1 Ketepatan dalam mencatat peta solusi cloud dalam satu dokumen
+
+                                                                                                              72
+KODE UNIT  :            J.63HOS00.015.2
+
+JUDUL UNIT :            Melakukan Aktivitas Rutin pada IaaS, PaaS, dan
+
+                        SaaS
+
+DESKRIPSI UNIT :        Unit kompetensi ini ini berhubungan dengan
+
+                        pengetahuan, keterampilan, dan sikap kerja yang
+
+                        dibutuhkan untuk mengidentifikasi objek pengelolaan,
+
+                        mengoperasikan        sistem     cloud,    dan
+
+                        mendokumentasikan     aktivitas  rutin     pada
+
+                        Infrastructure as a Service (IaaS), Platform as a Service
+
+                        (PaaS), dan Software as a Service (SaaS).
+
+.
+
+   ELEMEN KOMPETENSI                     KRITERIA UNJUK KERJA
+
+   1. Mengidentifikasi       objek 1.1 Jenis cloud ditentukan sesuai
+        pengelolaan                          kebutuhan.
+
+                                       1.2 Jenis aktivitas rutin diidentifikasi
+                                             sesuai kebutuhan.
+
+   2. Mengoperasikan sistem   2.1 Aktivitas berkala dilakukan secara
+        cloud                       lengkap pada setiap jenis layanan
+                                    sesuai dengan analisis resiko dan
+                                    ancaman.
+
+                              2.2 Aktivitas insidental dilakukan secara
+                                    lengkap pada setiap jenis layanan
+                                    sesuai dengan analisis resiko dan
+                                    ancaman.
+
+   3. Mendokumentasikan       3.1 Aktivitas rutin dicatat secara lengkap
+       aktivitas rutin pada         ke dalam satu dokumen.
+       sistem cloud
+                              3.2 Dokumentasi         perawatan    dan
+
+                              permasalahan yang timbul disusun
+
+                              secara lengkap ke dalam satu
+
+                              dokumen.
+
+BATASAN VARIABEL
+
+1. Konteks variabel
+
+   1.1 Unit kompetensi ini berlaku untuk mengidentifikasi objek
+
+   pengelolaan,               mengoperasikan  sistem     cloud,    dan
+
+   mendokumentasikan aktivitas rutin pada Infrastructure as a
+
+   Service (IaaS), Platform as a Service (PaaS), dan Software as a
+
+   Service (SaaS).
+
+                                                                   73
+     1.2 Aktivitas berkala berupa backup dan restore.
+              1.2.1 Backup adalah adalah memindahkan, menyalin atau
+                         mengompres informasi (data) yang tersimpan di dalam
+                         hardisk komputer yang biasanya dilakukan dari satu
+                         lokasi/perangkat ke lokasi/perangkat lain.
+              1.2.2 Restore data adalah mengembalikan atau mengekstrak file
+                         back up ke dalam bentuk dan format file aslinya baik
+                         melalui proses decompress maupun tidak sama sekali.
+
+     1.3 Aktivitas insidental dapat berupa patching, update, dan upgrade.
+              1.3.1 Patching adalah proses memodifikasi sebagian dari
+                         firmware dengan mengganti byte-byte data yang sudah ada
+                         dengan nilai yang baru, dengan tujuan memanipulasi
+                         sistem response untuk mendapatkan hasil yang diinginkan.
+              1.3.2 Update adalah perintah yang digunakan untuk
+                         memperbarui program.
+              1.3.3 Upgrade adalah mengganti atau menambah alat agar
+                         performa atau kualitas menjadi lebih baik dari sebelumnya.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+              2.1.1 Alat tulis kantor
+              2.1.2 Alat pengolah data
+              2.1.3 Jaringan internet
+              2.1.4 Perangkat lunak bantu perkantoran seperti pengolah kata,
+                         lembar kerja, dan perangkat lunak bantu gambar
+     2.2 Perlengkapan
+              (Tidak ada.)
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+     4.1 Norma
+              (Tidak ada.)
+
+                                                                                                              74
+     4.2 Standar
+              4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+                         Manajemen layanan Bagian 9: Pedoman penerapan SNI
+                         ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+                         9:2015, IDT)
+
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              menjalankan aktivitas rutin pada IaaS, PaaS, dan SaaS dalam
+              sebuah organisasi/perusahaan. Penilaian dapat dilakukan di
+              Tempat Uji Kompetensi (TUK).
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu
+              kepada Kriteria Unjuk Kerja.
+
+     1.3 Demonstrasi secara konseptual disampaikan dengan
+              menggunakan Bahasa Indonesia dalam rangka aktualisasi
+              pelaksanaan pekerjaan.
+
+     1.4 Metode-metode lain yang relevan.
+
+2. Persyaratan kompetensi
+     (Tidak ada.)
+
+3. Pengetahuan dan keterampilan yang dibutuhkan
+     3.1 Pengetahuan
+            3.1.1 Konsep sistem monitoring
+            3.1.2 Konsep sistem logging
+            3.1.3 Konsep Service Level Agreement (SLA) cloud computing
+     3.2 Keterampilan
+            3.2.1 Menuliskan dokumentasi perawatan dengan menggunakan
+                       perangkat lunak bantu
+
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam mengelola data pengguna pada sistem cloud
+     4.2 Disiplin dalam mengelola sistem cloud pada IaaS, PaaS, dan SaaS
+
+                                                                                                              75
+    4.3 Bertanggung jawab dalam mengelola sistem cloud IaaS, PaaS, dan
+           SaaS
+
+    4.4 Bekerjasama dalam tim mengelola sistem cloud pada IaaS, PaaS,
+           dan SaaS
+
+5. Aspek kritis
+    5.1 Kemampuan melakukan aktivitas berkala secara lengkap pada
+           setiap jenis layanan sesuai dengan analisis resiko dan ancaman
+
+                                                                                                             76
+KODE UNIT  : J.63HOS00.016.2
+
+JUDUL UNIT : Memantau Sarana dan Prasarana Agar Bisa
+
+           Digunakan oleh Pengguna Sesuai Service Level
+
+           Agreement (SLA)
+
+DESKRIPSI UNIT : Unit kompetensi ini berhubungan dengan
+
+           pengetahuan, keterampilan, dan sikap kerja yang
+
+           dibutuhkan dalam mengevaluasi kualitas layanan,
+
+           melaksanakan tindak lanjut evaluasi layanan secara
+
+           periodik, dan mendokumentasikan hasil pemantauan
+
+           dan analisis kualitas layanan.
+
+ELEMEN KOMPETENSI                KRITERIA UNJUK KERJA
+
+1. Mengevaluasi        1.1 Perangkat bantu pemantauan sarana dan
+     kualitas layanan        prasarana diimplementasikan pada sistem
+                             cloud secara lengkap sesuai dengan SLA.
+
+                       1.2 Log diverifikasi secara lengkap sesuai
+                             dengan SLA.
+
+                       1.3 Kualitas layanan dipantau secara berkala,
+                             berkelanjutan, dan lengkap sesuai dengan
+                             SLA.
+
+                       1.4 Kondisi layanan dianalisis sesuai standar
+                             SLA.
+
+2. Melaksanakan        2.1 Hasil pemantauan dan analisis diverifikasi
+     tindak lanjut           secara berkala, berkelanjutan, dan
+     evaluasi layanan        lengkap sesuai SLA.
+     secara periodik
+                       2.2 Kompensasi terhadap penyimpangan SLA
+                             direkomendasikan sesuai dengan SLA.
+
+3. Mendokumentasikan 2.1 Hasil pemenuhan SLA dicatat secara
+
+hasil pemantauan       lengkap ke dalam satu dokumen.
+
+dan analisis kualitas 2.2 Hasil  penyimpangan  SLA     dan
+layanan
+                       rekomendasi dicatat secara lengkap ke
+
+                       dalam satu dokumen.
+
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk mengevaluasi kualitas layanan,
+              melaksanakan tindak lanjut evaluasi layanan secara periodik, dan
+              mendokumentasikan hasil pemantauan dan analisis kualitas
+              layanan.
+
+                                                       77
+     1.2 Perangkat bantu adalah karakteristik perangkat tambahan sesuai
+              dengan karakteristik yang dibutuhkan sehingga suatu sistem
+              cloud dapat beroperasi dengan baik dan menunjukan karakter
+              sebagai komputasi cloud-based.
+
+     1.3 Log adalah sekumpulan catatan yang berisi aktivitas, proses atau
+              kegagalan pada suatu sistem.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+              2.1.1 Alat tulis kantor
+              2.1.2 Alat pengolah kata
+              2.1.3 Jaringan internet
+              2.1.4 Perangkat lunak bantu perkantoran seperti pengolah kata,
+                         lembar kerja, dan perangkat lunak bantu gambar
+     2.2 Perlengkapan
+              (Tidak ada.)
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+     4.1 Norma
+              (Tidak ada.)
+     4.2 Standar
+              4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+                         Manajemen layanan Bagian 9: Pedoman penerapan SNI
+                         ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+                         9:2015, IDT)
+
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              memantau sarana dan prasarana agar bisa digunakan oleh
+              pengguna sesuai dengan SLA yang disepakati dalam sebuah
+
+                                                                                                              78
+              organisasi/perusahaan. Penilaian dapat dilakukan di Tempat Uji
+              Kompetensi (TUK).
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu
+              kepada Kriteria Unjuk Kerja.
+     1.3 Demonstrasi secara konseptual disampaikan dengan
+              menggunakan Bahasa Indonesia dalam rangka aktualisasi
+              pelaksanaan pekerjaan.
+     1.4 Metode-metode lain yang relevan.
+
+2. Persyaratan kompetensi
+     (Tidak ada.)
+
+3. Pengetahuan dan keterampilan yang dibutuhkan
+     3.1 Pengetahuan
+              3.1.1 Konsep sistem monitoring
+              3.1.2 Konsep sistem logging
+              3.1.3 Konsep sistem audit
+              3.1.4 Konsep SLA cloud computing
+     3.2 Keterampilan
+              3.2.1 Melakukan audit dengan menggunakan perangkat lunak
+                         bantu
+              3.2.2 Membaca log dengan/tanpa perangkat bantu
+
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam mengevaluasi kualitas layanan
+     4.2 Disiplin dalam mengevaluasi kualitas layanan
+     4.3 Bekerjasama dalam tim mengevaluasi kualitas layanan
+     4.4 Bertanggung jawab dalam mengevaluasi kualitas layanan
+
+5. Aspek kritis
+     5.1 Ketepatan dalam memantau kualitas layanan secara berkala,
+              berkelanjutan, dan lengkap sesuai dengan SLA
+
+                                                                                                              79
+KODE UNIT  :      J.63HOS00.017.2
+                  Memberikan Dukungan Teknis Atas Masalah
+JUDUL UNIT :      Pengguna
+                  Unit kompetensi ini berhubungan dengan
+DESKRIPSI UNIT :  pengetahuan, keterampilan, dan sikap kerja yang
+                  dibutuhkan untuk mengumpulkan data keluhan
+                  pengguna, melakukan penanganan keluhan pengguna,
+                  dan mendokumentasikan keluhan pengguna.
+
+  ELEMEN KOMPETENSI                KRITERIA UNJUK KERJA
+1. Menyiapkan data
+                        1.1 Ticketing system digunakan sesuai
+    keluhan pengguna          dengan jenis layanan.
+
+2. Menjalankan          1.2 Data keluhan dari pengguna dik-
+    penanganan keluhan       umpulkan menggunakan ticketing
+    pengguna                 system sesuai dengan jenis layanan.
+
+3. Mendokumentasikan    2.1 Eskalasi dilakukan sesuai dengan
+    keluhan pengguan          pengelompokkan jenis keluhan
+                              pengguna.
+
+                        2.2 Hasil penanganan dipantau secara
+                              teliti dan tepat sesuai Service Level
+                              Agreement (SLA).
+
+                        3.1 Pengelompokkan jenis keluhan
+                              pengguna dilakukan sesuai dengan
+                              prioritas, jenis pengguna, dan jenis
+                              layanan.
+
+                        3.2 Laporan atas hasil penanganan
+                              disusun rinci dan lengkap sesuai jenis
+                              layanan.
+
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk mengumpulkan data keluhan
+              pengguna, melakukan penanganan keluhan pengguna, dan men-
+              dokumentasikan keluhan pengguan.
+
+     1.2 Ticketing system digunakan untuk keperluan keluhan pengguna.
+              Dengan ticketing system, masalah akan langsung dikirimkan
+              kepada yang bertanggung jawab menangani bidangnya, dan bisa
+              memantau memantau masalah tersebut, apakah sudah direspon,
+
+                                                                      80
+              sudah selesai, ataupun ditampung sementara karena masalah be-
+              lum dapat terselesaikan.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+              2.1.1 Alat pengolah data
+              2.1.2 Jaringan internet
+              2.1.3 Perangkat lunak bantu perkantoran seperti pengolah kata,
+                         lembar kerja, dan perangkat lunak bantu gambar
+     2.2 Perlengkapan
+              2.2.1 Alat tulis kantor
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+     4.1 Norma
+              (Tidak ada.)
+     4.2 Standar
+              4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+                         Manajemen layanan Bagian 9: Pedoman penerapan SNI
+                         ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+                         9:2015, IDT)
+
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              memberikan dukungan lapis pertama atas masalah pengguna dan
+              report next layer dalam sebuah organisasi/perusahaan. Penilaian
+              dapat dilakukan di Tempat Uji Kompetensi (TUK).
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu
+              kepada kriteria unjuk kerja.
+
+                                                                                                              81
+     1.3 Demonstrasi secara konseptual disampaikan dengan
+              menggunakan Bahasa Indonesia dalam rangka aktualisasi
+              pelaksanaan pekerjaan.
+
+     1.4 Metode-metode lain yang relevan.
+2. Persyaratan kompetensi
+
+     (Tidak ada.)
+3. Pengetahuan dan keterampilan yang diperlukan
+
+     3.1 Pengetahuan
+              3.1.1 Konsep customer support system
+              3.1.2 Konsep SLA cloud computing
+
+     3.2 Keterampilan
+              3.2.1 Menggunakan ticketing system
+
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam melakukan penanganan keluhan dari pengguna
+     4.2 Bekerjasama dalam tim penanganan keluhan dari pengguna
+     4.3 Bertanggung jawab dalam penanganan keluhan dari pengguna
+
+5. Aspek kritis
+     5.1 Ketepatan dalam melakukan eskalasi penanganan sesuai dengan
+              pengelompokkan jenis keluhan pengguna
+
+                                                                                                              82
+KODE UNIT  : J.63HOS00.018.2
+
+JUDUL UNIT : Melakukan Antisipasi Gangguan dan Ancaman
+
+           terhadap Sistem Cloud
+
+DESKRIPSI UNIT : Unit kompetensi ini berhubungan dengan
+
+           pengetahuan, keterampilan, dan sikap kerja yang
+
+           berlaku untuk mendeteksi gangguan dan ancaman
+
+           terhadap keamanan sistem cloud secara
+
+           berkelanjutan, menyusun rencana pencegahan
+
+           terhadap gangguan dan ancaman pada sistem cloud,
+
+           dan mendokumentasi potensi dan rencana
+
+           pencegahan terhadap gangguan dan ancaman
+
+           terhadap sistem cloud.
+
+ELEMEN KOMPETENSI         KRITERIA UNJUK KERJA
+
+1. Mendeteksi gangguan    1.1 Potensi gangguan dan ancaman
+   dan ancaman terhadap         terhadap keamanan sistem cloud
+   keamanan sistem cloud        diidentifikasi sesuai dengan model risiko
+   secara berkelanjutan         yang ada.
+
+                          1.2 Kondisi keamanan layanan sistem cloud
+                                yang teridentifikasi dianalisis secara
+                                lengkap meliputi aspek teknis dan non-
+                                teknis.
+
+2. Menyusun rencana       2.1 Strategi pemulihan sistem cloud setelah
+   pencegahan terhadap          kejadian gangguan dan ancaman
+   gangguan dan ancaman         ditentukan sesuai kebutuhan organisasi.
+   pada sistem cloud
+                          2.2 Pemulihan sistem cloud setelah kejadian
+                                gangguan dan ancaman dilakukan
+                                sesuai dengan strategi pemulihan sistem
+                                cloud.
+
+                          2.3 Pencegahan terhadap gangguan dan
+                                ancaman pada sistem cloud dilakukan
+                                secara berkelanjutan.
+
+3. Mendokumentasi         3.1 Laporan hasil analisis data gangguan
+   potensi dan rencana          dan ancaman keamanan sistem cloud
+   pencegahan terhadap          disusun secara lengkap sesuai dengan
+   gangguan dan ancaman         aspek teknis dan non teknis.
+   terhadap sistem cloud
+                          3.2 Rencana pencegahan dan pemulihan
+                                sistem cloud setelah kejadian gangguan
+                                dan ancaman disusun secara lengkap
+                                sesuai dengan Service Level Agreement
+                                (SLA).
+
+                                                83
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk mendeteksi gangguan dan an-
+              caman terhadap keamanan sistem cloud secara berkelanjutan,
+              menyusun rencana pencegahan terhadap gangguan dan ancaman
+              pada sistem cloud, dan mendokumentasi potensi dan rencana
+              pencegahan terhadap gangguan dan ancaman terhadap sistem
+              cloud.
+
+     1.2 Gangguan dan ancaman keamanan sistem cloud yang
+              dimaksudkan adalah segala sesuatu yang berpotensi
+              menyebabkan kejadian yang tidak diinginkan, yang dapat
+              berpengaruh buruk kepada sistem atau organisasi, serta
+              terdapatnya kelemahan pada sistem yang dapat dimanfaatkan oleh
+              gangguan tersebut.
+
+     1.3 Aspek teknis dan non-teknis, aspek teknis adalah aspek-aspek
+              yang terkait konfigurasi dari permasalahan teknis dari suatu
+              sistem informasi, misal yang meliputi perangkat keras, perangkat
+              jaringan, ataupun perangkat lunak, termasuk juga infrastruktur
+              bangunan, infrastruktur listrik maupun infrastruktur perangkat
+              komputer. Aspek non teknis adalah aspek-aspek yang terkait
+              dengan permasalahan non teknis dari perangkat sistem informasi,
+              misalnya masalah pembiayaan, organisasi, sumber daya manusia,
+              hukum dan bisnis, termasuk juga aspek interaksi manusia dan
+              kelembagaan.
+
+     1.4 Strategi pemulihan keadaan pada sistem cloud tidak terbatas pada
+              system backup dan system restores.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+              2.1.1 Alat pengolah data
+              2.1.2 Jaringan internet
+              2.1.3 Perangkat lunak bantu perkantoran seperti pengolah kata,
+                         lembar kerja, dan perangkat lunak bantu gambar
+
+                                                                                                              84
+2.2 Perlengkapan
+        2.2.1 Alat tulis kantor
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+4. Norma dan standar
+
+4.1 Norma
+
+(Tidak ada.)
+
+4.2 Standar
+
+4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+
+       Manajemen layanan Bagian 9: Pedoman penerapan SNI
+
+       ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+
+4.2.2  9:2015, IDT)
+       SNI ISO/IEC 27017:2015, Teknologi informasi­Teknik
+       keamanan­Petunjuk praktik kendali keamanan informasi
+
+       berdasarkan ISO/IEC 27002 untuk layanan cloud (ISO/IEC
+
+       27017:2015, IDT, Eng)
+
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              melakukan penanganan (penanggulangan) gangguan dan ancaman
+              terhadap sistem cloud dalam sebuah organisasi/perusahaan.
+              Penilaian dapat dilakukan di Tempat Uji Kompetensi (TUK).
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu kepa-
+              da Kriteria Unjuk Kerja.
+
+     1.3 Demonstrasi secara konseptual disampaikan dengan
+              menggunakan Bahasa Indonesia dalam rangka aktualisasi
+              pelaksanaan pekerjaan.
+
+     1.4 Metode-metode lain yang relevan.
+
+2. Persyaratan kompetensi
+     (Tidak ada.)
+
+                                 85
+3. Pengetahuan dan keterampilan yang diperlukan
+     3.1 Pengetahuan
+              3.1.1 Konsep penanggulangan gangguan dan ancaman sistem
+              3.1.2 Konsep keamanan sistem dan informasi
+              3.1.3 Konsep metode backup dan recovery
+     3.2 Keterampilan
+              3.1.4 Mengimplementasikan strategi pemulihan
+
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam mendeteksi gangguan dan ancaman terhadap
+              keamanan sistem cloud secara berkelanjutan
+     4.2 Disiplin dalam mendeteksi gangguan dan ancaman terhadap
+              keamanan sistem cloud secara berkelanjutan
+     4.3 Bekerjasama dalam tim mendeteksi gangguan dan ancaman
+              terhadap keamanan sistem cloud secara berkelanjutan
+     4.4 Bertanggung jawab dalam menyusun dokumentasi potensi dan
+              rencana pencegahan terhadap gangguan dan ancaman terhadap
+              sistem cloud
+
+5. Aspek kritis
+     5.1 Ketepatan dalam menganalisis kondisi keamanan layanan sistem
+              cloud yang teridentifikasi secara lengkap meliputi aspek teknis dan
+              non-teknis
+
+                                                                                                              86
+KODE UNIT  :      J.63HOS00.019.2
+                  Mengelola Insiden pada Sistem Cloud
+JUDUL UNIT :      Unit kompetensi ini berhubungan dengan
+                  pengetahuan, keterampilan, dan sikap kerja yang
+DESKRIPSI UNIT :  berlaku untuk mengidentifikasi insiden yang terjadi,
+                  mengoperasikan penanganan terhadap insiden yang
+                  terjadi, melaksanakan mitigasi dan pemulihan
+                  (recovery) terhadap insiden yang terjadi, dan
+                  mendokumentasikan pengelolaan penanganan insiden
+                  yang terjadi pada sistem cloud yang disebabkan oleh
+                  keadaan kahar.
+
+    ELEMEN KOMPETENSI          KRITERIA UNJUK KERJA
+1. Mengidentifikasi insiden
+                               1.1 Insiden yang terjadi diklasifikasi
+     yang terjadi                     sesuai dengan model insiden dan
+                                      risiko yang ada.
+2. Mengoperasikan
+     penanganan terhadap       1.2 Root  Couse        Analysis
+     insiden yang terjadi
+                               dilaksanakan secara detail sesuai
+3. Melaksanakan mitigasi
+     dan pemulihan (recovery)  dengan model insiden.
+     terhadap insiden yang
+     terjadi                   2.1 Strategi mitigasi dan pemulihan
+                                      pada sistem cloud ditentukan
+4. Mendokumentasikan                  secara detail.
+     pengelolaan penanganan
+     insiden yang terjadi      2.2 Perbaikan sistem cloud yang
+                                      terkena insiden dilakukan sesuai
+                                      dengan rencana mitigasi insiden.
+
+                               3.1 Strategi mitigasi dan pemulihan
+                                      pada sistem cloud ditentukan
+                                      secara detail.
+
+                               3.2 Perbaikan sistem cloud yang
+                                      terkena insiden dilakukan sesuai
+                                      dengan rencana mitigasi insiden.
+
+                               4.1 Dokumen rencana dan prosedur
+                                      mitigasi bencana disusun secara
+                                      lengkap sesuai dengan standar.
+
+                               4.2 Dokumen rencana dan prosedur
+                                      mitigasi insiden ditinjau secara
+                                      berkala sesuai dengan standar.
+
+                                                                        87
+BATASAN VARIABEL
+1. Konteks variabel
+
+     1.1 Unit kompetensi ini berlaku untuk mengidentifikasi insiden yang
+              terjadi, mengoperasikan penanganan terhadap insiden yang ter-
+              jadi, melaksanakan mitigasi dan pemulihan (recovery) terhadap in-
+              siden yang terjadi, dan mendokumentasikan pengelolaan pe-
+              nanganan insiden yang terjadi pada sistem cloud yang disebabkan
+              oleh keadaan kahar..
+
+     1.2 Root Cause Analysis adalah analisis untuk mencari faktor utama
+              penyebab dari suatu kecelakaan atau kerusakan. Analisis ini
+              dilakukan dengan mengetahui faktor-faktor penyebab dari suatu
+              kecelakaan/kerusakan dan merunutnya hingga mengetahui faktor
+              penyebab utama.
+
+     1.3 Mitigasi insiden yang dimaksudkan adalah serangkaian upaya
+              untuk mengurangi risiko bencana, baik melalui pembangunan
+              fisik maupun penyadaran dan peningkatan kemampuan
+              menghadapi ancaman bencana.
+
+     1.4 Prosedur mitigasi bencana terdiri atas serangkaian upaya yang
+              harus dilakukan untuk mengurangi resiko kerugian akibat
+              bencana, yang disesuaikan dengan kondisi organisasi, dengan
+              memperhatikan kaidah-kaidah mitigasi bencana.
+
+2. Peralatan dan perlengkapan
+     2.1 Peralatan
+              2.1.1 Alat pengolah data
+              2.1.2 Jaringan internet
+              2.1.3 Perangkat lunak bantu perkantoran seperti pengolah kata,
+                         lembar kerja, dan perangkat lunak bantu gambar
+     2.2 Perlengkapan
+              2.2.1 Alat tulis kantor
+
+3. Peraturan yang diperlukan
+     (Tidak ada.)
+
+                                                                                                              88
+4. Norma dan standar
+
+4.1 Norma
+
+(Tidak ada.)
+
+4.2 Standar
+
+4.2.1 SNI ISO/IEC TR 20000-9:2016, Teknologi informasi
+
+           Manajemen layanan Bagian 9: Pedoman penerapan SNI
+
+           ISO/IEC 20000-1 ke layanan cloud (ISO/IEC TR 20000-
+
+4.2.2      9:2015, IDT)
+           SNI ISO/IEC 27017:2015, Teknologi informasi­Teknik
+           keamanan­Petunjuk praktik kendali keamanan informasi
+
+           berdasarkan ISO/IEC 27002 untuk layanan cloud (ISO/IEC
+
+           27017:2015, IDT, Eng)
+
+PANDUAN PENILAIAN
+1. Konteks penilaian
+
+     1.1 Unit kompetensi ini dinilai berdasarkan tingkat kemampuan
+              mengelola insiden pada sistem cloud yang disebabkan oleh
+              keadaan kahar dalam sebuah organisasi/perusahaan. Penilaian
+              dapat dilakukan di Tempat Uji Kompetensi (TUK).
+
+     1.2 Wawancara menggunakan Bahasa Indonesia yang mengacu
+              kepada kriteria unjuk kerja.
+
+     1.3 Demonstrasi secara konseptual disampaikan dengan
+              menggunakan Bahasa Indonesia dalam rangka aktualisasi
+              pelaksanaan pekerjaan.
+
+     1.4 Metode-metode lain yang relevan.
+
+2. Persyaratan kompetensi
+     (Tidak ada.)
+
+3. Pengetahuan dan keterampilan yang diperlukan
+     3.1 Pengetahuan
+              3.1.1 Konsep Disaster Recovery Plan
+              3.1.2 Konsep dan metode backup dan recovery
+              3.1.3 Konsep pemulihan kinerja sistem
+
+                                                           89
+     3.2 Keterampilan
+              3.2.1 Melakukan simulasi dengan menggunakan perangkat
+                         lunak bantu
+
+4. Sikap kerja yang diperlukan
+     4.1 Teliti dalam melakukan pemantauan dan pelaporan terhadap
+              sistem cloud secara berkelanjutan
+     4.2 Bekerjasama dalam melakukan mitigasi pemulihan (recovery)
+              terhadap insiden yang terjadi
+     4.3 Disiplin dalam melakukan penanganan terhadap insiden yang
+              terjadi
+     4.4 Bertanggung jawab dalam melakukan mitigasi pemulihan
+              (recovery) terhadap insiden yang terjadi
+
+5. Aspek kritis
+     5.1 Ketepatan dalam mengklasifikasikan insiden yang terjadi sesuai
+              dengan model insiden dan risiko yang ada
+
+                                                                                                              90
+

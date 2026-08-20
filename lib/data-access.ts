@@ -1,12 +1,10 @@
-import type { SaranTopik, SkillDeltaReport } from "./types";
+import type { SaranTopik, SkillDeltaReport, SumberDayaLab, KategoriAlat } from "./types";
 import {
   programKeahlian,
   guru,
   unitKompetensi,
-  sumberDayaLab,
   skillEntity,
   saranTopik,
-  koreksiGuru,
 } from "./seed-data";
 
 // Antarmuka data ini berdiri di tempat Layer 0-2 (parsing SKKNI, NER, embedding
@@ -29,8 +27,21 @@ export function getSaranTopikForUnit(unitKompetensiId: string): SaranTopik[] {
   return saranTopik.filter((s) => s.unitKompetensiId === unitKompetensiId);
 }
 
+// Cache in-memory dari tabel sumber_daya_lab di Postgres. checkFeasibility()
+// dipanggil sinkron dari komponen client (components/guru/susun-modul-client.tsx,
+// lewat useMemo) — driver `pg` tidak bisa dipakai di client bundle sama
+// sekali (butuh modul Node seperti "tls"), jadi baca tetap sinkron dari cache
+// ini. Query Postgres yang mengisi cache ada di lib/data-access-db.ts
+// (server-only) supaya "pg" tidak pernah ikut ter-bundle ke client, walau
+// cuma lewat import chain — lihat setLabCache() di bawah.
+let sumberDayaLabCache: SumberDayaLab[] = [];
+
+export function setLabCache(items: SumberDayaLab[]) {
+  sumberDayaLabCache = items;
+}
+
 export function getLabForProgram(programKeahlianId: string) {
-  return sumberDayaLab.filter((l) => l.programKeahlianId === programKeahlianId);
+  return sumberDayaLabCache.filter((l) => l.programKeahlianId === programKeahlianId);
 }
 
 export interface FeasibilityResult {
@@ -56,16 +67,32 @@ export function checkFeasibility(topik: SaranTopik, programKeahlianId: string): 
   return { layak: tidakTersedia.length === 0, tersedia, tidakTersedia };
 }
 
+export function findLabItemInCache(id: string) {
+  return sumberDayaLabCache.find((l) => l.id === id);
+}
+
+export const KATEGORI_ALAT_LIST: KategoriAlat[] = [
+  "perangkat-jaringan",
+  "komputer-kerja",
+  "alat-ukur",
+  "perangkat-lunak",
+  "alat-tangan",
+  "server",
+];
+
+export function toggleGapReviewed(id: string) {
+  const skill = skillEntity.find((s) => s.id === id);
+  if (!skill) return undefined;
+  skill.sudahDitinjau = !skill.sudahDitinjau;
+  return skill;
+}
+
 export function getGapKandidat(programKeahlianId?: string) {
   return skillEntity.filter(
     (s) =>
       s.statusPemetaan === "gap_kandidat" &&
       (programKeahlianId === undefined || s.programKeahlianId === programKeahlianId)
   );
-}
-
-export function getKoreksiGuru() {
-  return koreksiGuru;
 }
 
 export function getGuruByProgram(programKeahlianId: string) {

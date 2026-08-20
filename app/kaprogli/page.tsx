@@ -1,17 +1,22 @@
-import { AlertTriangle, Gauge, Package } from "lucide-react";
+import Link from "next/link";
+import { AlertTriangle, Gauge, Package, Settings, CheckCircle2 } from "lucide-react";
 import {
   getProgramKeahlian,
   getSkillDeltaReport,
   getGapKandidat,
   getLabForProgram,
 } from "@/lib/data-access";
+import { ensureLabCacheFresh } from "@/lib/data-access-db";
+import { toggleGapReviewedAction } from "./actions";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const SEMESTER = "Ganjil 2026/2027";
 
-export default function KaprogliPage() {
+export default async function KaprogliPage() {
+  await ensureLabCacheFresh();
   const programList = getProgramKeahlian();
 
   return (
@@ -65,18 +70,28 @@ export default function KaprogliPage() {
                 />
               </div>
 
-              <h3 className="mt-5 mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                Inventaris lab
-              </h3>
-              <ul className="flex flex-col gap-1">
-                {getLabForProgram(program.id).map((item) => (
-                  <li key={item.id} className="flex items-center gap-2 text-sm text-foreground">
-                    <Package className="size-3.5 text-muted-foreground" aria-hidden />
-                    {item.nama}
-                    <span className="text-muted-foreground">&times;{item.jumlah}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className="mt-5 mb-2 flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  Inventaris lab
+                </h3>
+                <Link href="/kaprogli/lab" className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline">
+                  <Settings className="size-3" aria-hidden />
+                  Kelola
+                </Link>
+              </div>
+              {getLabForProgram(program.id).length === 0 ? (
+                <p className="text-sm text-muted-foreground">Belum ada alat terdaftar.</p>
+              ) : (
+                <ul className="flex flex-col gap-1">
+                  {getLabForProgram(program.id).map((item) => (
+                    <li key={item.id} className="flex items-center gap-2 text-sm text-foreground">
+                      <Package className="size-3.5 text-muted-foreground" aria-hidden />
+                      {item.nama}
+                      <span className="text-muted-foreground">&times;{item.jumlah}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </Card>
           );
         })}
@@ -103,9 +118,24 @@ export default function KaprogliPage() {
                       <AlertTriangle className="size-4 shrink-0 text-warning" aria-hidden />
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-medium text-foreground">{skill.namaSkill}</p>
-                        <p className="text-xs text-muted-foreground">{skill.sumberSekunder}</p>
+                        <p className="text-xs text-muted-foreground">
+                          Sumber: {skill.sumberSekunder} &middot; Tidak memiliki skor kemiripan ke
+                          unit SKKNI manapun yang memenuhi ambang pemetaan.
+                        </p>
                       </div>
-                      <Badge variant="warning">Belum ada di SKKNI</Badge>
+                      {skill.sudahDitinjau ? (
+                        <Badge variant="success">
+                          <CheckCircle2 className="size-3" aria-hidden />
+                          Sudah ditinjau
+                        </Badge>
+                      ) : (
+                        <Badge variant="warning">Belum ada di SKKNI</Badge>
+                      )}
+                      <form action={toggleGapReviewedAction.bind(null, skill.id)}>
+                        <Button type="submit" size="sm" variant={skill.sudahDitinjau ? "secondary" : "primary"}>
+                          {skill.sudahDitinjau ? "Batalkan tinjauan" : "Tandai sudah ditinjau"}
+                        </Button>
+                      </form>
                     </Card>
                   ))}
                 </div>

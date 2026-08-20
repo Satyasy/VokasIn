@@ -3,9 +3,65 @@
 // util/types) yang tidak ada di bundle browser; memisahkan file ini dari
 // lib/data-access.ts (yang diimpor components/guru/susun-modul-client.tsx,
 // sebuah client component) mencegah "pg" ikut ter-bundle ke client.
-import type { KategoriAlat, KoreksiGuru, SumberDayaLab } from "./types";
-import { setLabCache, findLabItemInCache } from "./data-access";
+import type { Guru, KategoriAlat, KoreksiGuru, Role, SumberDayaLab } from "./types";
+import { setLabCache, findLabItemInCache, setGuruCache } from "./data-access";
 import { pool } from "./db";
+
+async function loadGuruCacheFromDb(): Promise<void> {
+  const { rows } = await pool.query<{
+    id: string;
+    nama: string;
+    program_keahlian_id: string;
+    email: string;
+    role: Role;
+  }>("SELECT id, nama, program_keahlian_id, email, role FROM guru ORDER BY id");
+  setGuruCache(
+    rows.map((r) => ({
+      id: r.id,
+      nama: r.nama,
+      programKeahlianId: r.program_keahlian_id,
+      email: r.email,
+      role: r.role,
+    }))
+  );
+}
+
+// Panggil (dan await) di Server Component sebelum baca guru, sama polanya
+// dengan ensureLabCacheFresh().
+export function ensureGuruCacheFresh(): Promise<void> {
+  return loadGuruCacheFromDb();
+}
+
+export interface GuruAuthRow extends Guru {
+  passwordHash: string;
+}
+
+// HANYA dipakai oleh alur login (app/login) — passwordHash tidak pernah masuk
+// ke guruCache sinkron di lib/data-access.ts supaya tidak ada jalur tak sengaja
+// yang mengekspornya ke client.
+export async function getGuruAuthByEmail(email: string): Promise<GuruAuthRow | undefined> {
+  const { rows } = await pool.query<{
+    id: string;
+    nama: string;
+    program_keahlian_id: string;
+    email: string;
+    password_hash: string;
+    role: Role;
+  }>(
+    "SELECT id, nama, program_keahlian_id, email, password_hash, role FROM guru WHERE email = $1",
+    [email]
+  );
+  const row = rows[0];
+  if (!row) return undefined;
+  return {
+    id: row.id,
+    nama: row.nama,
+    programKeahlianId: row.program_keahlian_id,
+    email: row.email,
+    role: row.role,
+    passwordHash: row.password_hash,
+  };
+}
 
 async function loadLabCacheFromDb(): Promise<void> {
   const { rows } = await pool.query<{

@@ -4,16 +4,22 @@ import { getProgramKeahlian, getUnitKompetensiByProgram } from "@/lib/data-acces
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
+import { LogoutButton } from "@/components/logout-button";
 
 export default function GuruPage() {
   const programList = getProgramKeahlian();
 
   return (
     <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-12">
-      <h1 className="text-2xl font-bold text-foreground">Pilih unit kompetensi</h1>
-      <p className="mt-1 text-muted-foreground">
-        Kartu saran akan disusun dari Elemen dan Kriteria Unjuk Kerja unit yang Anda pilih.
-      </p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Pilih unit kompetensi</h1>
+          <p className="mt-1 text-muted-foreground">
+            Kartu saran akan disusun dari Elemen dan Kriteria Unjuk Kerja unit yang Anda pilih.
+          </p>
+        </div>
+        <LogoutButton />
+      </div>
 
       <div className="mt-8 flex flex-col gap-8">
         {programList.map((program) => {

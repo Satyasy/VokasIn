@@ -6,10 +6,14 @@ export interface ProgramKeahlian {
   singkatan: string;
 }
 
+export type Role = "guru_produktif" | "kaprogli";
+
 export interface Guru {
   id: string;
   nama: string;
   programKeahlianId: string;
+  email: string;
+  role: Role;
 }
 
 export interface KriteriaUnjukKerja {

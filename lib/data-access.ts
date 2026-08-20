@@ -1,7 +1,6 @@
-import type { SaranTopik, SkillDeltaReport, SumberDayaLab, KategoriAlat } from "./types";
+import type { Guru, SaranTopik, SkillDeltaReport, SumberDayaLab, KategoriAlat } from "./types";
 import {
   programKeahlian,
-  guru,
   unitKompetensi,
   skillEntity,
   saranTopik,
@@ -95,8 +94,22 @@ export function getGapKandidat(programKeahlianId?: string) {
   );
 }
 
+// Cache in-memory dari tabel guru di Postgres, sama seperti sumberDayaLabCache
+// di atas — sengaja bukan array in-memory di seed-data.ts lagi, supaya guru
+// (dan kredensial login-nya) punya satu sumber kebenaran. Query pengisi cache
+// ada di lib/data-access-db.ts (server-only).
+let guruCache: Guru[] = [];
+
+export function setGuruCache(items: Guru[]) {
+  guruCache = items;
+}
+
 export function getGuruByProgram(programKeahlianId: string) {
-  return guru.filter((g) => g.programKeahlianId === programKeahlianId);
+  return guruCache.filter((g) => g.programKeahlianId === programKeahlianId);
+}
+
+export function getGuruById(id: string) {
+  return guruCache.find((g) => g.id === id);
 }
 
 // Agregat sederhana untuk Skill Delta Score (F8) — proporsi unit kompetensi

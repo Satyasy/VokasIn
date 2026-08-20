@@ -1,6 +1,5 @@
 import type {
   ProgramKeahlian,
-  Guru,
   UnitKompetensi,
   SkillEntity,
   SaranTopik,
@@ -58,10 +57,8 @@ export const programKeahlian: ProgramKeahlian[] = [
   { id: "pk-belum-ditentukan", nama: "(Belum ditentukan oleh kaprogli)", singkatan: "?" },
 ];
 
-export const guru: Guru[] = [
-  { id: "guru-01", nama: "Siti Rahmawati, S.Kom.", programKeahlianId: "pk-tkj" },
-  { id: "guru-02", nama: "Bambang Wijaya, S.T.", programKeahlianId: "pk-rpl" },
-];
+// guru pindah ke Postgres (tabel guru, kolom email/password_hash/role
+// ditambahkan untuk auth) — lihat scripts/seed.sql dan lib/data-access-db.ts.
 
 export const unitKompetensi: UnitKompetensi[] = [
   {

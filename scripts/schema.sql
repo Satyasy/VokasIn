@@ -1,13 +1,16 @@
 -- Skema Postgres VokasIn — mengikuti ERD di ARCHITECTURE.md §2 satu-per-satu.
--- Hanya sumber_daya_lab dan koreksi_guru yang dibaca/ditulis lewat lib/data-access.ts
--- saat ini; tabel lain disiapkan strukturnya dulu (ARCHITECTURE.md #6: relasional
+-- program_keahlian, guru, saran_topik, sumber_daya_lab, dan koreksi_guru
+-- sudah dibaca/ditulis (atau di-seed) lewat Postgres — lihat scripts/seed.sql.
+-- Tabel lain disiapkan strukturnya dulu (ARCHITECTURE.md #6: relasional
 -- sederhana, bukan Knowledge Graph) supaya tidak perlu dirombak saat fitur lain
 -- menyusul, meski isinya masih di lib/seed-data.ts (in-memory).
 --
--- ponytail: FK constraint sengaja tidak dipasang lintas tabel — tabel rujukan
--- primer (program_keahlian, guru, unit_kompetensi, dst.) belum diisi dari
--- Postgres sama sekali (masih in-memory). Tambahkan REFERENCES saat tabel itu
--- juga dimigrasikan, supaya seed dua tabel yang sudah aktif tidak gagal FK.
+-- ponytail: FK constraint masih belum dipasang untuk sebagian besar kolom
+-- lintas tabel — tabel rujukan (unit_kompetensi, elemen_kompetensi, dst.)
+-- belum diisi dari Postgres sama sekali (masih in-memory). Tambahkan
+-- REFERENCES saat tabel itu juga dimigrasikan (termasuk saran_topik.unit_kompetensi_id
+-- dan elemen_kompetensi_id, yang sengaja belum diberi REFERENCES karena
+-- tabel rujukannya masih kosong).
 
 CREATE TABLE IF NOT EXISTS sekolah (
   id TEXT PRIMARY KEY,
@@ -24,7 +27,10 @@ CREATE TABLE IF NOT EXISTS program_keahlian (
 CREATE TABLE IF NOT EXISTS guru (
   id TEXT PRIMARY KEY,
   nama TEXT NOT NULL,
-  program_keahlian_id TEXT NOT NULL
+  program_keahlian_id TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  role TEXT NOT NULL CHECK (role IN ('guru_produktif', 'kaprogli'))
 );
 
 CREATE TABLE IF NOT EXISTS dokumen_skkni (
@@ -98,8 +104,8 @@ CREATE TABLE IF NOT EXISTS saran_topik (
 -- KoreksiGuru: implementasi konkret "data nyata untuk validasi" (ARCHITECTURE.md §2).
 CREATE TABLE IF NOT EXISTS koreksi_guru (
   id TEXT PRIMARY KEY,
-  saran_topik_id TEXT NOT NULL,
-  guru_id TEXT NOT NULL,
+  saran_topik_id TEXT NOT NULL REFERENCES saran_topik(id),
+  guru_id TEXT NOT NULL REFERENCES guru(id),
   tindakan TEXT NOT NULL CHECK (tindakan IN ('terima', 'tolak', 'modifikasi')),
   catatan TEXT,
   waktu TIMESTAMPTZ NOT NULL
@@ -113,7 +119,7 @@ CREATE TABLE IF NOT EXISTS sumber_daya_lab (
     kategori IN ('perangkat-jaringan', 'komputer-kerja', 'alat-ukur', 'perangkat-lunak', 'alat-tangan', 'server')
   ),
   jumlah INTEGER NOT NULL CHECK (jumlah >= 0),
-  program_keahlian_id TEXT NOT NULL
+  program_keahlian_id TEXT NOT NULL REFERENCES program_keahlian(id)
 );
 
 CREATE TABLE IF NOT EXISTS skill_delta_report (

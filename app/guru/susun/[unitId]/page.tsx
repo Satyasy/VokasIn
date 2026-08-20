@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
-import { getUnitKompetensiById, getSaranTopikForUnit } from "@/lib/data-access";
+import { getUnitKompetensiById, getSaranTopikForUnit, checkFeasibility } from "@/lib/data-access";
 import { ensureLabCacheFresh } from "@/lib/data-access-db";
 import { SusunModulClient } from "@/components/guru/susun-modul-client";
 
@@ -16,6 +16,9 @@ export default async function SusunModulPage({
   if (!unit) notFound();
 
   const saran = getSaranTopikForUnit(unit.id);
+  const feasibilityByTopikId = Object.fromEntries(
+    saran.map((t) => [t.id, checkFeasibility(t, unit.programKeahlianId)])
+  );
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-12">
@@ -33,7 +36,7 @@ export default async function SusunModulPage({
       </p>
 
       <div className="mt-8">
-        <SusunModulClient unit={unit} saranAwal={saran} programKeahlianId={unit.programKeahlianId} />
+        <SusunModulClient unit={unit} saranAwal={saran} feasibilityByTopikId={feasibilityByTopikId} />
       </div>
     </main>
   );

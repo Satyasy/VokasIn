@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Inbox, Download, FileWarning } from "lucide-react";
 import type { SaranTopik, UnitKompetensi } from "@/lib/types";
-import { checkFeasibility } from "@/lib/data-access";
+import type { FeasibilityResult } from "@/lib/data-access";
 import { buildModulAjarMarkdown, downloadModulAjar } from "@/lib/export-modul-ajar";
 import { SuggestionCard } from "./suggestion-card";
 import { KoreksiDialog } from "./koreksi-dialog";
@@ -24,23 +24,17 @@ export interface KoreksiLogEntry {
 export function SusunModulClient({
   unit,
   saranAwal,
-  programKeahlianId,
+  feasibilityByTopikId,
 }: {
   unit: UnitKompetensi;
   saranAwal: SaranTopik[];
-  programKeahlianId: string;
+  feasibilityByTopikId: Record<string, FeasibilityResult>;
 }) {
   const [tersedia, setTersedia] = useState(saranAwal);
   const [diterima, setDiterima] = useState<SaranTopik[]>([]);
   const [koreksiLog, setKoreksiLog] = useState<KoreksiLogEntry[]>([]);
   const [dialogTopik, setDialogTopik] = useState<SaranTopik | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
-
-  const feasibilityByTopik = useMemo(() => {
-    const map = new Map<string, ReturnType<typeof checkFeasibility>>();
-    for (const t of saranAwal) map.set(t.id, checkFeasibility(t, programKeahlianId));
-    return map;
-  }, [saranAwal, programKeahlianId]);
 
   function terimaTopik(id: string) {
     const topik = tersedia.find((t) => t.id === id);
@@ -101,7 +95,7 @@ export function SusunModulClient({
                 key={topik.id}
                 topik={topik}
                 kodeUnit={unit.kodeUnit}
-                feasibility={feasibilityByTopik.get(topik.id)!}
+                feasibility={feasibilityByTopikId[topik.id]}
                 onTerima={terimaTopik}
                 onTolakModifikasi={bukaDialogKoreksi}
               />

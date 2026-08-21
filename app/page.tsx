@@ -10,8 +10,14 @@ import {
   ChevronDown,
   Landmark,
   Wallet,
+  FileStack,
 } from "lucide-react";
 import { LandingNavbar } from "@/components/landing/navbar";
+import { LandingFooter } from "@/components/landing/footer";
+import { Reveal, RevealGroup, RevealItem } from "@/components/landing/reveal";
+import { SectionContainer } from "@/components/landing/section-container";
+import { SectionTransition } from "@/components/landing/section-transition";
+import { HeroBackdropShape, SectionBackdropShape } from "@/components/landing/background-shapes";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DocumentToCardsIllustration } from "@/components/illustrations/document-to-cards";
@@ -40,26 +46,27 @@ const langkahKerja = [
   },
 ];
 
-const alasan = [
-  {
-    icon: FileText,
-    title: "Bukan generator RPP asal jadi",
-    body: "Kartu saran ditarik langsung dari teks Unit Kompetensi dan Kriteria Unjuk Kerja SKKNI asli. Perluasan dengan AI bersifat opsional dan selalu ditandai jelas saat dipakai.",
-  },
+const alasanFeatured = {
+  icon: FileText,
+  title: "Bukan generator RPP asal jadi",
+  body: "Kartu saran ditarik langsung dari teks Unit Kompetensi dan Kriteria Unjuk Kerja SKKNI asli. Perluasan dengan AI bersifat opsional dan selalu ditandai jelas saat dipakai — tidak pernah dicampur diam-diam dengan teks standar.",
+};
+
+const alasanKecil = [
   {
     icon: MousePointerClick,
-    title: "Anda yang memutuskan, bukan sistem",
-    body: "Setiap kartu saran harus Anda seret satu per satu ke kanvas modul ajar. Tidak ada tombol “setujui semua” — friksi ini disengaja.",
+    title: "Anda yang memutuskan",
+    body: "Tiap kartu diseret satu per satu ke kanvas — tidak ada tombol “setujui semua”.",
   },
   {
     icon: Wrench,
-    title: "Cek alat lab dulu sebelum menyarankan",
-    body: "Resource Feasibility Checker mencocokkan fungsi alat, bukan merek dagang, dengan inventaris lab sekolah Anda — supaya tidak ada praktik yang mustahil dijalankan.",
+    title: "Cek alat lab dulu",
+    body: "Resource Feasibility Checker mencocokkan fungsi alat dengan inventaris lab Anda.",
   },
   {
     icon: AlertTriangle,
     title: "Skill di luar standar tidak dibuang",
-    body: "Kompetensi dari sumber sekunder yang belum tercatat di SKKNI ditandai sebagai kandidat kesenjangan (gap), bukan hilang begitu saja — kaprogli yang menindaklanjuti.",
+    body: "Kompetensi belum tercatat SKKNI ditandai sebagai gap, bukan hilang begitu saja.",
   },
 ];
 
@@ -92,55 +99,73 @@ export default function Home() {
       <LandingNavbar />
       <main className="flex-1">
         {/* 1. HERO */}
-        <section id="hero" className="mx-auto w-full max-w-5xl px-6 py-16 sm:py-24">
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <div className="fade-up">
-              <Badge variant="brand">Untuk guru produktif & kaprogli SMK</Badge>
-              <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-[2.75rem] lg:leading-tight">
-                Susun jobsheet SMK dari SKKNI asli — bukan dari nol.
-              </h1>
-              <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-                Kartu saran ditarik langsung dari teks Unit Kompetensi &amp; KUK resmi. Anda
-                yang menyeret, mengecek alat lab, dan mengekspor — sistem tidak mengarang
-                sendiri.
-              </p>
-              <div className="mt-7 flex flex-wrap gap-3">
-                <Link
-                  href="/guru"
-                  className="inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground transition-colors hover:bg-slime-lime-700"
-                >
-                  Mulai coba
-                  <ArrowRight className="size-4" aria-hidden />
-                </Link>
-                <a
-                  href="#cara-kerja"
-                  className="inline-flex h-11 items-center gap-2 rounded-lg border border-border px-5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
-                >
-                  Lihat cara kerja
-                </a>
+        <section id="hero" className="relative overflow-hidden">
+          <HeroBackdropShape />
+          <SectionContainer className="py-16 sm:py-24">
+            <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+              <div className="fade-up">
+                <Badge variant="brand" className="gap-1.5 bg-slime-lime-100 text-slime-lime-900">
+                  <FileStack className="size-3.5" aria-hidden />
+                  SKKNI → PERANGKAT AJAR
+                </Badge>
+                <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl lg:leading-[1.05]">
+                  Susun jobsheet SMK dari{" "}
+                  <span className="text-slime-lime-700">SKKNI asli</span> — bukan dari nol.
+                </h1>
+                <p className="mt-5 text-base text-muted-foreground sm:text-lg">
+                  Kartu saran ditarik langsung dari teks Unit Kompetensi &amp; KUK resmi. Anda
+                  yang menyeret, mengecek alat lab, dan mengekspor — sistem tidak mengarang
+                  sendiri.
+                </p>
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <Link
+                    href="/guru"
+                    className="inline-flex h-11 items-center gap-2 rounded-lg bg-cta-primary px-5 text-sm font-medium text-cta-primary-foreground transition-colors hover:bg-neutral-800"
+                  >
+                    Mulai coba
+                    <ArrowRight className="size-4" aria-hidden />
+                  </Link>
+                  <a
+                    href="#cara-kerja"
+                    className="inline-flex h-11 items-center gap-2 rounded-lg border border-border px-5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+                  >
+                    Lihat cara kerja
+                  </a>
+                </div>
               </div>
+              <DocumentToCardsIllustration
+                className="mx-auto w-full max-w-md text-slime-lime-600 fade-up [animation-delay:120ms]"
+              />
             </div>
-            <DocumentToCardsIllustration className="mx-auto w-full max-w-md text-slime-lime-600 fade-up" />
-          </div>
+          </SectionContainer>
         </section>
 
-        {/* 2. MASALAH */}
-        <section id="masalah" className="border-t border-border bg-muted/50">
-          <div className="mx-auto w-full max-w-5xl px-6 py-16 sm:py-20">
-            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              Otonomi tanpa instrumen
-            </h2>
-            <p className="mt-3 max-w-2xl text-base text-muted-foreground sm:text-lg">
-              Kurikulum Merdeka memberi SMK kebebasan membuka kelas peminatan lintas jurusan —
-              misalnya siswa TKJ mendalami Cloud Computing atau DKV. Tapi kebebasan ini tidak
-              disertai instrumen untuk menurunkan minat tersebut menjadi kompetensi yang
-              terverifikasi dan bisa diajarkan.
-            </p>
+        {/* 2. MASALAH — neutral-100, selang-seling dengan putih di Hero/Cara Kerja */}
+        <section id="masalah" className="border-t border-border bg-neutral-100">
+          <Reveal>
+          <SectionContainer className="py-16 sm:py-20">
+            <div className="grid gap-8 lg:grid-cols-[1fr_220px] lg:items-center">
+              <div>
+                <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+                  Otonomi tanpa instrumen
+                </h2>
+                <p className="mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
+                  Kurikulum Merdeka memberi SMK kebebasan membuka kelas peminatan lintas jurusan —
+                  misalnya siswa TKJ mendalami Cloud Computing atau DKV. Tapi kebebasan ini tidak
+                  disertai instrumen untuk menurunkan minat tersebut menjadi kompetensi yang
+                  terverifikasi dan bisa diajarkan.
+                </p>
+              </div>
+              <DocumentToCardsIllustration
+                className="hidden w-full max-w-[220px] justify-self-end text-slime-lime-600 lg:block"
+                aria-hidden
+              />
+            </div>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               <Card className="bg-card">
-                <p className="text-4xl font-bold text-slime-lime-800">9,2%</p>
-                <p className="mt-2 text-sm text-foreground">
+                <p className="text-5xl font-extrabold text-slime-lime-800 sm:text-6xl">9,2%</p>
+                <p className="mt-3 text-sm text-foreground">
                   Pada kasus mitra sertifikasi TBIG (2025), dari 1.569 siswa yang diajukan
                   sekolah untuk pelatihan, hanya 145 siswa (9,2%) yang lulus standar
                   kualifikasi.
@@ -159,8 +184,8 @@ export default function Home() {
                 </p>
               </Card>
               <Card className="bg-card">
-                <p className="text-4xl font-bold text-slime-lime-800">1.000+</p>
-                <p className="mt-2 text-sm text-foreground">
+                <p className="text-5xl font-extrabold text-slime-lime-800 sm:text-6xl">1.000+</p>
+                <p className="mt-3 text-sm text-foreground">
                   Dokumen SKKNI resmi sudah terbuka luas per triwulan III 2022 — tapi uji
                   duplikasi pasar menemukan belum ada satu pun alat yang menerjemahkannya
                   otomatis menjadi perangkat ajar siap pakai.
@@ -179,22 +204,26 @@ export default function Home() {
                 </p>
               </Card>
             </div>
-          </div>
+          </SectionContainer>
+          </Reveal>
         </section>
 
         {/* 3. CARA KERJA */}
-        <section id="cara-kerja" className="mx-auto w-full max-w-5xl px-6 py-16 sm:py-20">
-          <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-            Empat langkah, dari SKKNI ke jobsheet
-          </h2>
-          <p className="mt-3 max-w-2xl text-base text-muted-foreground">
-            Tidak ada tombol ajaib. Tiap langkah butuh tindakan eksplisit dari Anda.
-          </p>
+        <section id="cara-kerja">
+          <SectionContainer className="py-16 sm:py-20">
+          <Reveal>
+            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+              Empat langkah, dari SKKNI ke jobsheet
+            </h2>
+            <p className="mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
+              Tidak ada tombol ajaib. Tiap langkah butuh tindakan eksplisit dari Anda.
+            </p>
+          </Reveal>
 
           <div className="mt-10 grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-center">
-            <ol className="grid gap-6 sm:grid-cols-2">
+            <RevealGroup className="grid gap-6 sm:grid-cols-2" stagger={0.1}>
               {langkahKerja.map((langkah, i) => (
-                <li key={langkah.title} className="flex flex-col gap-2">
+                <RevealItem key={langkah.title} className="flex flex-col gap-2">
                   <div className="flex items-center gap-3">
                     <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
                       {i + 1}
@@ -203,121 +232,175 @@ export default function Home() {
                   </div>
                   <h3 className="font-semibold text-foreground">{langkah.title}</h3>
                   <p className="text-sm text-muted-foreground">{langkah.body}</p>
-                </li>
+                </RevealItem>
               ))}
-            </ol>
+            </RevealGroup>
             <LabCheckIllustration className="mx-auto hidden w-full max-w-xs text-slime-lime-600 lg:block" />
           </div>
+          </SectionContainer>
         </section>
 
-        {/* 4. KENAPA VOKASIN */}
-        <section id="kenapa" className="border-t border-border bg-muted/50">
-          <div className="mx-auto w-full max-w-5xl px-6 py-16 sm:py-20">
-            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              Kenapa VokasIn
-            </h2>
-            <p className="mt-3 max-w-2xl text-base text-muted-foreground">
-              Empat batasan yang sengaja kami pertahankan, bukan fitur yang kami lepas begitu
-              saja.
-            </p>
+        <SectionTransition from="var(--color-background)" to="var(--color-neutral-950)" />
 
-            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {alasan.map((item) => (
-                <Card key={item.title} className="bg-card">
-                  <item.icon className="size-7 text-slime-lime-700" aria-hidden />
-                  <CardTitle className="mt-3 text-base">{item.title}</CardTitle>
-                  <CardDescription className="mt-1.5">{item.body}</CardDescription>
-                </Card>
-              ))}
+        {/* 4. KENAPA VOKASIN — section near-black, satu-satunya di halaman ini (Bagian C.2) */}
+        <section id="kenapa" className="relative overflow-hidden bg-neutral-950 text-neutral-50">
+          <SectionBackdropShape />
+          <SectionContainer className="py-16 sm:py-20">
+            <Reveal>
+              <h2 className="text-3xl font-extrabold tracking-tight text-neutral-50 sm:text-4xl lg:text-5xl">
+                Kenapa VokasIn
+              </h2>
+              <p className="mt-4 max-w-2xl text-base text-neutral-400 sm:text-lg">
+                Empat batasan yang sengaja kami pertahankan, bukan fitur yang kami lepas begitu
+                saja.
+              </p>
+            </Reveal>
+
+            {/* Grid 12-kolom di lg: featured col-span-7, 3 kartu kecil col-span-5 ditumpuk
+                mengisi tinggi yang sama (align-items stretch bawaan grid + h-full di wrapper).
+                Tablet: featured penuh 12 kolom, 3 kecil sejajar 4 kolom masing-masing.
+                Mobile: semua col-span-12 ditumpuk vertikal. */}
+            <div className="mt-10 grid gap-4 sm:grid-cols-12">
+              <RevealItem scale className="sm:col-span-12 lg:col-span-7">
+                <div className="card-hover flex h-full flex-col rounded-xl border border-slime-lime-800/60 bg-neutral-900 p-8 ring-1 ring-slime-lime-900/40">
+                  <DocumentToCardsIllustration
+                    gradient
+                    className="mb-6 h-40 w-full text-slime-lime-400"
+                    aria-hidden
+                  />
+                  <alasanFeatured.icon className="card-hover-icon size-8 text-slime-lime-400" aria-hidden />
+                  <CardTitle className="mt-3 text-xl text-neutral-50">{alasanFeatured.title}</CardTitle>
+                  <CardDescription className="mt-3 text-base text-neutral-300">
+                    {alasanFeatured.body}
+                  </CardDescription>
+                </div>
+              </RevealItem>
+
+              <RevealGroup
+                className="grid gap-4 sm:col-span-12 sm:grid-cols-3 lg:col-span-5 lg:grid-cols-1"
+                stagger={0.1}
+              >
+                {alasanKecil.map((item) => (
+                  <RevealItem key={item.title}>
+                    <div className="card-hover flex h-full flex-col gap-2 rounded-xl border border-neutral-800 bg-neutral-900 p-5">
+                      <item.icon className="card-hover-icon size-6 text-slime-lime-400" aria-hidden />
+                      <CardTitle className="text-base text-neutral-50">{item.title}</CardTitle>
+                      <CardDescription className="text-neutral-400">{item.body}</CardDescription>
+                    </div>
+                  </RevealItem>
+                ))}
+              </RevealGroup>
             </div>
-          </div>
+          </SectionContainer>
         </section>
 
-        {/* 5. REGULASI & DANA */}
-        <section id="regulasi" className="mx-auto w-full max-w-5xl px-6 py-16 sm:py-20">
-          <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-            Bukan celah yang dibuat-buat
-          </h2>
-          <p className="mt-3 max-w-2xl text-base text-muted-foreground">
-            Kurikulum Merdeka mewajibkan sekolah menentukan sendiri kelas peminatannya, tapi
-            tidak menyediakan instrumen untuk menurunkannya menjadi kompetensi yang
-            terverifikasi. VokasIn dibangun untuk mengisi celah operasional itu — bukan
-            pengganti proses sertifikasi resmi BNSP/LSP.
-          </p>
+        {/* 5. REGULASI & DANA — dark tapi tint hijau (slime-lime-950), beda nuansa dari "Kenapa VokasIn" (neutral-950) */}
+        <section id="regulasi" className="relative overflow-hidden bg-slime-lime-950 text-neutral-50">
+          <SectionContainer className="py-16 sm:py-20">
+          <div className="grid gap-8 lg:grid-cols-[1fr_200px] lg:items-start">
+            <div>
+              <Reveal>
+              <h2 className="text-3xl font-extrabold tracking-tight text-neutral-50 sm:text-4xl lg:text-5xl">
+                Bukan celah yang dibuat-buat
+              </h2>
+              <p className="mt-4 max-w-2xl text-base text-neutral-300 sm:text-lg">
+                Kurikulum Merdeka mewajibkan sekolah menentukan sendiri kelas peminatannya, tapi
+                tidak menyediakan instrumen untuk menurunkannya menjadi kompetensi yang
+                terverifikasi. VokasIn dibangun untuk mengisi celah operasional itu — bukan
+                pengganti proses sertifikasi resmi BNSP/LSP.
+              </p>
+              </Reveal>
 
-          <Card className="mt-8 bg-card">
-            <div className="flex items-start gap-3">
-              <Wallet className="mt-0.5 size-6 shrink-0 text-slime-lime-700" aria-hidden />
-              <div>
-                <CardTitle className="text-lg">Bisa dibiayai dari dana BOSP</CardTitle>
-                <p className="mt-2 text-sm text-foreground">
-                  Langganan sekolah dapat dibiayai dana BOSP sesuai{" "}
-                  <strong className="font-semibold">Permendikdasmen No. 8 Tahun 2026</strong>
-                  , komponen &ldquo;Pelaksanaan kegiatan pembelajaran&rdquo;, Pasal 42 ayat (1)
-                  huruf c: &ldquo;penyediaan aplikasi atau perangkat lunak yang digunakan dalam
-                  proses pembelajaran&rdquo;.
-                </p>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Dengan syarat: diposisikan sebagai aplikasi pembelajaran — bukan aplikasi
-                  pendataan/pelaporan (larangan Pasal 66 ayat (1) huruf d &amp; e) — dan
-                  tercatat dalam RKAS/ARKAS.
-                </p>
-                <p className="mt-3 text-xs text-muted-foreground">
-                  Sumber:{" "}
-                  <a
-                    href="https://peraturan.go.id/files/Permendikdasmen-no-8-tahun-2026.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline underline-offset-2 hover:text-foreground"
-                  >
-                    Permendikdasmen No. 8 Tahun 2026, Pasal 42(1)(c) &amp; Pasal 66(1)(d/e)
-                  </a>
-                  .
+              <Card className="mt-8 border-slime-lime-800/60 bg-slime-lime-900/60">
+                <div className="flex items-start gap-3">
+                  <Wallet className="mt-0.5 size-6 shrink-0 text-slime-lime-400" aria-hidden />
+                  <div>
+                    <CardTitle className="text-lg text-neutral-50">Bisa dibiayai dari dana BOSP</CardTitle>
+                    <p className="mt-2 text-sm text-neutral-200">
+                      Langganan sekolah dapat dibiayai dana BOSP sesuai{" "}
+                      <strong className="font-semibold text-neutral-50">Permendikdasmen No. 8 Tahun 2026</strong>
+                      , komponen &ldquo;Pelaksanaan kegiatan pembelajaran&rdquo;, Pasal 42 ayat (1)
+                      huruf c: &ldquo;penyediaan aplikasi atau perangkat lunak yang digunakan dalam
+                      proses pembelajaran&rdquo;.
+                    </p>
+                    <p className="mt-2 text-sm text-neutral-400">
+                      Dengan syarat: diposisikan sebagai aplikasi pembelajaran — bukan aplikasi
+                      pendataan/pelaporan (larangan Pasal 66 ayat (1) huruf d &amp; e) — dan
+                      tercatat dalam RKAS/ARKAS.
+                    </p>
+                    <p className="mt-3 text-xs text-neutral-400">
+                      Sumber:{" "}
+                      <a
+                        href="https://peraturan.go.id/files/Permendikdasmen-no-8-tahun-2026.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline underline-offset-2 hover:text-neutral-50"
+                      >
+                        Permendikdasmen No. 8 Tahun 2026, Pasal 42(1)(c) &amp; Pasal 66(1)(d/e)
+                      </a>
+                      .
+                    </p>
+                  </div>
+                </div>
+              </Card>
+
+              <div className="mt-4 flex items-start gap-3 text-sm text-neutral-400">
+                <Landmark className="mt-0.5 size-5 shrink-0 text-slime-lime-400" aria-hidden />
+                <p>
+                  VokasIn tidak menjanjikan pembangunan infrastruktur skala besar (Knowledge
+                  Graph/QuadStore, IaC penuh) pada tahap prototipe — cakupannya sengaja dijaga
+                  proporsional dengan anggaran sekolah.
                 </p>
               </div>
             </div>
-          </Card>
-
-          <div className="mt-4 flex items-start gap-3 text-sm text-muted-foreground">
-            <Landmark className="mt-0.5 size-5 shrink-0" aria-hidden />
-            <p>
-              VokasIn tidak menjanjikan pembangunan infrastruktur skala besar (Knowledge
-              Graph/QuadStore, IaC penuh) pada tahap prototipe — cakupannya sengaja dijaga
-              proporsional dengan anggaran sekolah.
-            </p>
+            <DocumentToCardsIllustration
+              gradient
+              className="hidden w-full max-w-[200px] justify-self-end text-slime-lime-300 lg:block"
+              aria-hidden
+            />
           </div>
+          </SectionContainer>
         </section>
+
+        <SectionTransition
+          from="var(--color-slime-lime-950)"
+          to="color-mix(in oklch, var(--color-muted) 50%, var(--color-background))"
+        />
 
         {/* 6. FAQ */}
         <section id="faq" className="border-t border-border bg-muted/50">
-          <div className="mx-auto w-full max-w-3xl px-6 py-16 sm:py-20">
-            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              Pertanyaan yang jujur perlu dijawab jujur
+          <Reveal>
+          <SectionContainer className="max-w-3xl py-16 sm:py-20">
+            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+              Pertanyaan yang sering ditanyakan
             </h2>
             <div className="mt-8 divide-y divide-border">
               {faq.map((item) => (
                 <details key={item.q} className="group py-4">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-medium text-foreground">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-0 py-1 text-base font-medium text-foreground outline-none">
                     {item.q}
                     <ChevronDown
                       className="size-5 shrink-0 text-muted-foreground transition-transform duration-(--duration-ui) group-open:rotate-180"
                       aria-hidden
                     />
                   </summary>
-                  <p className="mt-3 text-sm text-muted-foreground">{item.a}</p>
+                  <p className="fade-up mt-3 text-sm text-muted-foreground">{item.a}</p>
                 </details>
               ))}
             </div>
-          </div>
+          </SectionContainer>
+          </Reveal>
         </section>
 
-        {/* 7. CTA PENUTUP */}
-        <section id="cta" className="mx-auto w-full max-w-5xl px-6 py-16 sm:py-20">
-          <Card className="border-slime-lime-700 bg-slime-lime-50 sm:p-10">
-            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+        {/* 7. CTA PENUTUP — neutral-950, titik akhir, boleh gelap */}
+        <section id="cta" className="bg-neutral-950">
+          <SectionContainer className="py-16 sm:py-20">
+          <Reveal>
+          <Card className="glass glass-cta border border-white/10 bg-neutral-900/70 sm:p-10">
+            <h2 className="text-3xl font-extrabold tracking-tight text-neutral-50 sm:text-4xl">
               Ajukan ke kaprogli atau kepala sekolah Anda
             </h2>
-            <p className="mt-3 max-w-2xl text-base text-muted-foreground">
+            <p className="mt-3 max-w-2xl text-base text-neutral-400">
               Karena VokasIn bisa dianggarkan lewat RKAS/ARKAS dari dana BOSP, langkah paling
               realistis adalah membawanya ke rapat program keahlian atau ke kepala sekolah —
               bukan menunggu keputusan dari pusat.
@@ -325,21 +408,28 @@ export default function Home() {
             <div className="mt-6 flex flex-wrap gap-3">
               <Link
                 href="/guru"
-                className="inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground transition-colors hover:bg-slime-lime-700"
+                className="inline-flex h-11 items-center gap-2 rounded-lg bg-neutral-50 px-5 text-sm font-medium text-neutral-950 transition-colors hover:bg-neutral-200"
               >
                 Coba alur guru
                 <ArrowRight className="size-4" aria-hidden />
               </Link>
               <Link
                 href="/kaprogli"
-                className="inline-flex h-11 items-center gap-2 rounded-lg border border-slime-lime-700 px-5 text-sm font-medium text-foreground transition-colors hover:bg-slime-lime-100"
+                className="inline-flex h-11 items-center gap-2 rounded-lg border border-slime-lime-500 px-5 text-sm font-medium text-neutral-50 transition-colors hover:bg-slime-lime-950"
               >
                 Buka dashboard kaprogli
               </Link>
             </div>
           </Card>
+          </Reveal>
+          </SectionContainer>
         </section>
       </main>
+      <SectionTransition
+        from="var(--color-neutral-950)"
+        to="color-mix(in oklch, var(--color-muted) 50%, var(--color-background))"
+      />
+      <LandingFooter />
     </>
   );
 }

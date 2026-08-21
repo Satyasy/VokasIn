@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { SectionContainer } from "@/components/landing/section-container";
 
 const links = [
   { href: "#masalah", label: "Masalah" },
@@ -9,9 +13,26 @@ const links = [
 ];
 
 export function LandingNavbar() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const hero = document.getElementById("hero");
+    const threshold = hero ? hero.offsetHeight : 400;
+    const onScroll = () => setScrolled(window.scrollY > threshold);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <nav className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-6 py-3">
+    <header
+      className={`sticky top-0 z-40 border-b backdrop-blur-sm transition-colors duration-(--duration-ui) ${
+        scrolled
+          ? "glass glass-nav border-black/10 bg-background/75 dark:border-white/10"
+          : "border-transparent bg-background/40"
+      }`}
+    >
+      <SectionContainer as="nav" className="flex items-center justify-between gap-4 py-3">
         <Link href="#hero" className="text-sm font-semibold tracking-tight text-foreground">
           VokasIn
         </Link>
@@ -29,11 +50,11 @@ export function LandingNavbar() {
         </ul>
         <Link
           href="/guru"
-          className="inline-flex h-9 items-center rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-slime-lime-700"
+          className="inline-flex h-9 items-center rounded-lg bg-cta-primary px-4 text-sm font-medium text-cta-primary-foreground transition-colors hover:bg-neutral-800"
         >
           Mulai coba
         </Link>
-      </nav>
+      </SectionContainer>
     </header>
   );
 }

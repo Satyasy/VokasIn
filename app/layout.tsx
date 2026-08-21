@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { LazyMotion, domAnimation, MotionConfig } from "motion/react";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -18,7 +19,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="id" className={`${jakarta.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        {children}
+        <MotionConfig reducedMotion="user">
+          <LazyMotion features={domAnimation} strict>
+            {children}
+          </LazyMotion>
+        </MotionConfig>
       </body>
     </html>
   );

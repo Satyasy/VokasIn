@@ -47,6 +47,10 @@
   --color-border:               oklch(90% 0.008 125);
   --color-ring:                 var(--color-slime-lime-600);
 
+  /* === CTA utama landing page — near-black, terpisah dari --color-primary (masih dipakai badge/ring/border) === */
+  --color-cta-primary:            var(--color-neutral-950);
+  --color-cta-primary-foreground: var(--color-neutral-50);
+
   /* === Tipografi === */
   --font-sans: var(--font-jakarta), system-ui, sans-serif;
 
@@ -66,6 +70,8 @@
   --color-muted:                oklch(26% 0.01 125);
   --color-muted-foreground:     oklch(70% 0.01 125);
   --color-border:               oklch(30% 0.01 125);
+  --color-cta-primary:            var(--color-neutral-50);
+  --color-cta-primary-foreground: var(--color-neutral-950);
 }
 
 body {
@@ -74,22 +80,24 @@ body {
   font-family: var(--font-sans);
 }
 
-/* prefers-reduced-motion base: no-motion is default, animations added only inside the media query (DESIGN.md §6) */
-* {
-  animation-duration: 0.01ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0.01ms !important;
+/* DESIGN.md §6: motion on by default, killed only when the user actually asked for less.
+   ponytail: previous version set transition-duration:0.01ms!important on `*` and tried to
+   `revert` it back inside the no-preference query — `revert` restores the UA stylesheet value
+   (0s), not .card-hover's own 380ms, so every transition on the site was silently snapping to
+   ~0 regardless of the tuning above. That's the real cause of "stiff" hover, not the durations. */
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  * {
-    animation-duration: revert !important;
-    animation-iteration-count: revert !important;
-    transition-duration: revert !important;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
 }
 
@@ -106,4 +114,98 @@ body {
 
 .fade-up {
   animation: fade-up var(--duration-ui) var(--ease-fluid) both;
+}
+
+/* Glass — limited to nav bar + closing CTA card, DESIGN.md/CLAUDE.md ban on heavy glassmorphism (§B) */
+.glass {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+@media (max-width: 768px) and (hover: none) {
+  .glass {
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+  }
+}
+
+/* Hover/focus lift — cards & interactive rows (§Bagian A). Shadow is opacity-animated on a
+   pseudo-element so the only animated properties stay transform/opacity/color, per DESIGN.md §6. */
+.card-hover {
+  position: relative;
+  transition:
+    transform 380ms var(--ease-fluid),
+    border-color 380ms var(--ease-fluid);
+}
+
+.card-hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  box-shadow: 0 20px 36px -16px oklch(21% 0.006 125 / 0.45);
+  opacity: 0;
+  transition: opacity 380ms var(--ease-fluid);
+  pointer-events: none;
+}
+
+.card-hover:hover,
+.card-hover:focus-visible,
+.card-hover:has(summary:focus-visible) {
+  transform: translateY(-6px) scale(1.015);
+  border-color: var(--color-primary);
+}
+
+.card-hover:hover::after,
+.card-hover:focus-visible::after,
+.card-hover:has(summary:focus-visible)::after {
+  opacity: 1;
+}
+
+.card-hover-icon {
+  display: inline-flex;
+  transition:
+    color 380ms var(--ease-fluid),
+    opacity 380ms var(--ease-fluid),
+    transform 380ms var(--ease-fluid);
+}
+
+.card-hover:hover .card-hover-icon,
+.card-hover:focus-visible .card-hover-icon,
+.card-hover:has(summary:focus-visible) .card-hover-icon {
+  color: var(--color-slime-lime-700);
+  transform: scale(1.12);
+}
+
+/* details/summary in card-hover: focus-visible ring on summary itself, since <details> can't receive focus directly */
+.card-hover summary:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+  border-radius: 0.375rem;
+}
+
+/* Dot-grid backdrop texture — Hero & "Kenapa VokasIn" only (2-decoration budget). Single
+   CSS background-image, no SVG/JS, so it costs nothing extra to paint or repaint. */
+.dot-grid {
+  background-image: radial-gradient(circle at 1px 1px, var(--color-neutral-400) 1.5px, transparent 0);
+  background-size: 28px 28px;
+  opacity: 0.35;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 80%);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .glass-nav {
+    background: color-mix(in oklch, var(--color-background) 95%, transparent) !important;
+  }
+
+  .glass-cta {
+    background: color-mix(in oklch, var(--color-slime-lime-50) 95%, transparent) !important;
+  }
 }

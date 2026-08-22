@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
-import { getUnitKompetensiById, getSaranTopikForUnit, checkFeasibility } from "@/lib/data-access";
+import { getUnitKompetensiById, getSaranTopikForUnit, checkFeasibility, getProgramKeahlian } from "@/lib/data-access";
 import { ensureLabCacheFresh } from "@/lib/data-access-db";
 import { SusunModulClient } from "@/components/guru/susun-modul-client";
 
@@ -36,7 +36,12 @@ export default async function SusunModulPage({
       </p>
 
       <div className="mt-8">
-        <SusunModulClient unit={unit} saranAwal={saran} feasibilityByTopikId={feasibilityByTopikId} />
+        <SusunModulClient
+          unit={unit}
+          saranAwal={saran}
+          feasibilityByTopikId={feasibilityByTopikId}
+          programList={getProgramKeahlian()}
+        />
       </div>
     </main>
   );

@@ -16,8 +16,7 @@ import { LandingNavbar } from "@/components/landing/navbar";
 import { LandingFooter } from "@/components/landing/footer";
 import { Reveal, RevealGroup, RevealItem } from "@/components/landing/reveal";
 import { SectionContainer } from "@/components/landing/section-container";
-import { SectionTransition } from "@/components/landing/section-transition";
-import { HeroBackdropShape, SectionBackdropShape } from "@/components/landing/background-shapes";
+import { DotGridTexture, HairlineGridTexture } from "@/components/landing/background-shapes";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DocumentToCardsIllustration } from "@/components/illustrations/document-to-cards";
@@ -100,7 +99,7 @@ export default function Home() {
       <main className="flex-1">
         {/* 1. HERO */}
         <section id="hero" className="relative overflow-hidden">
-          <HeroBackdropShape />
+          <DotGridTexture />
           <SectionContainer className="py-16 sm:py-24">
             <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
               <div className="fade-up">
@@ -141,7 +140,11 @@ export default function Home() {
         </section>
 
         {/* 2. MASALAH — neutral-100, selang-seling dengan putih di Hero/Cara Kerja */}
-        <section id="masalah" className="border-t border-border bg-neutral-100">
+        <section
+          id="masalah"
+          className="relative overflow-hidden border-t border-neutral-200/50 bg-neutral-100"
+        >
+          <HairlineGridTexture />
           <Reveal>
           <SectionContainer className="py-16 sm:py-20">
             <div className="grid gap-8 lg:grid-cols-[1fr_220px] lg:items-center">
@@ -209,7 +212,11 @@ export default function Home() {
         </section>
 
         {/* 3. CARA KERJA */}
-        <section id="cara-kerja">
+        <section
+          id="cara-kerja"
+          className="relative overflow-hidden border-t border-neutral-200/50"
+        >
+          <HairlineGridTexture />
           <SectionContainer className="py-16 sm:py-20">
           <Reveal>
             <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
@@ -240,11 +247,15 @@ export default function Home() {
           </SectionContainer>
         </section>
 
-        <SectionTransition from="var(--color-background)" to="var(--color-neutral-950)" />
-
         {/* 4. KENAPA VOKASIN — section near-black, satu-satunya di halaman ini (Bagian C.2) */}
-        <section id="kenapa" className="relative overflow-hidden bg-neutral-950 text-neutral-50">
-          <SectionBackdropShape />
+        <section
+          id="kenapa"
+          className="relative overflow-hidden border-t border-white/10 bg-neutral-950 text-neutral-50"
+        >
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -right-24 -top-24 -z-10 size-[420px] rounded-full bg-slime-lime-600/10 blur-[100px]"
+          />
           <SectionContainer className="py-16 sm:py-20">
             <Reveal>
               <h2 className="text-3xl font-extrabold tracking-tight text-neutral-50 sm:text-4xl lg:text-5xl">
@@ -295,8 +306,15 @@ export default function Home() {
         </section>
 
         {/* 5. REGULASI & DANA — dark tapi tint hijau (slime-lime-950), beda nuansa dari "Kenapa VokasIn" (neutral-950) */}
-        <section id="regulasi" className="relative overflow-hidden bg-slime-lime-950 text-neutral-50">
-          <SectionContainer className="py-16 sm:py-20">
+        <section
+          id="regulasi"
+          className="relative overflow-hidden border-t border-slime-lime-800/30 bg-slime-lime-950 text-neutral-50"
+        >
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -bottom-24 -left-24 -z-10 size-[420px] rounded-full bg-slime-lime-500/20 blur-[100px]"
+          />
+          <SectionContainer className="py-16 pb-36 sm:py-20 sm:pb-40">
           <div className="grid gap-8 lg:grid-cols-[1fr_200px] lg:items-start">
             <div>
               <Reveal>
@@ -362,13 +380,16 @@ export default function Home() {
           </SectionContainer>
         </section>
 
-        <SectionTransition
-          from="var(--color-slime-lime-950)"
-          to="color-mix(in oklch, var(--color-muted) 50%, var(--color-background))"
-        />
-
-        {/* 6. FAQ */}
-        <section id="faq" className="border-t border-border bg-muted/50">
+        {/* 6. FAQ — bg solid (bukan bg-muted/50 yang translucent) supaya warnanya konsisten
+            terhadap section gelap di atas maupun di bawahnya. */}
+        <section
+          id="faq"
+          className="relative overflow-hidden border-t border-black/10"
+          style={{
+            backgroundColor: "color-mix(in oklch, var(--color-muted) 50%, var(--color-background))",
+          }}
+        >
+          <DotGridTexture />
           <Reveal>
           <SectionContainer className="max-w-3xl py-16 sm:py-20">
             <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
@@ -393,7 +414,14 @@ export default function Home() {
         </section>
 
         {/* 7. CTA PENUTUP — neutral-950, titik akhir, boleh gelap */}
-        <section id="cta" className="bg-neutral-950">
+        <section
+          id="cta"
+          className="relative overflow-hidden border-t border-white/10 bg-neutral-950"
+        >
+          <div
+            aria-hidden
+            className="pointer-events-none absolute left-1/2 top-1/2 -z-10 size-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-slime-lime-500/10 blur-[120px]"
+          />
           <SectionContainer className="py-16 sm:py-20">
           <Reveal>
           <Card className="glass glass-cta border border-white/10 bg-neutral-900/70 sm:p-10">
@@ -425,10 +453,6 @@ export default function Home() {
           </SectionContainer>
         </section>
       </main>
-      <SectionTransition
-        from="var(--color-neutral-950)"
-        to="color-mix(in oklch, var(--color-muted) 50%, var(--color-background))"
-      />
       <LandingFooter />
     </>
   );

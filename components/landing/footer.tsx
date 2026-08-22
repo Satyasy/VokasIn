@@ -18,7 +18,7 @@ const sumber = [
 
 export function LandingFooter() {
   return (
-    <footer className="border-t border-border bg-muted/50">
+    <footer className="border-t border-black/10 bg-muted/50">
       <SectionContainer className="grid gap-8 py-12 sm:grid-cols-3">
         <div>
           <p className="text-sm font-semibold text-foreground">VokasIn</p>

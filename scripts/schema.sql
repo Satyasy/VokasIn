@@ -12,6 +12,8 @@
 -- dan elemen_kompetensi_id, yang sengaja belum diberi REFERENCES karena
 -- tabel rujukannya masih kosong).
 
+CREATE EXTENSION IF NOT EXISTS vector;
+
 CREATE TABLE IF NOT EXISTS sekolah (
   id TEXT PRIMARY KEY,
   nama TEXT NOT NULL
@@ -38,14 +40,30 @@ CREATE TABLE IF NOT EXISTS dokumen_skkni (
   nomor TEXT NOT NULL
 );
 
+-- corpus_text/embedding/corpus_tsv: lihat lib/embedding.ts & lib/data-access-db.ts.
+-- HANYA unit yang terverifikasi manual boleh punya baris di tabel ini sama
+-- sekali (CLAUDE.md/DESIGN.md) — 171 unit hasil parser mentah di
+-- data/skkni-parsed.json TIDAK pernah dimuat ke sini.
 CREATE TABLE IF NOT EXISTS unit_kompetensi (
   id TEXT PRIMARY KEY,
   kode_unit TEXT NOT NULL,
   judul_unit TEXT NOT NULL,
   dokumen_skkni_id TEXT,
   sumber TEXT NOT NULL,
-  program_keahlian_id TEXT NOT NULL
+  program_keahlian_id TEXT NOT NULL,
+  -- Teks gabungan judul unit + seluruh judul Elemen + seluruh teks KUK, dipakai
+  -- SEBAGAI SUMBER untuk embedding (lib/embedding.ts) maupun full-text search
+  -- di bawah — satu teks, dua indeks, supaya keduanya selalu konsisten.
+  corpus_text TEXT,
+  embedding vector(384),
+  embedding_model_version TEXT,
+  embedding_updated_at TIMESTAMPTZ,
+  corpus_tsv tsvector GENERATED ALWAYS AS (to_tsvector('simple', coalesce(corpus_text, ''))) STORED
 );
+
+-- Full-text search index (GIN standar, BUKAN index ANN vektor — korpus masih
+-- terlalu kecil untuk HNSW/IVFFlat, brute-force cosine scan sudah cukup).
+CREATE INDEX IF NOT EXISTS unit_kompetensi_corpus_tsv_idx ON unit_kompetensi USING GIN (corpus_tsv);
 
 CREATE TABLE IF NOT EXISTS elemen_kompetensi (
   id TEXT PRIMARY KEY,
@@ -98,7 +116,12 @@ CREATE TABLE IF NOT EXISTS saran_topik (
   judul TEXT NOT NULL,
   isi_ekstraktif TEXT NOT NULL,
   alat_dibutuhkan JSONB NOT NULL DEFAULT '[]', -- {kategori,label}[] — tidak jadi tabel terpisah, tidak ada di ERD
-  skor_keyakinan REAL NOT NULL
+  skor_keyakinan REAL NOT NULL,
+  -- Catatan cara mengajar / strategi pedagogi — murni input manual guru,
+  -- TIDAK PERNAH diisi sistem/AI (HITL: sistem cuma menyediakan kompetensi
+  -- dari SKKNI, cara mengajarkan sepenuhnya keputusan guru). Nullable karena
+  -- guru boleh belum mengisi.
+  catatan_pedagogi TEXT
 );
 
 -- KoreksiGuru: implementasi konkret "data nyata untuk validasi" (ARCHITECTURE.md §2).

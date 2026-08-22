@@ -80,6 +80,7 @@ export interface SaranTopik {
   isiEkstraktif: string; // disusun langsung dari teks Elemen+KUK asli
   alatDibutuhkan: KategoriAlatDibutuhkan[];
   skorKeyakinan: number; // 0-1, hasil vector similarity — bukan kepastian
+  catatanPedagogi?: string; // murni input manual guru — sistem TIDAK PERNAH mengisi ini
 }
 
 export interface KoreksiGuru {

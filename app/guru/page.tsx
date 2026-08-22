@@ -5,6 +5,9 @@ import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 import { LogoutButton } from "@/components/logout-button";
+import { UnitSearch } from "@/components/guru/unit-search";
+import { AsistenKebutuhanModul } from "@/components/guru/asisten-kebutuhan-modul";
+import { DraftStatusBar } from "@/components/guru/draft-status-bar";
 
 export default function GuruPage() {
   const programList = getProgramKeahlian();
@@ -19,6 +22,12 @@ export default function GuruPage() {
           </p>
         </div>
         <LogoutButton />
+      </div>
+
+      <div className="mt-8">
+        <DraftStatusBar programList={programList} />
+        <AsistenKebutuhanModul />
+        <UnitSearch />
       </div>
 
       <div className="mt-8 flex flex-col gap-8">

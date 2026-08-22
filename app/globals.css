@@ -185,14 +185,28 @@ html {
   border-radius: 0.375rem;
 }
 
-/* Dot-grid backdrop texture — Hero & "Kenapa VokasIn" only (2-decoration budget). Single
-   CSS background-image, no SVG/JS, so it costs nothing extra to paint or repaint. */
+/* === Batas antar-section: potongan tegas, tanpa blend/fade/mask apa pun (DESIGN.md).
+   Setiap section punya border-t 1px pada elemen <section> di page.tsx (hairline murni,
+   tidak ada elemen/pseudo-element transisi terpisah). Tekstur latar per section (di
+   bawah) berhenti total di dalam section-nya sendiri via overflow-hidden pada parent. */
+
+/* Dot-grid backdrop texture — Hero & FAQ (bookend awal/akhir halaman terang). Single CSS
+   background-image, no SVG/JS. Flat opacity, no edge mask — containment datang dari
+   overflow-hidden pada section pembungkus, bukan dari mask-image pada tekstur sendiri. */
 .dot-grid {
   background-image: radial-gradient(circle at 1px 1px, var(--color-neutral-400) 1.5px, transparent 0);
   background-size: 28px 28px;
-  opacity: 0.35;
-  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 80%);
+  opacity: 0.12;
+}
+
+/* Hairline grid backdrop texture — Masalah & Cara Kerja. Garis tipis horizontal+vertikal,
+   spacing lebih lebar dari dot-grid supaya kedua section terang tidak terasa identik. */
+.hairline-grid {
+  background-image:
+    linear-gradient(to right, var(--color-neutral-400) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-neutral-400) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.08;
 }
 
 @media (prefers-reduced-transparency: reduce) {

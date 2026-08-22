@@ -13,11 +13,95 @@ ON CONFLICT (id) DO NOTHING;
 -- JANGAN simpan plaintext di file ini.
 INSERT INTO guru (id, nama, program_keahlian_id, email, password_hash, role) VALUES
   ('guru-01', 'Siti Rahmawati, S.Kom.', 'pk-tkj', 'siti.rahmawati@smk.belajar.id',
-   'bc4a7e52d33f1a2af95e1fbdb3e01b10:793c25df17a00a0491d9335ad11d98e339e8949adf03bbb68f3fffa299ec64748074b5c3194326ae308f83241a5f0b51c4540d613e913a88a9729eb1f386b244',
+   '38a25721bb1ae148696d711d3b4d448a:e8a4ae599d8e096efe6289c22ced67c0bf5d1b728c85ff30f13e40c091cad503d3e2fb33d650de0699dd283e49f8e9163871dec7da3a5106b6171dc057f64c2d',
    'guru_produktif'),
   ('guru-02', 'Bambang Wijaya, S.T.', 'pk-rpl', 'bambang.wijaya@smk.belajar.id',
-   'e9c4742823d8ab2510208b5de9303cf7:3f5b62d38e65cdb4ed396f6b0a8055b4344a3b31d86c68df4a21e40326c849f7e9fbc1b40df7de7d0d5ffe26f6bf665bf250a6e4895d04df8bccb9fb562628e1',
+   '9966e6a2a0543b59b7290a2e89b386a1:9165b5d621ae012ea9beb45206399245712cd15333be4fc377188a9cc5cd5b34b28b8b61954f077955340ee640a3a87bfb9c4effd88babf828652cf31a0dfbf4',
    'kaprogli')
+ON CONFLICT (id) DO NOTHING;
+
+-- Rujukan primer: HANYA 7 unit yang sudah diverifikasi manual terhadap PDF
+-- SKKNI asli (lihat catatan provenance di lib/seed-data.ts) — bukan seluruh
+-- 171 unit hasil parser mentah di data/skkni-parsed.json, yang sebagian besar
+-- masih parsing_uncertain. Disalin persis dari lib/seed-data.ts.
+INSERT INTO dokumen_skkni (id, nomor) VALUES
+  ('doc-22-2019', 'Kepmenaker No. 22 Tahun 2019'),
+  ('doc-300-2020', 'Kepmenaker No. 300 Tahun 2020'),
+  ('doc-103-2026', 'Kepmenaker No. 103 Tahun 2026'),
+  ('doc-102-2023', 'Kepmenaker No. 102 Tahun 2023')
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO unit_kompetensi (id, kode_unit, judul_unit, dokumen_skkni_id, sumber, program_keahlian_id) VALUES
+  ('uk-01', 'ICTTEN5201A', 'Instal, Konfigurasi dan Uji Server', 'doc-22-2019', 'Kepmenaker No. 22 Tahun 2019, unit ICTTEN5201A, hal. 1169–1175', 'pk-tkj'),
+  ('uk-02', 'ICTNWK506', 'Melakukan Konfigurasi, Verifikasi, dan Mengatasi Masalah Tautan WAN dan Layanan IP di Jaringan Perusahaan Menengah', 'doc-22-2019', 'Kepmenaker No. 22 Tahun 2019, unit ICTNWK506, hal. 1135–1143', 'pk-tkj'),
+  ('uk-03', 'J.61IOT01.005.1', 'Menguji Coba Device IoT', 'doc-300-2020', 'Kepmenaker No. 300 Tahun 2020, unit J.61IOT01.005.1, hal. 40–43', 'pk-tkj'),
+  ('uk-04', 'K.62AIN00.001.2', 'Menentukan Sasaran Bisnis Solusi Artificial Intelligence', 'doc-103-2026', 'Kepmenaker No. 103 Tahun 2026, unit K.62AIN00.001.2, hal. 16–18', 'pk-belum-ditentukan'),
+  ('uk-05', 'J.63HOS00.003.2', 'Menjabarkan Berbagai Jenis Perangkat Keras Cloud Computing', 'doc-102-2023', 'Kepmenaker No. 102 Tahun 2023, unit J.63HOS00.003.2, hal. 26–28', 'pk-tkj'),
+  ('uk-06', 'J.63HOS00.018.2', 'Melakukan Antisipasi Gangguan dan Ancaman terhadap Sistem Cloud', 'doc-102-2023', 'Kepmenaker No. 102 Tahun 2023, unit J.63HOS00.018.2, hal. 83–86', 'pk-tkj'),
+  ('uk-07', 'ICAPRG502A', 'Mengelola Sebuah Proyek Menggunakan Software Management Tools', 'doc-22-2019', 'Kepmenaker No. 22 Tahun 2019, unit ICAPRG502A, hal. 1112–1118', 'pk-rpl')
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO elemen_kompetensi (id, unit_kompetensi_id, judul) VALUES
+  ('ek-01', 'uk-01', 'Persiapkan untuk memasang server'),
+  ('ek-02', 'uk-01', 'Instal dan konfigurasi server'),
+  ('ek-03', 'uk-02', 'Melakukan konfigurasikan tautan WAN'),
+  ('ek-04', 'uk-02', 'Mengatasi masalah tautan WAN pada perusahaan menengah'),
+  ('ek-05', 'uk-03', 'Melakukan persiapan uji coba'),
+  ('ek-06', 'uk-03', 'Melakukan pengujian desain aplikasi'),
+  ('ek-07', 'uk-04', 'Mengidentifikasi permasalahan dan sasaran bisnis proyek Artificial Intelligence (AI)'),
+  ('ek-08', 'uk-04', 'Menyusun kriteria kesuksesan dari sasaran bisnis proyek AI'),
+  ('ek-09', 'uk-05', 'Mengidentifikasi fungsi perangkat keras untuk sistem cloud'),
+  ('ek-10', 'uk-05', 'Menguraikan jenis perangkat yang memenuhi fungsi cloud'),
+  ('ek-11', 'uk-06', 'Mendeteksi gangguan dan ancaman terhadap keamanan sistem cloud secara berkelanjutan'),
+  ('ek-12', 'uk-06', 'Menyusun rencana pencegahan terhadap gangguan dan ancaman pada sistem cloud'),
+  ('ek-13', 'uk-06', 'Mendokumentasi potensi dan rencana pencegahan terhadap gangguan dan ancaman terhadap sistem cloud'),
+  ('ek-14', 'uk-07', 'Mengidentifikasi perangkat lunak alat manajemen'),
+  ('ek-15', 'uk-07', 'Melaksanakan alat manajemen perangkat lunak'),
+  ('ek-16', 'uk-07', 'Memantau penggunaan alat manajemen perangkat lunak')
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO kriteria_unjuk_kerja (id, elemen_kompetensi_id, kode, teks) VALUES
+  ('kuk-01', 'ek-01', '1.4', 'Pilih server yang paling sesuai dengan refeensi ke aplikasi server dan fitur server yang diperlukan.'),
+  ('kuk-02', 'ek-01', '1.11', 'Buat dan dokumentasikan rencana penerapan.'),
+  ('kuk-03', 'ek-02', '2.2', 'Instal dan konfigurasikan server seperti yang dipersyaratkan oleh persyaratan teknis dan spesifikasi fungsional.'),
+  ('kuk-04', 'ek-02', '2.4', 'Hubungkan kembali dan konfigurasi ulang perangkat konektivitas yang relevan.'),
+  ('kuk-05', 'ek-03', '2.1', 'Menentukan metode yang berbeda untuk menghubungkan ke jaringan area luas (WAN).'),
+  ('kuk-06', 'ek-03', '2.4', 'Menentukan teknologi jaringan pribadi virtual (VPN).'),
+  ('kuk-07', 'ek-04', '5.1', 'Mengatasi masalah implementasi WAN.'),
+  ('kuk-12', 'ek-04', '5.2', 'Memperbaiki masalah WAN.'),
+  ('kuk-08', 'ek-05', '1.1', 'Jenis jaringan dan detail spesifikasi sistem IoT yang akan diujicoba diidentifikasi.'),
+  ('kuk-09', 'ek-05', '1.2', 'Device IoT disiapkan untuk persiapan uji coba.'),
+  ('kuk-13', 'ek-05', '1.3', 'Alur kerja aplikasi beserta panduannya disiapkan sebelum uji coba dimulai.'),
+  ('kuk-14', 'ek-05', '1.4', 'Peralatan antistatic untuk persiapan uji coba disiapkan sesuai kebutuhan.'),
+  ('kuk-10', 'ek-06', '2.1', 'Device IoT yang sesuai dengan rancangan desain sesuai cetak biru disiapkan sesuai desain.'),
+  ('kuk-11', 'ek-06', '2.2', 'Aplikasi yang tertanam sesuai dengan tujuan nya disiapkan sesuai desain.'),
+  ('kuk-15', 'ek-07', '1.1', 'Latar belakang, tujuan, dan permasalahan bisnis proyek AI diidentifikasi sesuai dengan prosedur bisnis AI yang berlaku.'),
+  ('kuk-16', 'ek-07', '1.2', 'Poin-poin sasaran bisnis Solusi AI diidentifikasi sesuai dengan permasalahan bisnis proyek AI.'),
+  ('kuk-17', 'ek-08', '2.1', 'Elemen-elemen metrik kesuksesan dibuat berdasarkan sasaran bisnis Solusi AI.'),
+  ('kuk-18', 'ek-08', '2.2', 'Kriteria kesuksesan dari sasaran bisnis proyek AI dipilih sesuai dengan objektif bisnis Solusi AI.'),
+  ('kuk-19', 'ek-09', '1.1', 'Berbagai perangkat keras dideskripsikan sesuai dengan pemanfaatan pada cloud.'),
+  ('kuk-20', 'ek-09', '1.2', 'Perangkat keras penyimpan data diuraikan sesuai dengan pemanfaatan pada cloud.'),
+  ('kuk-21', 'ek-09', '1.3', 'Perangkat interkoneksi dalam jaringan wireless dan wire diuraikan sesuai dengan pemanfaatan pada cloud.'),
+  ('kuk-22', 'ek-10', '2.1', 'Berbagai penggunaan jenis perangkat keras pada sistem cloud computing dideskripsikan sesuai dengan fungsinya pada sistem cloud.'),
+  ('kuk-23', 'ek-10', '2.2', 'Berbagai jenis perangkat keras penyimpanan data (hard disk/SSD, dlsb) dideskripsikan sesuai dengan jenis fungsinya pada pada sistem cloud.'),
+  ('kuk-24', 'ek-10', '2.3', 'Berbagai router dan switch pada sistem cloud diuraikan.'),
+  ('kuk-25', 'ek-11', '1.1', 'Potensi gangguan dan ancaman terhadap keamanan sistem cloud diidentifikasi sesuai dengan model risiko yang ada.'),
+  ('kuk-26', 'ek-11', '1.2', 'Kondisi keamanan layanan sistem cloud yang teridentifikasi dianalisis secara lengkap meliputi aspek teknis dan non-teknis.'),
+  ('kuk-27', 'ek-12', '2.1', 'Strategi pemulihan sistem cloud setelah kejadian gangguan dan ancaman ditentukan sesuai kebutuhan organisasi.'),
+  ('kuk-28', 'ek-12', '2.2', 'Pemulihan sistem cloud setelah kejadian gangguan dan ancaman dilakukan sesuai dengan strategi pemulihan sistem cloud.'),
+  ('kuk-29', 'ek-12', '2.3', 'Pencegahan terhadap gangguan dan ancaman pada sistem cloud dilakukan secara berkelanjutan.'),
+  ('kuk-30', 'ek-13', '3.1', 'Laporan hasil analisis data gangguan dan ancaman keamanan sistem cloud disusun secara lengkap sesuai dengan aspek teknis dan non teknis.'),
+  ('kuk-31', 'ek-13', '3.2', 'Rencana pencegahan dan pemulihan sistem cloud setelah kejadian gangguan dan ancaman disusun secara lengkap sesuai dengan Service Level Agreement (SLA).'),
+  ('kuk-32', 'ek-14', '1.1', 'Menentukan perangkat lunak metodologi pengembangan yang akan digunakan untuk pengembangan proyek.'),
+  ('kuk-33', 'ek-14', '1.2', 'Menentukan perangkat lunak proyek-manajemen yang akan digunakan untuk mengelola pengembangan proyek.'),
+  ('kuk-34', 'ek-14', '1.3', 'Menentukan sistem kontrol-sumber untuk mengelola kode sumber dan menangani konflik.'),
+  ('kuk-35', 'ek-14', '1.4', 'Menentukan perangkat lunak kolaborasi untuk digunakan dalam pengembangan proyek.'),
+  ('kuk-36', 'ek-15', '2.1', 'Membuat rencana proyek sesuai dengan spesifikasi kebutuhan perangkat lunak.'),
+  ('kuk-37', 'ek-15', '2.2', 'Menentukan prosedur kontrol-sumber.'),
+  ('kuk-38', 'ek-15', '2.3', 'Membuat lingkungan kolaborasi.'),
+  ('kuk-39', 'ek-16', '3.1', 'Memantau dan menyesuaikan rencana proyek untuk mempertahankan kemajuan sesuai dengan rencana proyek.'),
+  ('kuk-40', 'ek-16', '3.2', 'Memastikan kode dengan benar dimasukkan ke dalam sistem kontrol sumber.'),
+  ('kuk-41', 'ek-16', '3.3', 'Memantau lingkungan kolaborasi dan menyelesaikan masalah di mana diperlukan.')
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO saran_topik (id, modul_ajar_draft_id, unit_kompetensi_id, elemen_kompetensi_id, judul, isi_ekstraktif, alat_dibutuhkan, skor_keyakinan) VALUES

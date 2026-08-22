@@ -13,9 +13,12 @@ export async function loginAction(_prevState: string | undefined, formData: Form
   if (!guru || !verifyPassword(password, guru.passwordHash)) {
     return "Email atau kata sandi salah.";
   }
+  if (!guru.aktif) {
+    return "Akun ini sudah dinonaktifkan.";
+  }
 
   await createSession(guru.id, guru.role);
-  redirect(guru.role === "kaprogli" ? "/kaprogli" : "/guru");
+  redirect(guru.role === "kaprogli" ? "/kaprogli" : guru.role === "admin" ? "/admin" : "/guru");
 }
 
 export async function logoutAction() {

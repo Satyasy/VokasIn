@@ -6,7 +6,7 @@ export interface ProgramKeahlian {
   singkatan: string;
 }
 
-export type Role = "guru_produktif" | "kaprogli";
+export type Role = "guru_produktif" | "kaprogli" | "admin";
 
 export interface Guru {
   id: string;
@@ -14,6 +14,41 @@ export interface Guru {
   programKeahlianId: string;
   email: string;
   role: Role;
+  aktif: boolean;
+}
+
+export interface DokumenSkkni {
+  id: string;
+  nomor: string;
+  namaFile: string | null;
+  diuploadPada: string | null;
+  diuploadOleh: string | null;
+}
+
+export interface KandidatKriteriaUnjukKerja {
+  kode: string;
+  teks: string;
+}
+
+export interface KandidatElemenKompetensi {
+  judul: string;
+  kriteriaUnjukKerja: KandidatKriteriaUnjukKerja[];
+}
+
+export type StatusKandidat = "menunggu" | "dikonfirmasi" | "ditolak";
+
+export interface UnitKompetensiKandidat {
+  id: string;
+  dokumenSkkniId: string;
+  kodeUnit: string;
+  judulUnit: string;
+  sumber: string;
+  programKeahlianId: string;
+  teksMentah: string;
+  elemenKompetensi: KandidatElemenKompetensi[];
+  parsingUncertain: boolean;
+  catatan: string | null;
+  status: StatusKandidat;
 }
 
 export interface KriteriaUnjukKerja {

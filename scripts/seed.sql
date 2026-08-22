@@ -20,6 +20,15 @@ INSERT INTO guru (id, nama, program_keahlian_id, email, password_hash, role) VAL
    'kaprogli')
 ON CONFLICT (id) DO NOTHING;
 
+-- Akun admin: HANYA lewat seed, tidak ada jalur pendaftaran publik
+-- (CLAUDE.md Bagian A). Password plaintext dilaporkan sekali di laporan sesi
+-- ini — JANGAN disimpan di file ini.
+INSERT INTO guru (id, nama, program_keahlian_id, email, password_hash, role) VALUES
+  ('admin-01', 'Admin VokasIn', 'pk-belum-ditentukan', 'admin@smk.belajar.id',
+   '1bd060bb0c064c6cdb5f7a0fad608a6f:0a34ae30f9863fcc80a953ba2a8a9de7a9c5f1a51f77af1dfb4868c1c9de8d398747596a4337a664e4a249981ad3e0574335e19975412219ac05bcac7aebe1cf',
+   'admin')
+ON CONFLICT (id) DO NOTHING;
+
 -- Rujukan primer: HANYA 7 unit yang sudah diverifikasi manual terhadap PDF
 -- SKKNI asli (lihat catatan provenance di lib/seed-data.ts) — bukan seluruh
 -- 171 unit hasil parser mentah di data/skkni-parsed.json, yang sebagian besar

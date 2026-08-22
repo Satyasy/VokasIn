@@ -12,6 +12,13 @@ const links = [
   { href: "#faq", label: "FAQ" },
 ];
 
+// Rute publik (bukan section landing page) — bisa diakses siapa pun tanpa
+// login, karenanya pakai Link biasa, bukan anchor scroll seperti `links` di atas.
+const publicToolLinks = [
+  { href: "/roadmap", label: "Roadmap Kompetensi" },
+  { href: "/jelajah-kompetensi", label: "Jelajah Kompetensi" },
+];
+
 export function LandingNavbar() {
   const [scrolled, setScrolled] = useState(false);
 
@@ -45,6 +52,16 @@ export function LandingNavbar() {
               >
                 {link.label}
               </a>
+            </li>
+          ))}
+          {publicToolLinks.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </Link>
             </li>
           ))}
         </ul>

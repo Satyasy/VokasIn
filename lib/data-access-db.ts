@@ -3,9 +3,22 @@
 // util/types) yang tidak ada di bundle browser; memisahkan file ini dari
 // lib/data-access.ts (yang diimpor components/guru/susun-modul-client.tsx,
 // sebuah client component) mencegah "pg" ikut ter-bundle ke client.
-import type { Guru, KategoriAlat, KoreksiGuru, Role, SumberDayaLab } from "./types";
+import { spawn } from "child_process";
+import { mkdir, readFile, writeFile } from "fs/promises";
+import path from "path";
+import type {
+  DokumenSkkni,
+  Guru,
+  KandidatElemenKompetensi,
+  KategoriAlat,
+  KoreksiGuru,
+  Role,
+  SumberDayaLab,
+  UnitKompetensiKandidat,
+} from "./types";
 import { setLabCache, findLabItemInCache, setGuruCache } from "./data-access";
 import { pool } from "./db";
+import { hashPassword } from "./auth";
 import { embedPassage, embedQuery, toVectorLiteral, EMBEDDING_MODEL } from "./embedding";
 
 async function loadGuruCacheFromDb(): Promise<void> {
@@ -15,7 +28,8 @@ async function loadGuruCacheFromDb(): Promise<void> {
     program_keahlian_id: string;
     email: string;
     role: Role;
-  }>("SELECT id, nama, program_keahlian_id, email, role FROM guru ORDER BY id");
+    aktif: boolean;
+  }>("SELECT id, nama, program_keahlian_id, email, role, aktif FROM guru ORDER BY id");
   setGuruCache(
     rows.map((r) => ({
       id: r.id,
@@ -23,6 +37,7 @@ async function loadGuruCacheFromDb(): Promise<void> {
       programKeahlianId: r.program_keahlian_id,
       email: r.email,
       role: r.role,
+      aktif: r.aktif,
     }))
   );
 }
@@ -48,8 +63,9 @@ export async function getGuruAuthByEmail(email: string): Promise<GuruAuthRow | u
     email: string;
     password_hash: string;
     role: Role;
+    aktif: boolean;
   }>(
-    "SELECT id, nama, program_keahlian_id, email, password_hash, role FROM guru WHERE email = $1",
+    "SELECT id, nama, program_keahlian_id, email, password_hash, role, aktif FROM guru WHERE email = $1",
     [email]
   );
   const row = rows[0];
@@ -60,8 +76,298 @@ export async function getGuruAuthByEmail(email: string): Promise<GuruAuthRow | u
     programKeahlianId: row.program_keahlian_id,
     email: row.email,
     role: row.role,
+    aktif: row.aktif,
     passwordHash: row.password_hash,
   };
+}
+
+// === Admin: dashboard (Bagian C) ===
+
+export interface AdminDashboardStats {
+  totalDokumen: number;
+  unitTerverifikasi: number;
+  kandidatMenunggu: number;
+  totalPengguna: number;
+}
+
+export async function getAdminDashboardStats(): Promise<AdminDashboardStats> {
+  const [dokumen, unit, kandidat, pengguna] = await Promise.all([
+    pool.query<{ count: string }>("SELECT count(*)::text FROM dokumen_skkni"),
+    pool.query<{ count: string }>("SELECT count(*)::text FROM unit_kompetensi"),
+    pool.query<{ count: string }>(
+      "SELECT count(*)::text FROM unit_kompetensi_kandidat WHERE status = 'menunggu'"
+    ),
+    pool.query<{ count: string }>("SELECT count(*)::text FROM guru WHERE aktif = TRUE"),
+  ]);
+  return {
+    totalDokumen: Number(dokumen.rows[0].count),
+    unitTerverifikasi: Number(unit.rows[0].count),
+    kandidatMenunggu: Number(kandidat.rows[0].count),
+    totalPengguna: Number(pengguna.rows[0].count),
+  };
+}
+
+// === Admin: upload & parsing SKKNI (Bagian D, Tahap 1) ===
+
+export async function listDokumenSkkni(): Promise<DokumenSkkni[]> {
+  const { rows } = await pool.query<{
+    id: string;
+    nomor: string;
+    nama_file: string | null;
+    diupload_pada: Date | null;
+    diupload_oleh: string | null;
+  }>("SELECT id, nomor, nama_file, diupload_pada, diupload_oleh FROM dokumen_skkni ORDER BY diupload_pada DESC NULLS LAST, id");
+  return rows.map((r) => ({
+    id: r.id,
+    nomor: r.nomor,
+    namaFile: r.nama_file,
+    diuploadPada: r.diupload_pada ? r.diupload_pada.toISOString() : null,
+    diuploadOleh: r.diupload_oleh,
+  }));
+}
+
+const RAW_DIR = path.join(process.cwd(), "data", "skkni-raw");
+
+interface ParsedUnit {
+  kodeUnit: string;
+  judulUnit: string;
+  // scripts/parse_skkni.py emits "kuk" (bukan "kriteriaUnjukKerja") per elemen —
+  // dipetakan ke bentuk KandidatElemenKompetensi saat disimpan, lihat toKandidatElemen().
+  elemenKompetensi: { judul: string; kuk: { kode: string; teks: string; parsing_uncertain: boolean }[] }[];
+  halaman: { mulai: number; selesai: number };
+  sumberFile: string;
+  parsing_uncertain: boolean;
+  catatan: string;
+}
+
+function toKandidatElemen(units: ParsedUnit["elemenKompetensi"]): KandidatElemenKompetensi[] {
+  return units.map((e) => ({
+    judul: e.judul,
+    kriteriaUnjukKerja: e.kuk.map((k) => ({ kode: k.kode, teks: k.teks })),
+  }));
+}
+
+// Picu ulang scripts/parse_skkni.py (JANGAN tulis parser baru, CLAUDE.md
+// Bagian D). Parser memindai seluruh data/skkni-raw/ sekaligus — kita saring
+// hasilnya ke unit yang sourceFile-nya cocok dengan file yang baru diunggah.
+function runParser(): Promise<{ units: ParsedUnit[] }> {
+  return new Promise((resolve, reject) => {
+    const proc = spawn("python", [path.join(process.cwd(), "scripts", "parse_skkni.py")]);
+    let stderr = "";
+    proc.stderr.on("data", (d) => (stderr += d.toString()));
+    proc.on("error", reject);
+    proc.on("close", async (code) => {
+      if (code !== 0) return reject(new Error(`parse_skkni.py gagal: ${stderr}`));
+      const raw = await readFile(path.join(process.cwd(), "data", "skkni-parsed.json"), "utf8");
+      resolve(JSON.parse(raw));
+    });
+  });
+}
+
+// Tahap 1: simpan file, catat metadata dokumen, jalankan parser, simpan hasil
+// sebagai KANDIDAT (bukan unit_kompetensi live) — guru tidak pernah melihatnya
+// sampai admin mengonfirmasi di /admin/skkni/kandidat.
+export async function uploadDokumenSkkni(
+  file: File,
+  nomorDokumen: string,
+  adminId: string
+): Promise<{ dokumenId: string; kandidatBaru: number }> {
+  await mkdir(RAW_DIR, { recursive: true });
+  const fileName = file.name;
+  const filePath = path.join(RAW_DIR, fileName);
+  await writeFile(filePath, Buffer.from(await file.arrayBuffer()));
+
+  const dokumenId = `doc-upload-${crypto.randomUUID().slice(0, 8)}`;
+  await pool.query(
+    `INSERT INTO dokumen_skkni (id, nomor, nama_file, diupload_pada, diupload_oleh)
+     VALUES ($1, $2, $3, now(), $4)`,
+    [dokumenId, nomorDokumen, fileName, adminId]
+  );
+
+  const { units } = await runParser();
+  const unitsForFile = units.filter((u) => u.sumberFile === fileName);
+
+  // Re-upload file yang sama: buang kandidat 'menunggu' lama dari dokumen ini
+  // supaya tidak menumpuk duplikat setiap kali admin mengulang unggahan.
+  await pool.query(
+    `DELETE FROM unit_kompetensi_kandidat WHERE dokumen_skkni_id = $1 AND status = 'menunggu'`,
+    [dokumenId]
+  );
+
+  for (const u of unitsForFile) {
+    const sumber = `${nomorDokumen}, unit ${u.kodeUnit}, hal. ${u.halaman.mulai}-${u.halaman.selesai}`;
+    const elemen = toKandidatElemen(u.elemenKompetensi);
+    await pool.query(
+      `INSERT INTO unit_kompetensi_kandidat
+         (id, dokumen_skkni_id, kode_unit, judul_unit, sumber, program_keahlian_id, teks_mentah, elemen_kompetensi, parsing_uncertain, catatan, status)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'menunggu')`,
+      [
+        `kd-${crypto.randomUUID().slice(0, 8)}`,
+        dokumenId,
+        u.kodeUnit,
+        u.judulUnit,
+        sumber,
+        "pk-belum-ditentukan",
+        elemen.map((e) => e.judul).join("\n") || "(lihat teks mentah — skema B tidak menghasilkan elemen terstruktur)",
+        JSON.stringify(elemen),
+        u.parsing_uncertain,
+        u.catatan,
+      ]
+    );
+  }
+
+  return { dokumenId, kandidatBaru: unitsForFile.length };
+}
+
+// === Admin: tinjau kandidat (Bagian D, Tahap 2) ===
+
+interface KandidatRow {
+  id: string;
+  dokumen_skkni_id: string;
+  kode_unit: string;
+  judul_unit: string;
+  sumber: string;
+  program_keahlian_id: string;
+  teks_mentah: string;
+  elemen_kompetensi: KandidatElemenKompetensi[];
+  parsing_uncertain: boolean;
+  catatan: string | null;
+  status: UnitKompetensiKandidat["status"];
+}
+
+function mapKandidat(r: KandidatRow): UnitKompetensiKandidat {
+  return {
+    id: r.id,
+    dokumenSkkniId: r.dokumen_skkni_id,
+    kodeUnit: r.kode_unit,
+    judulUnit: r.judul_unit,
+    sumber: r.sumber,
+    programKeahlianId: r.program_keahlian_id,
+    teksMentah: r.teks_mentah,
+    elemenKompetensi: r.elemen_kompetensi,
+    parsingUncertain: r.parsing_uncertain,
+    catatan: r.catatan,
+    status: r.status,
+  };
+}
+
+export async function listKandidat(status: UnitKompetensiKandidat["status"] = "menunggu"): Promise<UnitKompetensiKandidat[]> {
+  const { rows } = await pool.query<KandidatRow>(
+    `SELECT id, dokumen_skkni_id, kode_unit, judul_unit, sumber, program_keahlian_id,
+            teks_mentah, elemen_kompetensi, parsing_uncertain, catatan, status
+     FROM unit_kompetensi_kandidat WHERE status = $1 ORDER BY dokumen_skkni_id, kode_unit`,
+    [status]
+  );
+  return rows.map(mapKandidat);
+}
+
+export async function getKandidatById(id: string): Promise<UnitKompetensiKandidat | undefined> {
+  const { rows } = await pool.query<KandidatRow>(
+    `SELECT id, dokumen_skkni_id, kode_unit, judul_unit, sumber, program_keahlian_id,
+            teks_mentah, elemen_kompetensi, parsing_uncertain, catatan, status
+     FROM unit_kompetensi_kandidat WHERE id = $1`,
+    [id]
+  );
+  return rows[0] ? mapKandidat(rows[0]) : undefined;
+}
+
+// Update field kandidat sebelum konfirmasi ("Edit lalu Konfirmasi").
+export async function editKandidat(
+  id: string,
+  patch: Pick<UnitKompetensiKandidat, "kodeUnit" | "judulUnit" | "sumber" | "programKeahlianId">
+): Promise<void> {
+  await pool.query(
+    `UPDATE unit_kompetensi_kandidat SET kode_unit = $2, judul_unit = $3, sumber = $4, program_keahlian_id = $5
+     WHERE id = $1`,
+    [id, patch.kodeUnit, patch.judulUnit, patch.sumber, patch.programKeahlianId]
+  );
+}
+
+// Satu-satunya jalur yang menulis ke unit_kompetensi live — SELALU dari baris
+// kandidat yang sudah ada (CLAUDE.md Bagian D poin 3-4: tidak ada tombol
+// konfirmasi massal, satu per satu).
+export async function confirmKandidat(id: string): Promise<void> {
+  const kandidat = await getKandidatById(id);
+  if (!kandidat || kandidat.status !== "menunggu") return;
+
+  const unitId = `uk-${crypto.randomUUID().slice(0, 8)}`;
+  await pool.query(
+    `INSERT INTO unit_kompetensi (id, kode_unit, judul_unit, dokumen_skkni_id, sumber, program_keahlian_id)
+     VALUES ($1, $2, $3, $4, $5, $6)`,
+    [unitId, kandidat.kodeUnit, kandidat.judulUnit, kandidat.dokumenSkkniId, kandidat.sumber, kandidat.programKeahlianId]
+  );
+  for (const elemen of kandidat.elemenKompetensi) {
+    const elemenId = `ek-${crypto.randomUUID().slice(0, 8)}`;
+    await pool.query(
+      `INSERT INTO elemen_kompetensi (id, unit_kompetensi_id, judul) VALUES ($1, $2, $3)`,
+      [elemenId, unitId, elemen.judul]
+    );
+    for (const kuk of elemen.kriteriaUnjukKerja) {
+      await pool.query(
+        `INSERT INTO kriteria_unjuk_kerja (id, elemen_kompetensi_id, kode, teks) VALUES ($1, $2, $3, $4)`,
+        [`kuk-${crypto.randomUUID().slice(0, 8)}`, elemenId, kuk.kode, kuk.teks]
+      );
+    }
+  }
+  await pool.query(`UPDATE unit_kompetensi_kandidat SET status = 'dikonfirmasi' WHERE id = $1`, [id]);
+}
+
+export async function rejectKandidat(id: string): Promise<void> {
+  await pool.query(`UPDATE unit_kompetensi_kandidat SET status = 'ditolak' WHERE id = $1 AND status = 'menunggu'`, [id]);
+}
+
+// === Admin: manajemen pengguna (Bagian E) ===
+
+export async function listAllGuru(): Promise<Guru[]> {
+  const { rows } = await pool.query<{
+    id: string;
+    nama: string;
+    program_keahlian_id: string;
+    email: string;
+    role: Role;
+    aktif: boolean;
+  }>("SELECT id, nama, program_keahlian_id, email, role, aktif FROM guru ORDER BY nama");
+  return rows.map((r) => ({
+    id: r.id,
+    nama: r.nama,
+    programKeahlianId: r.program_keahlian_id,
+    email: r.email,
+    role: r.role,
+    aktif: r.aktif,
+  }));
+}
+
+// Password acak ditampilkan SEKALI ke admin (dikembalikan di sini), hanya
+// hash-nya yang disimpan (lib/auth.ts hashPassword — TIDAK ada mekanisme
+// hashing kedua, CLAUDE.md Bagian E poin 3). Tidak ada email otomatis.
+export async function createGuru(input: {
+  nama: string;
+  email: string;
+  role: Role;
+  programKeahlianId: string;
+  password: string;
+}): Promise<Guru> {
+  const id = `guru-${crypto.randomUUID().slice(0, 8)}`;
+  const passwordHash = hashPassword(input.password);
+  await pool.query(
+    `INSERT INTO guru (id, nama, program_keahlian_id, email, password_hash, role, aktif)
+     VALUES ($1, $2, $3, $4, $5, $6, TRUE)`,
+    [id, input.nama, input.programKeahlianId, input.email, passwordHash, input.role]
+  );
+  await ensureGuruCacheFresh();
+  return { id, nama: input.nama, programKeahlianId: input.programKeahlianId, email: input.email, role: input.role, aktif: true };
+}
+
+export async function updateGuruRole(id: string, role: Role): Promise<void> {
+  await pool.query("UPDATE guru SET role = $2 WHERE id = $1", [id, role]);
+  await ensureGuruCacheFresh();
+}
+
+// Soft-delete (bukan DELETE) — riwayat koreksi_guru/modul_ajar_draft milik
+// akun ini tetap punya guru_id yang valid (CLAUDE.md Bagian E poin 2).
+export async function setGuruAktif(id: string, aktif: boolean): Promise<void> {
+  await pool.query("UPDATE guru SET aktif = $2 WHERE id = $1", [id, aktif]);
+  await ensureGuruCacheFresh();
 }
 
 async function loadLabCacheFromDb(): Promise<void> {

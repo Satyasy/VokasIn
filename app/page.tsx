@@ -11,6 +11,8 @@ import {
   Landmark,
   Wallet,
   FileStack,
+  Map,
+  Compass,
 } from "lucide-react";
 import { LandingNavbar } from "@/components/landing/navbar";
 import { LandingFooter } from "@/components/landing/footer";
@@ -66,6 +68,23 @@ const alasanKecil = [
     icon: AlertTriangle,
     title: "Skill di luar standar tidak dibuang",
     body: "Kompetensi belum tercatat SKKNI ditandai sebagai gap, bukan hilang begitu saja.",
+  },
+];
+
+const alatPublik = [
+  {
+    icon: Map,
+    title: "Roadmap Kompetensi",
+    body: "Susuri unit kompetensi SKKNI per program keahlian dan tandai yang sudah Anda kuasai.",
+    href: "/roadmap",
+    cta: "Buka roadmap",
+  },
+  {
+    icon: Compass,
+    title: "Jelajah Kompetensi",
+    body: "Tempelkan ringkasan pengalaman Anda, temukan unit kompetensi SKKNI yang berkaitan.",
+    href: "/jelajah-kompetensi",
+    cta: "Mulai menjelajah",
   },
 ];
 
@@ -303,6 +322,45 @@ export default function Home() {
               </RevealGroup>
             </div>
           </SectionContainer>
+        </section>
+
+        {/* 4b. UNTUK SISWA JUGA — section terang, di antara "Kenapa VokasIn" (dark) dan
+            "Regulasi & Dana" (dark) supaya keduanya tidak bertumpuk langsung. Tidak ada
+            warna baru, tidak ada titik glass tambahan (batas 2 sudah dipakai nav + CTA). */}
+        <section
+          id="untuk-siswa"
+          className="relative overflow-hidden border-t border-neutral-200/50 bg-neutral-100"
+        >
+          <HairlineGridTexture />
+          <Reveal>
+          <SectionContainer className="py-16 sm:py-20">
+            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+              Bukan cuma untuk guru.
+            </h2>
+            <p className="mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
+              Dua alat berbasis SKKNI ini terbuka untuk siapa saja, tanpa akun.
+            </p>
+
+            <RevealGroup className="mt-8 grid gap-4 sm:grid-cols-2" stagger={0.1}>
+              {alatPublik.map((alat) => (
+                <RevealItem key={alat.href}>
+                  <div className="card-hover flex h-full flex-col rounded-xl border border-border bg-card p-6">
+                    <alat.icon className="card-hover-icon size-7 text-slime-lime-700" aria-hidden />
+                    <CardTitle className="mt-3 text-lg">{alat.title}</CardTitle>
+                    <CardDescription className="mt-2">{alat.body}</CardDescription>
+                    <Link
+                      href={alat.href}
+                      className="mt-4 inline-flex items-center gap-1.5 self-start text-sm font-medium text-slime-lime-700 hover:text-slime-lime-800"
+                    >
+                      {alat.cta}
+                      <ArrowRight className="size-4" aria-hidden />
+                    </Link>
+                  </div>
+                </RevealItem>
+              ))}
+            </RevealGroup>
+          </SectionContainer>
+          </Reveal>
         </section>
 
         {/* 5. REGULASI & DANA — dark tapi tint hijau (slime-lime-950), beda nuansa dari "Kenapa VokasIn" (neutral-950) */}

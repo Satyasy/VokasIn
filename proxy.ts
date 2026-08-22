@@ -5,6 +5,7 @@ import { decodeSession, SESSION_COOKIE_NAME } from "@/lib/auth";
 const ROLE_BY_PREFIX = {
   "/guru": "guru_produktif",
   "/kaprogli": "kaprogli",
+  "/admin": "admin",
 } as const;
 
 export function proxy(request: NextRequest) {
@@ -25,5 +26,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/guru/:path*", "/kaprogli/:path*"],
+  matcher: ["/guru/:path*", "/kaprogli/:path*", "/admin/:path*"],
 };

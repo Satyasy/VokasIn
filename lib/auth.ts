@@ -15,6 +15,12 @@ function getSecret(): string {
   return secret;
 }
 
+// Ditampilkan sekali ke admin saat membuat akun (CLAUDE.md Bagian E) — tidak
+// pernah disimpan plaintext, hanya hash-nya (hashPassword di bawah).
+export function generateRandomPassword(): string {
+  return randomBytes(12).toString("base64url");
+}
+
 export function hashPassword(password: string): string {
   const salt = randomBytes(16).toString("hex");
   const hash = scryptSync(password, salt, 64).toString("hex");

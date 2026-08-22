@@ -32,12 +32,48 @@ CREATE TABLE IF NOT EXISTS guru (
   program_keahlian_id TEXT NOT NULL,
   email TEXT NOT NULL UNIQUE,
   password_hash TEXT NOT NULL,
-  role TEXT NOT NULL CHECK (role IN ('guru_produktif', 'kaprogli'))
+  role TEXT NOT NULL CHECK (role IN ('guru_produktif', 'kaprogli', 'admin')),
+  -- Soft-delete: menonaktifkan akun tidak menghapus baris supaya riwayat
+  -- koreksi_guru/modul_ajar_draft milik akun itu tidak yatim (CLAUDE.md Bagian E).
+  aktif BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE IF NOT EXISTS dokumen_skkni (
   id TEXT PRIMARY KEY,
-  nomor TEXT NOT NULL
+  nomor TEXT NOT NULL,
+  -- Metadata unggahan admin (Bagian D). Nullable: 4 baris seed awal
+  -- (doc-22-2019 dst.) tidak pernah diunggah lewat form, hanya dientri manual.
+  nama_file TEXT,
+  diupload_pada TIMESTAMPTZ,
+  diupload_oleh TEXT REFERENCES guru(id)
+);
+
+-- Migrasi idempoten untuk tabel yang sudah ada dari sesi sebelumnya (CREATE
+-- TABLE IF NOT EXISTS di atas tidak mengubah tabel yang sudah ada).
+ALTER TABLE guru DROP CONSTRAINT IF EXISTS guru_role_check;
+ALTER TABLE guru ADD CONSTRAINT guru_role_check CHECK (role IN ('guru_produktif', 'kaprogli', 'admin'));
+ALTER TABLE guru ADD COLUMN IF NOT EXISTS aktif BOOLEAN NOT NULL DEFAULT TRUE;
+ALTER TABLE dokumen_skkni ADD COLUMN IF NOT EXISTS nama_file TEXT;
+ALTER TABLE dokumen_skkni ADD COLUMN IF NOT EXISTS diupload_pada TIMESTAMPTZ;
+ALTER TABLE dokumen_skkni ADD COLUMN IF NOT EXISTS diupload_oleh TEXT REFERENCES guru(id);
+
+-- Kandidat hasil parsing scripts/parse_skkni.py — TERPISAH TOTAL dari
+-- unit_kompetensi live (CLAUDE.md Bagian D): guru tidak pernah melihat baris
+-- di sini. Admin memindahkannya ke unit_kompetensi satu per satu lewat
+-- /admin/skkni/kandidat setelah membandingkan teks_mentah vs hasil parsing.
+CREATE TABLE IF NOT EXISTS unit_kompetensi_kandidat (
+  id TEXT PRIMARY KEY,
+  dokumen_skkni_id TEXT NOT NULL REFERENCES dokumen_skkni(id),
+  kode_unit TEXT NOT NULL,
+  judul_unit TEXT NOT NULL,
+  sumber TEXT NOT NULL,
+  program_keahlian_id TEXT NOT NULL,
+  teks_mentah TEXT NOT NULL,
+  elemen_kompetensi JSONB NOT NULL DEFAULT '[]', -- [{judul, kriteriaUnjukKerja:[{kode,teks}]}]
+  parsing_uncertain BOOLEAN NOT NULL DEFAULT FALSE,
+  catatan TEXT,
+  status TEXT NOT NULL DEFAULT 'menunggu' CHECK (status IN ('menunggu', 'dikonfirmasi', 'ditolak')),
+  dibuat_pada TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 -- corpus_text/embedding/corpus_tsv: lihat lib/embedding.ts & lib/data-access-db.ts.

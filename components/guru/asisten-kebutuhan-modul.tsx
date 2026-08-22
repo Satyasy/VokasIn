@@ -8,24 +8,9 @@ import type { SearchHit } from "@/lib/data-access-db";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { tingkatKecocokan, badgeVariantByTingkatKecocokan } from "@/lib/utils";
 
 const JUMLAH_HASIL_KEBUTUHAN = 8;
-
-type TingkatKecocokan = "Tinggi" | "Sedang" | "Rendah";
-
-function tingkatKecocokan(score: number, skorTertinggi: number): TingkatKecocokan {
-  if (skorTertinggi <= 0) return "Rendah";
-  const rasio = score / skorTertinggi;
-  if (rasio >= 0.7) return "Tinggi";
-  if (rasio >= 0.4) return "Sedang";
-  return "Rendah";
-}
-
-const badgeVariantByTingkat: Record<TingkatKecocokan, "success" | "warning" | "default"> = {
-  Tinggi: "success",
-  Sedang: "warning",
-  Rendah: "default",
-};
 
 // Asisten Kebutuhan Modul — BUKAN chatbot dan TIDAK ADA panggilan generatif:
 // ini hanya memperlebar hybrid search yang sama (searchUnitKompetensiHybrid,
@@ -124,7 +109,7 @@ export function AsistenKebutuhanModul() {
                           <span className="font-medium text-foreground">{h.kodeUnit}</span>
                           <span className="text-muted-foreground">— {h.judulUnit}</span>
                           {h.programKeahlian && <Badge variant="default">{h.programKeahlian}</Badge>}
-                          <Badge variant={badgeVariantByTingkat[tingkat]}>Tingkat kecocokan: {tingkat}</Badge>
+                          <Badge variant={badgeVariantByTingkatKecocokan[tingkat]}>Tingkat kecocokan: {tingkat}</Badge>
                         </div>
                         {h.snippet && <p className="mt-1 text-xs text-muted-foreground">…{h.snippet}…</p>}
                       </div>

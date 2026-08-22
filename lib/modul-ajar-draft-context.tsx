@@ -22,6 +22,7 @@ interface ModulAjarDraftContextValue extends ModulAjarDraftState {
   mulaiDraftBaru: (programKeahlianId: string) => void;
   resetDraft: () => void;
   tambahKeDraft: (unit: UnitKompetensi, topik: SaranTopik) => void;
+  hapusDariDraft: (unitId: string, topikId: string) => void;
   ubahCatatanPedagogi: (topikId: string, catatan: string) => void;
   jumlahKartu: number;
 }
@@ -52,6 +53,18 @@ export function ModulAjarDraftProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  // Tinjau Akhir (halaman /guru/tinjau) — guru bisa mencoret satu kartu yang
+  // ternyata tidak jadi dipakai tanpa kembali ke kanvas kerja. Grup unit yang
+  // jadi kosong ikut dibuang supaya tidak muncul heading unit tanpa kartu.
+  const hapusDariDraft = useCallback((unitId: string, topikId: string) => {
+    setState((prev) => ({
+      ...prev,
+      unitGroups: prev.unitGroups
+        .map((g) => (g.unit.id === unitId ? { ...g, topikDiterima: g.topikDiterima.filter((t) => t.id !== topikId) } : g))
+        .filter((g) => g.topikDiterima.length > 0),
+    }));
+  }, []);
+
   const ubahCatatanPedagogi = useCallback((topikId: string, catatan: string) => {
     setState((prev) => ({
       ...prev,
@@ -68,8 +81,8 @@ export function ModulAjarDraftProvider({ children }: { children: ReactNode }) {
   );
 
   const value = useMemo(
-    () => ({ ...state, mulaiDraftBaru, resetDraft, tambahKeDraft, ubahCatatanPedagogi, jumlahKartu }),
-    [state, mulaiDraftBaru, resetDraft, tambahKeDraft, ubahCatatanPedagogi, jumlahKartu]
+    () => ({ ...state, mulaiDraftBaru, resetDraft, tambahKeDraft, hapusDariDraft, ubahCatatanPedagogi, jumlahKartu }),
+    [state, mulaiDraftBaru, resetDraft, tambahKeDraft, hapusDariDraft, ubahCatatanPedagogi, jumlahKartu]
   );
 
   return <ModulAjarDraftContext.Provider value={value}>{children}</ModulAjarDraftContext.Provider>;

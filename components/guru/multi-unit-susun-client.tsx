@@ -158,7 +158,7 @@ export function MultiUnitSusunClient({
             <DraftStatusBar programList={programList} />
           </>
         ) : (
-          <DraftCanvas programList={programList} onDropTopikId={handleDropTopikId} />
+          <DraftCanvas onDropTopikId={handleDropTopikId} />
         )}
       </section>
 

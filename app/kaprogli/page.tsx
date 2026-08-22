@@ -11,7 +11,6 @@ import { toggleGapReviewedAction } from "./actions";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { LogoutButton } from "@/components/logout-button";
 import { cn } from "@/lib/utils";
 
 const SEMESTER = "Ganjil 2026/2027";
@@ -22,15 +21,12 @@ export default async function KaprogliPage() {
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-12">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Dashboard Skill Delta Score</h1>
-          <p className="mt-1 text-muted-foreground">
-            Semester {SEMESTER}. Skor makin tinggi berarti kesenjangan antara materi ajar dan
-            SKKNI makin besar — bukan pengukuran mutlak, gunakan bersama penilaian lapangan.
-          </p>
-        </div>
-        <LogoutButton />
+      <div>
+        <h1 className="text-2xl font-bold text-foreground">Dashboard Skill Delta Score</h1>
+        <p className="mt-1 text-muted-foreground">
+          Semester {SEMESTER}. Skor makin tinggi berarti kesenjangan antara materi ajar dan
+          SKKNI makin besar — bukan pengukuran mutlak, gunakan bersama penilaian lapangan.
+        </p>
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">

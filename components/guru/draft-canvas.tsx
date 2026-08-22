@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Inbox, Download, NotebookPen } from "lucide-react";
-import type { ProgramKeahlian } from "@/lib/types";
+import Link from "next/link";
+import { Inbox, NotebookPen, ArrowRight } from "lucide-react";
 import { useModulAjarDraft } from "@/lib/modul-ajar-draft-context";
-import { buildModulAjarDocument, buildExportFilename, downloadBlob } from "@/lib/export-modul-ajar";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -15,41 +13,20 @@ import { cn } from "@/lib/utils";
 // Kanvas draft — dipakai baik dari alur cari-unit-satu-per-satu
 // (susun-modul-client.tsx) maupun alur "Asisten Kebutuhan Modul"
 // (multi-unit-susun-client.tsx). Diekstrak supaya kedua alur berbagi satu
-// implementasi kartu draft/ekspor, bukan dua salinan yang bisa menyimpang.
-export function DraftCanvas({
-  programList,
-  onDropTopikId,
-}: {
-  programList: ProgramKeahlian[];
-  onDropTopikId: (topikId: string) => void;
-}) {
-  const { programKeahlianId, unitGroups, jumlahKartu, ubahCatatanPedagogi } = useModulAjarDraft();
+// implementasi kartu draft, bukan dua salinan yang bisa menyimpang.
+//
+// Ekspor TIDAK lagi bisa langsung dari sini — dipindah jadi langkah terakhir
+// di /guru/tinjau (Tinjau Akhir) supaya guru selalu membaca ulang draft utuh
+// sebelum mengekspor, bukan langsung dari kanvas kerja yang kartunya kecil-kecil.
+export function DraftCanvas({ onDropTopikId }: { onDropTopikId: (topikId: string) => void }) {
+  const { unitGroups, jumlahKartu, ubahCatatanPedagogi } = useModulAjarDraft();
   const [isDragOver, setIsDragOver] = useState(false);
-  const [isExporting, setIsExporting] = useState<"pdf" | "docx" | null>(null);
 
   function handleDrop(e: React.DragEvent) {
     e.preventDefault();
     setIsDragOver(false);
     const id = e.dataTransfer.getData("text/plain");
     if (id) onDropTopikId(id);
-  }
-
-  async function handleExport(format: "pdf" | "docx") {
-    const program = programList.find((p) => p.id === programKeahlianId);
-    const slug = program?.singkatan ?? programKeahlianId ?? "draft";
-    setIsExporting(format);
-    try {
-      const dokumen = buildModulAjarDocument(program?.nama ?? "(peminatan belum ditentukan)", unitGroups);
-      if (format === "pdf") {
-        const { buildModulAjarPdfBlob } = await import("@/lib/export-modul-ajar-pdf");
-        downloadBlob(buildExportFilename(slug, "pdf"), await buildModulAjarPdfBlob(dokumen));
-      } else {
-        const { buildModulAjarDocx } = await import("@/lib/export-modul-ajar-docx");
-        downloadBlob(buildExportFilename(slug, "docx"), await buildModulAjarDocx(dokumen));
-      }
-    } finally {
-      setIsExporting(null);
-    }
   }
 
   const jumlahCatatanTerisi = unitGroups.reduce(
@@ -70,20 +47,13 @@ export function DraftCanvas({
               Catatan pedagogi {jumlahCatatanTerisi}/{jumlahKartu}
             </Badge>
           )}
-          <div className="flex gap-1.5" role="group" aria-label="Format ekspor">
-            {(["pdf", "docx"] as const).map((format) => (
-              <Button
-                key={format}
-                size="sm"
-                variant="secondary"
-                disabled={jumlahKartu === 0 || isExporting !== null}
-                onClick={() => handleExport(format)}
-              >
-                <Download className="size-4" aria-hidden />
-                {isExporting === format ? "Membuat…" : format.toUpperCase()}
-              </Button>
-            ))}
-          </div>
+          <Link
+            href="/guru/tinjau"
+            className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-muted px-3 text-sm font-medium text-foreground transition-colors hover:bg-neutral-200"
+          >
+            Tinjau &amp; ekspor
+            <ArrowRight className="size-4" aria-hidden />
+          </Link>
         </div>
       </div>
 

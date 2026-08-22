@@ -134,7 +134,7 @@ export function SusunModulClient({
             <DraftStatusBar programList={programList} />
           </>
         ) : (
-          <DraftCanvas programList={programList} onDropTopikId={terimaTopik} />
+          <DraftCanvas onDropTopikId={terimaTopik} />
         )}
       </section>
 

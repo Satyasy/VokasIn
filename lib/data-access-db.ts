@@ -19,7 +19,11 @@ import type {
 import { setLabCache, findLabItemInCache, setGuruCache } from "./data-access";
 import { pool } from "./db";
 import { hashPassword } from "./auth";
-import { embedPassage, embedQuery, toVectorLiteral, EMBEDDING_MODEL } from "./embedding";
+// ponytail: import dinamis (bukan statis) supaya @huggingface/transformers
+// tidak ikut ter-bundle ke SEMUA fungsi di file ini (termasuk login, yang
+// tidak butuh embedding) — @huggingface/transformers gagal dimuat di
+// serverless function Vercel (lihat komentar di lib/embedding.ts).
+const embedding = () => import("./embedding");
 
 async function loadGuruCacheFromDb(): Promise<void> {
   const { rows } = await pool.query<{
@@ -504,6 +508,7 @@ async function composeUnitCorpusText(unitId: string): Promise<string | null> {
 export async function embedAndStoreUnit(unitId: string): Promise<boolean> {
   const text = await composeUnitCorpusText(unitId);
   if (!text) return false;
+  const { embedPassage, toVectorLiteral, EMBEDDING_MODEL } = await embedding();
   const vector = await embedPassage(text);
   await pool.query(
     `UPDATE unit_kompetensi
@@ -536,6 +541,7 @@ export interface SearchHit {
 // Fase 1 — vector search murni: cosine distance, brute-force (tanpa index
 // ANN — korpus masih terlalu kecil untuk HNSW/IVFFlat).
 export async function searchUnitKompetensiVector(query: string, limit = 10): Promise<SearchHit[]> {
+  const { embedQuery, toVectorLiteral } = await embedding();
   const vector = await embedQuery(query);
   const { rows } = await pool.query<{
     id: string;
@@ -596,6 +602,7 @@ function buildOrTsQuery(query: string): string | null {
 // k=60 (nilai standar) supaya istilah SKKNI spesifik yang lemah di embedding
 // generik tetap bisa ketemu lewat exact match kata kunci.
 export async function searchUnitKompetensiHybrid(query: string, limit = 10): Promise<SearchHit[]> {
+  const { embedQuery, toVectorLiteral } = await embedding();
   const vector = await embedQuery(query);
   const tsQuery = buildOrTsQuery(query);
   type Row = {

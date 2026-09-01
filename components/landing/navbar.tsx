@@ -1,19 +1,18 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SectionContainer } from "@/components/landing/section-container";
 
 const links = [
-  { href: "#masalah", label: "Masalah" },
+  { href: "#stats", label: "Tantangan" },
   { href: "#cara-kerja", label: "Cara Kerja" },
   { href: "#kenapa", label: "Kenapa VokasIn" },
-  { href: "#regulasi", label: "Regulasi & Dana" },
+  { href: "#regulasi", label: "Regulasi" },
   { href: "#faq", label: "FAQ" },
 ];
 
-// Rute publik (bukan section landing page) — bisa diakses siapa pun tanpa
-// login, karenanya pakai Link biasa, bukan anchor scroll seperti `links` di atas.
 const publicToolLinks = [
   { href: "/roadmap", label: "Roadmap Kompetensi" },
   { href: "/jelajah-kompetensi", label: "Jelajah Kompetensi" },
@@ -24,7 +23,7 @@ export function LandingNavbar() {
 
   useEffect(() => {
     const hero = document.getElementById("hero");
-    const threshold = hero ? hero.offsetHeight : 400;
+    const threshold = hero ? hero.offsetHeight * 0.6 : 400;
     const onScroll = () => setScrolled(window.scrollY > threshold);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -33,32 +32,41 @@ export function LandingNavbar() {
 
   return (
     <header
-      className={`sticky top-0 z-40 border-b backdrop-blur-sm transition-colors duration-(--duration-ui) ${
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         scrolled
-          ? "glass glass-nav border-black/10 bg-background/75 dark:border-white/10"
-          : "border-transparent bg-background/40"
+          ? "border-b border-white/10 bg-neutral-950/80 backdrop-blur-md"
+          : "border-b border-transparent bg-transparent"
       }`}
     >
-      <SectionContainer as="nav" className="flex items-center justify-between gap-4 py-3">
-        <Link href="#hero" className="text-sm font-semibold tracking-tight text-foreground">
-          VokasIn
+      <SectionContainer as="nav" className="flex items-center justify-between gap-4 py-3.5">
+        <Link href="/" className="flex items-center gap-2 text-sm font-semibold tracking-tight text-neutral-50">
+          <Image
+            src="/logo.png"
+            alt="Logo VokasIn"
+            width={36}
+            height={36}
+            className="rounded-md object-contain"
+            priority
+          />
+          <span>VokasIn</span>
         </Link>
-        <ul className="hidden items-center gap-6 md:flex">
+        <ul className="hidden items-center gap-5 md:flex">
           {links.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="text-sm text-neutral-300 transition-colors hover:text-neutral-50"
               >
                 {link.label}
               </a>
             </li>
           ))}
+          <li className="h-4 w-px bg-white/20" aria-hidden />
           {publicToolLinks.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="text-sm text-neutral-300 transition-colors hover:text-neutral-50"
               >
                 {link.label}
               </Link>
@@ -67,7 +75,7 @@ export function LandingNavbar() {
         </ul>
         <Link
           href="/guru"
-          className="inline-flex h-9 items-center rounded-lg bg-cta-primary px-4 text-sm font-medium text-cta-primary-foreground transition-colors hover:bg-neutral-800"
+          className="inline-flex h-9 items-center rounded-lg bg-slime-lime-500 px-4 text-sm font-medium text-neutral-950 transition-colors hover:bg-slime-lime-400"
         >
           Mulai coba
         </Link>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Mail } from "lucide-react";
 import { SectionContainer } from "@/components/landing/section-container";
 
@@ -21,7 +22,16 @@ export function LandingFooter() {
     <footer className="border-t border-black/10 bg-muted/50">
       <SectionContainer className="grid gap-8 py-12 sm:grid-cols-3">
         <div>
-          <p className="text-sm font-semibold text-foreground">VokasIn</p>
+          <div className="flex items-center gap-2.5">
+            <Image
+              src="/logo.png"
+              alt="Logo VokasIn"
+              width={36}
+              height={36}
+              className="rounded object-contain"
+            />
+            <p className="text-sm font-semibold text-foreground">VokasIn</p>
+          </div>
           <p className="mt-2 text-sm text-muted-foreground">
             Alat bagi guru produktif SMK dan kaprogli untuk menerjemahkan SKKNI menjadi
             perangkat ajar, dengan konfirmasi manusia di setiap langkah.
@@ -73,7 +83,7 @@ export function LandingFooter() {
 
       <div className="border-t border-border">
         <SectionContainer as="p" className="py-4 text-xs text-muted-foreground">
-          © 2026 Tim VokasIn
+          &copy; 2026 Tim VokasIn
         </SectionContainer>
       </div>
     </footer>

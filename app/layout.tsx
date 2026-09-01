@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   title: "VokasIn — Asisten Analitik Kurikulum SMK",
   description:
     "Menerjemahkan SKKNI menjadi jobsheet, rencana praktikum, dan rubrik penilaian, dengan keputusan akhir di tangan guru.",
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

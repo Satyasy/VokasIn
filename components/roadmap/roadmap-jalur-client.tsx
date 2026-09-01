@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore, useState, useMemo } from "react";
 import { RotateCcw } from "lucide-react";
 import type { UnitKompetensi } from "@/lib/types";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
@@ -11,16 +11,33 @@ function storageKey(programKeahlianId: string) {
   return `vokasin-roadmap-${programKeahlianId}`;
 }
 
-// ponytail: localStorage baca/tulis langsung di sini, satu kunci per jalur —
-// tidak butuh hook generik selama hanya dipakai di satu tempat ini.
-function loadChecked(programKeahlianId: string): Set<string> {
-  if (typeof window === "undefined") return new Set();
-  try {
-    const raw = window.localStorage.getItem(storageKey(programKeahlianId));
-    return raw ? new Set(JSON.parse(raw) as string[]) : new Set();
-  } catch {
-    return new Set();
+const listeners = new Set<() => void>();
+function emitChange() {
+  for (const listener of listeners) {
+    listener();
   }
+}
+
+function subscribe(callback: () => void) {
+  listeners.add(callback);
+  window.addEventListener("storage", callback);
+  return () => {
+    listeners.delete(callback);
+    window.removeEventListener("storage", callback);
+  };
+}
+
+function getSnapshot(key: string): string {
+  if (typeof window === "undefined") return "[]";
+  try {
+    return window.localStorage.getItem(key) ?? "[]";
+  } catch {
+    return "[]";
+  }
+}
+
+function getServerSnapshot(): string {
+  return "[]";
 }
 
 export function RoadmapJalurClient({
@@ -30,33 +47,38 @@ export function RoadmapJalurClient({
   programKeahlianId: string;
   units: UnitKompetensi[];
 }) {
-  // Mulai kosong di server & client-first-render (hindari hydration mismatch),
-  // lalu diisi dari localStorage setelah mount.
-  const [checked, setChecked] = useState<Set<string>>(new Set());
-  const [hydrated, setHydrated] = useState(false);
+  const key = storageKey(programKeahlianId);
+  const rawChecked = useSyncExternalStore(
+    subscribe,
+    () => getSnapshot(key),
+    getServerSnapshot
+  );
+
+  const checked = useMemo(() => {
+    try {
+      return new Set(JSON.parse(rawChecked) as string[]);
+    } catch {
+      return new Set<string>();
+    }
+  }, [rawChecked]);
+
   const [confirmReset, setConfirmReset] = useState(false);
 
-  useEffect(() => {
-    setChecked(loadChecked(programKeahlianId));
-    setHydrated(true);
-  }, [programKeahlianId]);
-
-  useEffect(() => {
-    if (!hydrated) return;
-    window.localStorage.setItem(storageKey(programKeahlianId), JSON.stringify([...checked]));
-  }, [checked, hydrated, programKeahlianId]);
-
   function toggle(unitId: string) {
-    setChecked((prev) => {
-      const next = new Set(prev);
-      if (next.has(unitId)) next.delete(unitId);
-      else next.add(unitId);
-      return next;
-    });
+    const next = new Set(checked);
+    if (next.has(unitId)) next.delete(unitId);
+    else next.add(unitId);
+    try {
+      window.localStorage.setItem(key, JSON.stringify([...next]));
+      emitChange();
+    } catch {}
   }
 
   function resetCatatan() {
-    setChecked(new Set());
+    try {
+      window.localStorage.removeItem(key);
+      emitChange();
+    } catch {}
     setConfirmReset(false);
   }
 

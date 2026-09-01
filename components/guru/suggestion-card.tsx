@@ -12,6 +12,7 @@ export interface SuggestionCardProps {
   topik: SaranTopik;
   feasibility: FeasibilityResult;
   kodeUnit: string;
+  draftAktif?: boolean;
   onTerima: (topikId: string) => void;
   onTolakModifikasi: (topikId: string) => void;
 }
@@ -22,17 +23,24 @@ export function SuggestionCard({
   topik,
   feasibility,
   kodeUnit,
+  draftAktif = true,
   onTerima,
   onTolakModifikasi,
 }: SuggestionCardProps) {
   return (
     <Card
-      draggable
+      draggable={draftAktif}
       onDragStart={(e) => {
+        if (!draftAktif) {
+          e.preventDefault();
+          return;
+        }
         e.dataTransfer.setData("text/plain", topik.id);
         e.dataTransfer.effectAllowed = "move";
       }}
-      className="cursor-grab active:cursor-grabbing"
+      className={cn(
+        draftAktif ? "cursor-grab active:cursor-grabbing" : "opacity-90"
+      )}
     >
       <div className="flex items-start gap-2">
         <GripVertical className="mt-1 size-4 shrink-0 text-muted-foreground" aria-hidden />
@@ -70,8 +78,13 @@ export function SuggestionCard({
             })}
           </div>
 
-          <div className="mt-4 flex gap-2">
-            <Button size="sm" onClick={() => onTerima(topik.id)}>
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            <Button
+              size="sm"
+              disabled={!draftAktif}
+              title={!draftAktif ? "Pilih peminatan di panel kanan terlebih dahulu" : undefined}
+              onClick={() => onTerima(topik.id)}
+            >
               <CheckCircle2 className="size-4" aria-hidden />
               Tambahkan ke modul ajar
             </Button>
@@ -79,6 +92,11 @@ export function SuggestionCard({
               <XCircle className="size-4" aria-hidden />
               Tolak / modifikasi
             </Button>
+            {!draftAktif && (
+              <span className="text-xs text-muted-foreground">
+                (Pilih peminatan dulu di panel kanan)
+              </span>
+            )}
           </div>
         </div>
       </div>

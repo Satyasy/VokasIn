@@ -5,8 +5,7 @@ export default function RoadmapLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <LandingNavbar />
-      {/* ponytail: pt-14 offsets the fixed navbar height (~56px) */}
-      <div className="pt-14">{children}</div>
+      <div className="pt-24 sm:pt-28 pb-16">{children}</div>
     </>
   );
 }

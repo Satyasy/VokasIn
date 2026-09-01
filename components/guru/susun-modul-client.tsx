@@ -92,6 +92,7 @@ export function SusunModulClient({
                 key={topik.id}
                 topik={topik}
                 kodeUnit={unit.kodeUnit}
+                draftAktif={draftAktif}
                 feasibility={feasibilityByTopikId[topik.id]}
                 onTerima={terimaTopik}
                 onTolakModifikasi={bukaDialogKoreksi}

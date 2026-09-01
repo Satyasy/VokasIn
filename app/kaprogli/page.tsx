@@ -20,10 +20,10 @@ export default async function KaprogliPage() {
   const programList = getProgramKeahlian();
 
   return (
-    <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-12">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Dashboard Skill Delta Score</h1>
-        <p className="mt-1 text-muted-foreground">
+    <main className="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-6">
+      <div className="border-b border-neutral-200 pb-6">
+        <h1 className="text-2xl font-bold tracking-tight text-neutral-900">Dashboard Skill Delta Score</h1>
+        <p className="mt-1 text-sm text-neutral-600">
           Semester {SEMESTER}. Skor makin tinggi berarti kesenjangan antara materi ajar dan
           SKKNI makin besar — bukan pengukuran mutlak, gunakan bersama penilaian lapangan.
         </p>

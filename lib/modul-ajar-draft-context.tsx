@@ -30,26 +30,59 @@ interface ModulAjarDraftContextValue extends ModulAjarDraftState {
 const ModulAjarDraftContext = createContext<ModulAjarDraftContextValue | null>(null);
 
 const DRAFT_KOSONG: ModulAjarDraftState = { programKeahlianId: null, unitGroups: [] };
+const SESSION_STORAGE_KEY = "vokasin-modul-ajar-draft";
+
+function getInitialState(): ModulAjarDraftState {
+  if (typeof window === "undefined") return DRAFT_KOSONG;
+  try {
+    const raw = window.sessionStorage.getItem(SESSION_STORAGE_KEY);
+    if (!raw) return DRAFT_KOSONG;
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === "object" && Array.isArray(parsed.unitGroups)) {
+      return parsed as ModulAjarDraftState;
+    }
+  } catch {
+    // fallback ke DRAFT_KOSONG jika parse gagal
+  }
+  return DRAFT_KOSONG;
+}
 
 export function ModulAjarDraftProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<ModulAjarDraftState>(DRAFT_KOSONG);
+  const [state, setState] = useState<ModulAjarDraftState>(getInitialState);
 
   const mulaiDraftBaru = useCallback((programKeahlianId: string) => {
-    setState({ programKeahlianId, unitGroups: [] });
+    setState((prev) => {
+      const next = { programKeahlianId, unitGroups: prev.programKeahlianId === programKeahlianId ? prev.unitGroups : [] };
+      try {
+        window.sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(next));
+      } catch {}
+      return next;
+    });
   }, []);
 
-  const resetDraft = useCallback(() => setState(DRAFT_KOSONG), []);
+  const resetDraft = useCallback(() => {
+    try {
+      window.sessionStorage.removeItem(SESSION_STORAGE_KEY);
+    } catch {}
+    setState(DRAFT_KOSONG);
+  }, []);
 
   const tambahKeDraft = useCallback((unit: UnitKompetensi, topik: SaranTopik) => {
     setState((prev) => {
       const idx = prev.unitGroups.findIndex((g) => g.unit.id === unit.id);
+      let unitGroups: DraftUnitGroup[];
       if (idx === -1) {
-        return { ...prev, unitGroups: [...prev.unitGroups, { unit, topikDiterima: [topik] }] };
+        unitGroups = [...prev.unitGroups, { unit, topikDiterima: [topik] }];
+      } else {
+        unitGroups = prev.unitGroups.map((g, i) =>
+          i === idx ? { ...g, topikDiterima: [...g.topikDiterima, topik] } : g
+        );
       }
-      const unitGroups = prev.unitGroups.map((g, i) =>
-        i === idx ? { ...g, topikDiterima: [...g.topikDiterima, topik] } : g
-      );
-      return { ...prev, unitGroups };
+      const next = { ...prev, unitGroups };
+      try {
+        window.sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(next));
+      } catch {}
+      return next;
     });
   }, []);
 
@@ -57,22 +90,34 @@ export function ModulAjarDraftProvider({ children }: { children: ReactNode }) {
   // ternyata tidak jadi dipakai tanpa kembali ke kanvas kerja. Grup unit yang
   // jadi kosong ikut dibuang supaya tidak muncul heading unit tanpa kartu.
   const hapusDariDraft = useCallback((unitId: string, topikId: string) => {
-    setState((prev) => ({
-      ...prev,
-      unitGroups: prev.unitGroups
-        .map((g) => (g.unit.id === unitId ? { ...g, topikDiterima: g.topikDiterima.filter((t) => t.id !== topikId) } : g))
-        .filter((g) => g.topikDiterima.length > 0),
-    }));
+    setState((prev) => {
+      const next = {
+        ...prev,
+        unitGroups: prev.unitGroups
+          .map((g) => (g.unit.id === unitId ? { ...g, topikDiterima: g.topikDiterima.filter((t) => t.id !== topikId) } : g))
+          .filter((g) => g.topikDiterima.length > 0),
+      };
+      try {
+        window.sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(next));
+      } catch {}
+      return next;
+    });
   }, []);
 
   const ubahCatatanPedagogi = useCallback((topikId: string, catatan: string) => {
-    setState((prev) => ({
-      ...prev,
-      unitGroups: prev.unitGroups.map((g) => ({
-        ...g,
-        topikDiterima: g.topikDiterima.map((t) => (t.id === topikId ? { ...t, catatanPedagogi: catatan } : t)),
-      })),
-    }));
+    setState((prev) => {
+      const next = {
+        ...prev,
+        unitGroups: prev.unitGroups.map((g) => ({
+          ...g,
+          topikDiterima: g.topikDiterima.map((t) => (t.id === topikId ? { ...t, catatanPedagogi: catatan } : t)),
+        })),
+      };
+      try {
+        window.sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(next));
+      } catch {}
+      return next;
+    });
   }, []);
 
   const jumlahKartu = useMemo(

@@ -116,6 +116,7 @@ export function MultiUnitSusunClient({
                         key={topik.id}
                         topik={topik}
                         kodeUnit={b.unit.kodeUnit}
+                        draftAktif={draftAktif}
                         feasibility={b.feasibilityByTopikId[topik.id]}
                         onTerima={(id) => terima(b.unit.id, id)}
                         onTolakModifikasi={(id) => bukaDialogKoreksi(b.unit.id, id)}

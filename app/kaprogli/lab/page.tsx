@@ -9,16 +9,18 @@ export default async function LabInventoriPage() {
   const programList = getProgramKeahlian();
 
   return (
-    <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-12">
-      <Link href="/kaprogli" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
+    <main className="mx-auto w-full max-w-5xl flex-1 px-4 sm:px-6">
+      <Link href="/kaprogli" className="mb-4 inline-flex items-center gap-1.5 text-sm font-semibold text-neutral-600 transition-colors hover:text-slime-lime-800">
         <ArrowLeft className="size-4" aria-hidden />
-        Kembali ke dashboard
+        <span>Kembali ke dashboard</span>
       </Link>
-      <h1 className="mt-3 text-2xl font-bold text-foreground">Manajemen Inventaris Lab</h1>
-      <p className="mt-1 text-muted-foreground">
-        Perubahan di sini langsung dipakai oleh Resource Feasibility Checker saat guru menyusun
-        modul ajar.
-      </p>
+      <div className="border-b border-neutral-200 pb-5">
+        <h1 className="text-2xl font-bold tracking-tight text-neutral-900">Manajemen Inventaris Lab</h1>
+        <p className="mt-1 text-sm text-neutral-600">
+          Perubahan di sini langsung dipakai oleh Resource Feasibility Checker saat guru menyusun
+          modul ajar.
+        </p>
+      </div>
 
       <div className="mt-8 flex flex-col gap-10">
         {programList.map((program) => (

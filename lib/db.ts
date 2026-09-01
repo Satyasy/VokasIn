@@ -2,7 +2,6 @@ import { Pool } from "pg";
 
 // Satu pool per proses — pola standar Next.js (hindari reconnect tiap hot reload).
 declare global {
-  // eslint-disable-next-line no-var
   var _vokasinPool: Pool | undefined;
 }
 

@@ -18,7 +18,7 @@ export default async function RoadmapJalurPage({
   const units = getUnitKompetensiByProgram(programKeahlianId);
 
   return (
-    <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-12">
+    <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-12">
       <Link
         href="/roadmap"
         className="mb-4 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"

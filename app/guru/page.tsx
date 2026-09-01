@@ -13,7 +13,7 @@ export default function GuruPage() {
   const programList = getProgramKeahlian();
 
   return (
-    <main className="mx-auto w-full max-w-4xl flex-1 px-4 sm:px-6">
+    <main className="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-6">
       <div className="border-b border-neutral-200 pb-6">
         <p className="text-xs font-bold uppercase tracking-wider text-slime-lime-700">
           Alur Penyusunan Perangkat Ajar

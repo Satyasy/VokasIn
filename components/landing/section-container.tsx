@@ -7,6 +7,5 @@ export function SectionContainer({
   className,
   ...props
 }: HTMLAttributes<HTMLElement> & { as?: ElementType }) {
-  return <Tag className={cn("mx-auto w-full max-w-5xl px-6", className)} {...props} />;
-  return <Tag className={cn("mx-auto w-full max-w-6xl px-8", className)} {...props} />;
+  return <Tag className={cn("mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-12", className)} {...props} />;
 }

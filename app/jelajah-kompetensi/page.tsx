@@ -9,7 +9,7 @@ export default function JelajahKompetensiPage() {
     <>
       <LandingNavbar />
       <div className="pt-14">
-        <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-12">
+        <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-12">
         <div className="flex items-center gap-2">
           <Compass className="size-5 text-muted-foreground" aria-hidden />
           <h1 className="text-2xl font-bold text-foreground">Jelajah Kompetensi</h1>

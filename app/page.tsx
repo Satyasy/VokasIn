@@ -173,7 +173,7 @@ export default function Home() {
             className="pointer-events-none absolute -bottom-24 left-1/4 size-[360px] rounded-full bg-slime-lime-900 opacity-40 blur-[80px]"
           />
 
-          <SectionContainer className="relative py-20 sm:py-24">
+          <SectionContainer className="relative pt-24 pb-20 sm:pt-28 sm:pb-24">
             <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
               {/* Teks hero */}
               <div className="fade-up">
@@ -212,7 +212,7 @@ export default function Home() {
               </div>
 
               {/* Ilustrasi hero + floating cards */}
-              <div className="relative mx-auto w-full max-w-lg fade-up [animation-delay:120ms]">
+              <div className="relative mx-auto w-full max-w-xl lg:max-w-none fade-up [animation-delay:120ms]">
                 <HeroIllustration
                   className="w-full text-slime-lime-400"
                   aria-hidden
@@ -270,7 +270,7 @@ export default function Home() {
           <HairlineGridTexture />
           <Reveal>
             <SectionContainer className="py-16 sm:py-24">
-              <div className="max-w-2xl">
+              <div className="max-w-3xl">
                 <p className="text-xs font-semibold uppercase tracking-widest text-slime-lime-700">
                   Tantangan Vokasi
                 </p>
@@ -620,7 +620,7 @@ export default function Home() {
           className="relative overflow-hidden border-t border-neutral-100 bg-white"
         >
           <Reveal>
-            <SectionContainer className="max-w-3xl py-16 sm:py-24">
+            <SectionContainer className="max-w-5xl py-16 sm:py-24">
               <p className="text-xs font-semibold uppercase tracking-widest text-slime-lime-700">
                 FAQ
               </p>
@@ -662,7 +662,7 @@ export default function Home() {
 
           <SectionContainer className="relative py-20 sm:py-28">
             <Reveal>
-              <div className="mx-auto max-w-3xl text-center">
+              <div className="mx-auto max-w-4xl text-center">
                 <p className="text-xs font-semibold uppercase tracking-widest text-slime-lime-400">
                   Mulai sekarang
                 </p>

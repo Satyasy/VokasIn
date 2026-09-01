@@ -154,7 +154,7 @@ export default function Home() {
             ==================================================== */}
         <section
           id="hero"
-          className="relative overflow-hidden bg-slime-lime-950"
+          className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-slime-lime-950"
         >
           {/* Blob 1 — kiri atas */}
           <div
@@ -172,13 +172,13 @@ export default function Home() {
             className="pointer-events-none absolute -bottom-24 left-1/4 size-[360px] rounded-full bg-slime-lime-900 opacity-40 blur-[80px]"
           />
 
-          <SectionContainer className="relative pt-36 pb-24 sm:pt-44 sm:pb-32">
+          <SectionContainer className="relative py-20 sm:py-24">
             <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
               {/* Teks hero */}
               <div className="fade-up">
                 <Badge
                   variant="brand"
-                  className="gap-1.5 border border-slime-lime-700/60 bg-slime-lime-900/80 text-slime-lime-300"
+                  className="gap-1.5 border border-slime-lime-700/60 bg-slime-lime-900/80 text-slime-lime-300 font-semibold"
                 >
                   <FileStack className="size-3.5" aria-hidden />
                   SKKNI PERANGKAT AJAR
@@ -188,7 +188,7 @@ export default function Home() {
                   <span className="text-slime-lime-400">SKKNI asli</span>{" "}
                   {String.fromCharCode(8212)} bukan dari nol.
                 </h1>
-                <p className="mt-5 text-base text-neutral-300 sm:text-lg">
+                <p className="mt-5 text-base leading-relaxed text-neutral-300 sm:text-lg">
                   Kartu saran ditarik langsung dari teks Unit Kompetensi &amp; KUK resmi. Anda
                   yang menyeret, mengecek alat lab, dan mengekspor {String.fromCharCode(8212)} sistem tidak mengarang
                   sendiri.
@@ -219,38 +219,38 @@ export default function Home() {
 
                 {/* Floating card 1 — unit kompetensi */}
                 <div
-                  className="absolute -left-4 top-8 rounded-xl border border-slime-lime-700/40 bg-slime-lime-900/80 p-3 shadow-xl backdrop-blur-sm sm:-left-8"
+                  className="absolute -left-4 top-8 rounded-xl border border-slime-lime-700/40 bg-slime-lime-900/90 p-3.5 shadow-xl backdrop-blur-sm sm:-left-8"
                   aria-hidden
                 >
-                  <p className="text-[10px] font-medium uppercase tracking-wide text-slime-lime-400">
+                  <p className="text-[11px] font-semibold uppercase tracking-wider text-slime-lime-400">
                     Unit Kompetensi
                   </p>
-                  <p className="mt-1 text-sm font-semibold text-neutral-50">
+                  <p className="mt-1 text-sm font-bold text-neutral-50">
                     J.620100.001.01
                   </p>
-                  <p className="text-xs text-neutral-400">Mengoperasikan Komputer</p>
+                  <p className="text-xs text-neutral-300">Mengoperasikan Komputer</p>
                 </div>
 
                 {/* Floating card 2 — status lab */}
                 <div
-                  className="absolute -right-4 bottom-16 rounded-xl border border-slime-lime-700/40 bg-slime-lime-900/80 p-3 shadow-xl backdrop-blur-sm sm:-right-8"
+                  className="absolute -right-4 bottom-16 rounded-xl border border-slime-lime-700/40 bg-slime-lime-900/90 p-3.5 shadow-xl backdrop-blur-sm sm:-right-8"
                   aria-hidden
                 >
                   <div className="flex items-center gap-2">
                     <span className="size-2 rounded-full bg-slime-lime-400" />
-                    <p className="text-xs font-semibold text-slime-lime-300">Lab siap</p>
+                    <p className="text-xs font-bold text-slime-lime-300">Lab siap</p>
                   </div>
-                  <p className="mt-1 text-[11px] text-neutral-400">
+                  <p className="mt-1 text-xs text-neutral-300">
                     3/3 alat tersedia di inventaris
                   </p>
                 </div>
 
                 {/* Floating card 3 — konfirmasi kartu */}
                 <div
-                  className="absolute left-8 bottom-0 rounded-xl border border-slime-lime-700/40 bg-slime-lime-900/80 px-3 py-2 shadow-xl backdrop-blur-sm"
+                  className="absolute left-8 bottom-0 rounded-xl border border-slime-lime-700/40 bg-slime-lime-900/90 px-4 py-2.5 shadow-xl backdrop-blur-sm"
                   aria-hidden
                 >
-                  <p className="text-[10px] font-medium text-slime-lime-400">
+                  <p className="text-xs font-semibold text-slime-lime-300">
                     4 kartu dikonfirmasi
                   </p>
                 </div>
@@ -276,7 +276,7 @@ export default function Home() {
                 <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl lg:text-5xl">
                   Kesenjangan standar dan realitas pembelajaran
                 </h2>
-                <p className="mt-4 text-base text-neutral-500 sm:text-lg">
+                <p className="mt-4 text-base leading-relaxed text-neutral-600 sm:text-lg">
                   Kurikulum Merdeka memberi otonomi bagi SMK membuka kelas peminatan lintas jurusan, namun penyelarasan dengan standar kompetensi resmi membutuhkan instrumen operasional yang akurat.
                 </p>
               </div>
@@ -284,24 +284,24 @@ export default function Home() {
               <div className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-8">
                 {statsData.map((stat) => (
                   <div key={stat.value} className="flex flex-col gap-3">
-                    <stat.icon className="size-7 text-slime-lime-700" aria-hidden />
+                    <stat.icon className="size-8 text-slime-lime-700" aria-hidden />
                     <p className="text-5xl font-extrabold tracking-tight text-slime-lime-700 sm:text-6xl">
                       {stat.value}
                     </p>
-                    <p className="text-sm font-semibold uppercase tracking-wide text-neutral-400">
+                    <p className="text-sm font-bold uppercase tracking-wider text-neutral-600">
                       {stat.label}
                     </p>
-                    <p className="text-sm text-neutral-500">{stat.sub}</p>
+                    <p className="text-sm leading-relaxed text-neutral-700">{stat.sub}</p>
                   </div>
                 ))}
               </div>
-              <p className="mt-10 text-xs text-neutral-400">
-                Sumber statistik:{" "}
+              <p className="mt-10 text-sm text-neutral-600">
+                Sumber data resmi:{" "}
                 <a
                   href="https://jatimtimes.com/baca/3331344208/20260524/014200/kurikulum-smk-berkejaran-dengan-akselerasi-teknologi-masihkah-pendidikan-vokasi-relevan-dengan-lapangan-kerja"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline underline-offset-2 hover:text-neutral-700"
+                  className="font-medium text-neutral-800 underline underline-offset-2 hover:text-slime-lime-700"
                 >
                   JatimTimes, 24 Mei 2026
                 </a>{" "}
@@ -310,7 +310,7 @@ export default function Home() {
                   href="https://katalog.data.go.id/dataset/standar-kompetensi-kerja-nasional-indonesia-skkni-yang-ditetapkan-s-d-tw-iii-tahun-2022"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline underline-offset-2 hover:text-neutral-700"
+                  className="font-medium text-neutral-800 underline underline-offset-2 hover:text-slime-lime-700"
                 >
                   Satu Data Indonesia, per TW III 2022
                 </a>
@@ -335,7 +335,7 @@ export default function Home() {
               <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl lg:text-5xl">
                 Empat langkah, dari SKKNI ke jobsheet
               </h2>
-              <p className="mt-4 max-w-2xl text-base text-neutral-500 sm:text-lg">
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-neutral-600 sm:text-lg">
                 Tidak ada tombol ajaib. Tiap langkah butuh tindakan eksplisit dari Anda.
               </p>
             </Reveal>
@@ -343,20 +343,20 @@ export default function Home() {
             <RevealGroup className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" stagger={0.12}>
               {langkahKerja.map((langkah, i) => (
                 <RevealItem key={langkah.title}>
-                  <div className="card-hover flex h-full flex-col rounded-2xl border border-neutral-100 bg-neutral-50 p-6">
+                  <div className="card-hover flex h-full flex-col rounded-2xl border border-neutral-200/80 bg-neutral-50/70 p-6 shadow-sm">
                     <div className="flex items-center justify-between">
                       <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-slime-lime-100 text-sm font-bold text-slime-lime-800">
                         {i + 1}
                       </span>
-                      <div className="flex size-14 items-center justify-center rounded-xl bg-white shadow-sm ring-1 ring-neutral-100">
+                      <div className="flex size-14 items-center justify-center rounded-xl bg-white shadow-sm ring-1 ring-neutral-200/60">
                         <langkah.icon className="card-hover-icon size-9 text-slime-lime-700" aria-hidden />
                       </div>
                     </div>
-                    <h3 className="mt-5 text-base font-semibold text-neutral-900">
+                    <h3 className="mt-5 text-base font-bold text-neutral-900">
                       {langkah.title}
                     </h3>
-                    <p className="mt-2 flex-1 text-sm text-neutral-500">{langkah.body}</p>
-                    <p className="mt-4 text-xs font-medium text-slime-lime-700">
+                    <p className="mt-2.5 flex-1 text-sm leading-relaxed text-neutral-700">{langkah.body}</p>
+                    <p className="mt-4 text-sm font-semibold text-slime-lime-800">
                       {langkah.detail}
                     </p>
                   </div>
@@ -381,14 +381,14 @@ export default function Home() {
               <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl lg:text-5xl">
                 Batasan yang sengaja kami pertahankan
               </h2>
-              <p className="mt-4 max-w-2xl text-base text-neutral-500 sm:text-lg">
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-neutral-600 sm:text-lg">
                 Empat batasan yang sengaja kami pertahankan, bukan fitur yang kami lepas begitu saja.
               </p>
             </Reveal>
 
             <div className="mt-12 grid gap-5 sm:grid-cols-12">
               <RevealItem scale className="sm:col-span-12 lg:col-span-7">
-                <div className="card-hover flex h-full flex-col rounded-2xl border border-slime-lime-100 bg-slime-lime-50 p-8">
+                <div className="card-hover flex h-full flex-col rounded-2xl border border-slime-lime-200/80 bg-slime-lime-50 p-8 shadow-sm">
                   <DocumentToCardsIllustration
                     className="mb-6 h-44 w-full text-slime-lime-600"
                     aria-hidden
@@ -397,10 +397,10 @@ export default function Home() {
                     className="card-hover-icon size-8 text-slime-lime-700"
                     aria-hidden
                   />
-                  <CardTitle className="mt-4 text-xl text-neutral-900">
+                  <CardTitle className="mt-4 text-xl font-bold text-neutral-900">
                     {alasanFeatured.title}
                   </CardTitle>
-                  <CardDescription className="mt-3 text-base text-neutral-600">
+                  <CardDescription className="mt-3 text-sm leading-relaxed text-neutral-700 sm:text-base">
                     {alasanFeatured.body}
                   </CardDescription>
                 </div>
@@ -412,13 +412,13 @@ export default function Home() {
               >
                 {alasanKecil.map((item) => (
                   <RevealItem key={item.title}>
-                    <div className="card-hover flex h-full flex-col gap-3 rounded-2xl border border-neutral-100 bg-neutral-50 p-5">
+                    <div className="card-hover flex h-full flex-col gap-2.5 rounded-2xl border border-neutral-200/80 bg-neutral-50/80 p-5 shadow-sm">
                       <item.icon
                         className="card-hover-icon size-6 text-slime-lime-700"
                         aria-hidden
                       />
-                      <CardTitle className="text-base text-neutral-900">{item.title}</CardTitle>
-                      <CardDescription className="text-neutral-500">{item.body}</CardDescription>
+                      <CardTitle className="text-base font-bold text-neutral-900">{item.title}</CardTitle>
+                      <CardDescription className="text-sm leading-relaxed text-neutral-700">{item.body}</CardDescription>
                     </div>
                   </RevealItem>
                 ))}
@@ -432,7 +432,7 @@ export default function Home() {
             ==================================================== */}
         <section
           id="untuk-siswa"
-          className="relative overflow-hidden border-t border-neutral-100 bg-neutral-50"
+          className="relative overflow-hidden border-t border-neutral-100 bg-neutral-50/80"
         >
           <HairlineGridTexture />
           <Reveal>
@@ -443,27 +443,27 @@ export default function Home() {
               <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl lg:text-5xl">
                 Dua alat terbuka untuk siapa saja
               </h2>
-              <p className="mt-4 max-w-2xl text-base text-neutral-500 sm:text-lg">
-                Dua alat berbasis SKKNI ini terbuka untuk siapa saja, tanpa akun.
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-neutral-600 sm:text-lg">
+                Dua alat berbasis SKKNI ini terbuka untuk siapa saja, tanpa perlu akun atau login.
               </p>
 
               <RevealGroup className="mt-10 grid gap-5 sm:grid-cols-2" stagger={0.1}>
                 {alatPublik.map((alat) => (
                   <RevealItem key={alat.href}>
-                    <div className="card-hover flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-6">
+                    <div className="card-hover flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-7 shadow-sm">
                       <div className="flex size-12 items-center justify-center rounded-xl bg-slime-lime-100">
                         <alat.icon
                           className="card-hover-icon size-6 text-slime-lime-700"
                           aria-hidden
                         />
                       </div>
-                      <CardTitle className="mt-4 text-lg text-neutral-900">{alat.title}</CardTitle>
-                      <CardDescription className="mt-2 text-neutral-500">{alat.body}</CardDescription>
+                      <CardTitle className="mt-4 text-lg font-bold text-neutral-900">{alat.title}</CardTitle>
+                      <CardDescription className="mt-2 text-sm leading-relaxed text-neutral-700">{alat.body}</CardDescription>
                       <Link
                         href={alat.href}
-                        className="mt-5 inline-flex items-center gap-1.5 self-start text-sm font-semibold text-slime-lime-700 hover:text-slime-lime-800"
+                        className="mt-5 inline-flex items-center gap-1.5 self-start text-sm font-bold text-slime-lime-700 hover:text-slime-lime-800"
                       >
-                        {alat.cta}
+                        <span>{alat.cta}</span>
                         <ArrowRight className="size-4" aria-hidden />
                       </Link>
                     </div>
@@ -500,33 +500,33 @@ export default function Home() {
                   <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-neutral-50 sm:text-4xl lg:text-5xl">
                     Landasan Regulasi Resmi
                   </h2>
-                  <p className="mt-4 max-w-2xl text-base text-neutral-300 sm:text-lg">
+                  <p className="mt-4 max-w-2xl text-base leading-relaxed text-neutral-300 sm:text-lg">
                     Kurikulum Merdeka mewajibkan sekolah menentukan sendiri kelas peminatannya dan menurunkan kompetensi keahlian secara terverifikasi. VokasIn dibangun untuk memenuhi kebutuhan standar kurikulum tersebut.
                   </p>
                 </Reveal>
 
-                <Card className="mt-8 border-slime-lime-800/60 bg-slime-lime-900/60">
+                <Card className="mt-8 border-slime-lime-800/60 bg-slime-lime-900/70 p-6 shadow-md sm:p-8">
                   <div className="flex items-start gap-4">
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-slime-lime-800">
-                      <FileCheck2 className="size-5 text-slime-lime-400" aria-hidden />
+                    <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-slime-lime-800">
+                      <FileCheck2 className="size-6 text-slime-lime-400" aria-hidden />
                     </div>
                     <div>
-                      <CardTitle className="text-lg text-neutral-50">
+                      <CardTitle className="text-lg font-bold text-neutral-50">
                         Kesesuaian Standar Kompetensi Nasional
                       </CardTitle>
-                      <p className="mt-2 text-sm text-neutral-200">
+                      <p className="mt-2.5 text-sm leading-relaxed text-neutral-200">
                         Seluruh pemetaan perangkat ajar mengacu langsung pada dokumen resmi SKKNI yang ditetapkan oleh Kementerian Ketenagakerjaan RI serta kerangka pedoman pembelajaran dan asesmen vokasi dari Kemendikdasmen.
                       </p>
-                      <p className="mt-2 text-sm text-neutral-400">
+                      <p className="mt-2 text-sm leading-relaxed text-neutral-300">
                         Setiap elemen kompetensi dan kriteria unjuk kerja diturunkan secara presisi untuk memastikan kesiapan peserta didik menghadapi uji kompetensi dan sertifikasi keahlian.
                       </p>
-                      <p className="mt-3 text-xs text-neutral-400">
-                        Sumber:{" "}
+                      <p className="mt-3.5 text-sm text-neutral-300">
+                        Sumber rujukan:{" "}
                         <a
                           href="https://peraturan.go.id/files/Permendikdasmen-no-8-tahun-2026.pdf"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="underline underline-offset-2 hover:text-neutral-50"
+                          className="font-semibold text-slime-lime-300 underline underline-offset-2 hover:text-neutral-50"
                         >
                           Pedoman Standar Kurikulum &amp; Pembelajaran Vokasi
                         </a>
@@ -536,7 +536,7 @@ export default function Home() {
                   </div>
                 </Card>
 
-                <div className="mt-5 flex items-start gap-3 text-sm text-neutral-400">
+                <div className="mt-6 flex items-start gap-3 text-sm leading-relaxed text-neutral-300">
                   <Landmark className="mt-0.5 size-5 shrink-0 text-slime-lime-400" aria-hidden />
                   <p>
                     VokasIn memposisikan diri sebagai instrumen digital guru dalam mempermudah adopsi regulasi SKKNI secara langsung di ruang kelas dan laboratorium praktikum.
@@ -568,17 +568,17 @@ export default function Home() {
               <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl lg:text-5xl">
                 Pertanyaan yang sering ditanyakan
               </h2>
-              <div className="mt-10 divide-y divide-neutral-100">
+              <div className="mt-10 divide-y divide-neutral-200">
                 {faq.map((item) => (
                   <details key={item.q} className="group py-5">
-                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-0 py-1 text-base font-semibold text-neutral-900 outline-none">
-                      {item.q}
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-0 py-1 text-base font-bold text-neutral-900 outline-none">
+                      <span>{item.q}</span>
                       <ChevronDown
-                        className="size-5 shrink-0 text-neutral-400 transition-transform duration-(--duration-ui) group-open:rotate-180"
+                        className="size-5 shrink-0 text-neutral-500 transition-transform duration-(--duration-ui) group-open:rotate-180"
                         aria-hidden
                       />
                     </summary>
-                    <p className="fade-up mt-3 text-sm leading-relaxed text-neutral-500">
+                    <p className="fade-up mt-3 text-sm leading-relaxed text-neutral-700">
                       {item.a}
                     </p>
                   </details>
@@ -609,7 +609,7 @@ export default function Home() {
                 <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-neutral-50 sm:text-4xl lg:text-5xl">
                   Ajukan ke kaprogli atau kepala sekolah Anda
                 </h2>
-                <p className="mt-5 text-base text-neutral-300 sm:text-lg">
+                <p className="mt-5 text-base leading-relaxed text-neutral-300 sm:text-lg">
                   Langkah paling realistis adalah membawanya ke rapat program keahlian untuk mempermudah penyusunan perangkat ajar berbasis SKKNI di sekolah Anda.
                 </p>
                 <div className="mt-8 flex flex-wrap items-center justify-center gap-4">

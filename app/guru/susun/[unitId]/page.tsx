@@ -21,19 +21,21 @@ export default async function SusunModulPage({
   );
 
   return (
-    <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-12">
+    <main className="mx-auto w-full max-w-5xl flex-1 px-4 sm:px-6">
       <Link
         href="/guru"
-        className="mb-4 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+        className="mb-4 inline-flex items-center gap-1 text-sm font-semibold text-neutral-600 transition-colors hover:text-slime-lime-800"
       >
         <ChevronLeft className="size-4" aria-hidden />
-        Pilih unit lain
+        <span>Pilih unit lain</span>
       </Link>
 
-      <h1 className="text-2xl font-bold text-foreground">{unit.judulUnit}</h1>
-      <p className="mt-1 text-sm text-muted-foreground">
-        {unit.kodeUnit} &middot; {unit.dokumenSkkni}
-      </p>
+      <div className="border-b border-neutral-200 pb-5">
+        <h1 className="text-2xl font-extrabold tracking-tight text-neutral-900">{unit.judulUnit}</h1>
+        <p className="mt-1 text-sm text-neutral-600">
+          {unit.kodeUnit} &middot; {unit.dokumenSkkni}
+        </p>
+      </div>
 
       <div className="mt-8">
         <SusunModulClient

@@ -21,6 +21,25 @@ export async function loginAction(_prevState: string | undefined, formData: Form
   redirect(guru.role === "kaprogli" ? "/kaprogli" : guru.role === "admin" ? "/admin" : "/guru");
 }
 
+export async function demoLoginAction(role: "guru" | "kaprogli") {
+  const email =
+    role === "kaprogli"
+      ? "bambang.wijaya@smk.belajar.id"
+      : "siti.rahmawati@smk.belajar.id";
+
+  const guru = await getGuruAuthByEmail(email);
+  if (guru && guru.aktif) {
+    await createSession(guru.id, guru.role);
+  } else {
+    // Fallback ID & role default
+    const fallbackId = role === "kaprogli" ? "guru-02" : "guru-01";
+    const fallbackRole = role === "kaprogli" ? "kaprogli" : "guru_produktif";
+    await createSession(fallbackId, fallbackRole);
+  }
+
+  redirect(role === "kaprogli" ? "/kaprogli" : "/guru");
+}
+
 export async function logoutAction() {
   await destroySession();
   redirect("/login");

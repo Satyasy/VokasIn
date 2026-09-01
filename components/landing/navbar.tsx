@@ -21,7 +21,8 @@ export function LandingNavbar() {
   const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const navRef = useRef<HTMLElement>(null);
-  const [pointer, setPointer] = useState({ x: 0, y: 0, opacity: 0 });
+  const highlightRef = useRef<HTMLDivElement>(null);
+  const rafId = useRef<number | null>(null);
 
   useEffect(() => {
     if (!isHome) {
@@ -29,7 +30,10 @@ export function LandingNavbar() {
     }
     const hero = document.getElementById("hero");
     const threshold = hero ? hero.offsetHeight * 0.45 : 250;
-    const onScroll = () => setScrolled(window.scrollY > threshold);
+    const onScroll = () => {
+      const isPast = window.scrollY > threshold;
+      setScrolled((prev) => (prev !== isPast ? isPast : prev));
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -38,39 +42,50 @@ export function LandingNavbar() {
   const isDarkGlass = isHome && !scrolled;
 
   const handleMouseMove = (e: MouseEvent<HTMLElement>) => {
-    if (!navRef.current) return;
+    if (!navRef.current || !highlightRef.current) return;
     const rect = navRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    setPointer({ x, y, opacity: 1 });
+
+    if (rafId.current) {
+      cancelAnimationFrame(rafId.current);
+    }
+
+    rafId.current = requestAnimationFrame(() => {
+      if (!highlightRef.current) return;
+      highlightRef.current.style.opacity = "1";
+      highlightRef.current.style.background = isDarkGlass
+        ? `radial-gradient(circle 200px at ${x.toFixed(1)}px ${y.toFixed(1)}px, rgba(255, 255, 255, 0.22) 0%, rgba(180, 240, 0, 0.12) 35%, transparent 70%)`
+        : `radial-gradient(circle 200px at ${x.toFixed(1)}px ${y.toFixed(1)}px, rgba(255, 255, 255, 0.9) 0%, rgba(180, 240, 0, 0.15) 40%, transparent 70%)`;
+    });
   };
 
   const handleMouseLeave = () => {
-    setPointer((prev) => ({ ...prev, opacity: 0 }));
+    if (rafId.current) {
+      cancelAnimationFrame(rafId.current);
+    }
+    if (highlightRef.current) {
+      highlightRef.current.style.opacity = "0";
+    }
   };
 
   return (
-    <header className="fixed top-4 inset-x-0 mx-auto z-50 flex justify-center w-[92%] sm:w-[85%] max-w-7xl">
+    <header className="fixed top-4 inset-x-0 mx-auto z-50 flex justify-center w-[92%] sm:w-[85%] max-w-7xl will-change-transform">
       <nav
         ref={navRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className={`relative flex items-center justify-between w-full rounded-full px-5 py-2 sm:px-7 sm:py-2.5 border overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`relative flex items-center justify-between w-full rounded-full px-5 py-2 sm:px-7 sm:py-2.5 border overflow-hidden transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isDarkGlass
             ? "bg-neutral-950/45 border-white/15 shadow-[0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur-2xl text-neutral-50"
             : "bg-white/80 border-neutral-200/90 shadow-[0_12px_40px_rgba(0,0,0,0.08)] backdrop-blur-2xl text-neutral-900"
         }`}
       >
-        {/* Liquid Glass Real-Time Specular Highlight Layer (SwiftUI glassEffect emulation) */}
+        {/* Liquid Glass Real-Time Specular Highlight Layer */}
         <div
+          ref={highlightRef}
           aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-full transition-opacity duration-300 ease-out"
-          style={{
-            opacity: pointer.opacity,
-            background: isDarkGlass
-              ? `radial-gradient(circle 200px at ${pointer.x}px ${pointer.y}px, rgba(255, 255, 255, 0.22) 0%, rgba(180, 240, 0, 0.12) 35%, transparent 70%)`
-              : `radial-gradient(circle 200px at ${pointer.x}px ${pointer.y}px, rgba(255, 255, 255, 0.9) 0%, rgba(180, 240, 0, 0.15) 40%, transparent 70%)`,
-          }}
+          className="pointer-events-none absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 ease-out will-change-[opacity,background]"
         />
 
         {/* Ambient Top Edge Refraction Sheen */}
@@ -82,7 +97,7 @@ export function LandingNavbar() {
         {/* Logo & Brand Name */}
         <Link
           href="/"
-          className="group relative z-10 flex items-center gap-2.5 rounded-full px-2.5 py-1 transition-all duration-200 ease-out hover:scale-105 shrink-0"
+          className="group relative z-10 flex items-center gap-2.5 rounded-full px-2.5 py-1 transition-transform duration-200 ease-out hover:scale-105 shrink-0"
         >
           <Image
             src="/logo.png"

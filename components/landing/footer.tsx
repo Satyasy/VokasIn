@@ -55,6 +55,8 @@ export function LandingFooter() {
                   alt="Logo BINUS University"
                   width={160}
                   height={56}
+                  loading="lazy"
+                  sizes="(max-width: 768px) 120px, 160px"
                   className="h-12 w-auto object-contain transition-transform hover:scale-105"
                 />
                 <Image
@@ -62,6 +64,8 @@ export function LandingFooter() {
                   alt="Logo BEEFEST 2026"
                   width={160}
                   height={56}
+                  loading="lazy"
+                  sizes="(max-width: 768px) 120px, 160px"
                   className="h-12 w-auto object-contain transition-transform hover:scale-105"
                 />
               </div>

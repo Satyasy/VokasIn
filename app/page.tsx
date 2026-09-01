@@ -389,6 +389,7 @@ export default function Home() {
             ==================================================== */}
         <section
           id="kenapa"
+          style={{ contentVisibility: "auto", containIntrinsicSize: "1px 600px" }}
           className="relative overflow-hidden border-t border-neutral-100 bg-white"
         >
           <SectionContainer className="py-16 sm:py-24">
@@ -472,6 +473,7 @@ export default function Home() {
             ==================================================== */}
         <section
           id="untuk-siswa"
+          style={{ contentVisibility: "auto", containIntrinsicSize: "1px 500px" }}
           className="relative overflow-hidden border-t border-neutral-100 bg-neutral-50/80"
         >
           <HairlineGridTexture />
@@ -534,6 +536,7 @@ export default function Home() {
             ==================================================== */}
         <section
           id="regulasi"
+          style={{ contentVisibility: "auto", containIntrinsicSize: "1px 600px" }}
           className="relative overflow-hidden bg-slime-lime-950 text-neutral-50"
         >
           <div
@@ -613,6 +616,7 @@ export default function Home() {
             ==================================================== */}
         <section
           id="faq"
+          style={{ contentVisibility: "auto", containIntrinsicSize: "1px 500px" }}
           className="relative overflow-hidden border-t border-neutral-100 bg-white"
         >
           <Reveal>
@@ -648,6 +652,7 @@ export default function Home() {
             ==================================================== */}
         <section
           id="cta"
+          style={{ contentVisibility: "auto", containIntrinsicSize: "1px 400px" }}
           className="relative overflow-hidden bg-slime-lime-950"
         >
           <div

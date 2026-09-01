@@ -22,6 +22,7 @@ import { SectionContainer } from "@/components/landing/section-container";
 import { HairlineGridTexture } from "@/components/landing/background-shapes";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ParallaxCard } from "@/components/ui/parallax-card";
 import { HeroIllustration } from "@/components/illustrations/hero-illustration";
 import { DocumentToCardsIllustration } from "@/components/illustrations/document-to-cards";
 import {
@@ -343,23 +344,40 @@ export default function Home() {
             <RevealGroup className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" stagger={0.12}>
               {langkahKerja.map((langkah, i) => (
                 <RevealItem key={langkah.title}>
-                  <div className="card-hover flex h-full flex-col rounded-2xl border border-neutral-200/80 bg-neutral-50/70 p-6 shadow-sm">
+                  <ParallaxCard className="flex h-full flex-col rounded-2xl border border-neutral-200/80 bg-neutral-50/70 p-6 shadow-sm">
                     <div className="flex items-center justify-between">
-                      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-slime-lime-100 text-sm font-bold text-slime-lime-800">
+                      <span
+                        style={{ transform: "translateZ(30px)" }}
+                        className="flex size-9 shrink-0 items-center justify-center rounded-full bg-slime-lime-100 text-sm font-bold text-slime-lime-800 shadow-sm"
+                      >
                         {i + 1}
                       </span>
-                      <div className="flex size-14 items-center justify-center rounded-xl bg-white shadow-sm ring-1 ring-neutral-200/60">
-                        <langkah.icon className="card-hover-icon size-9 text-slime-lime-700" aria-hidden />
+                      <div
+                        style={{ transform: "translateZ(35px)" }}
+                        className="flex size-14 items-center justify-center rounded-xl bg-white shadow-md ring-1 ring-neutral-200/60"
+                      >
+                        <langkah.icon className="size-9 text-slime-lime-700" aria-hidden />
                       </div>
                     </div>
-                    <h3 className="mt-5 text-base font-bold text-neutral-900">
+                    <h3
+                      style={{ transform: "translateZ(20px)" }}
+                      className="mt-5 text-base font-bold text-neutral-900"
+                    >
                       {langkah.title}
                     </h3>
-                    <p className="mt-2.5 flex-1 text-sm leading-relaxed text-neutral-700">{langkah.body}</p>
-                    <p className="mt-4 text-sm font-semibold text-slime-lime-800">
+                    <p
+                      style={{ transform: "translateZ(10px)" }}
+                      className="mt-2.5 flex-1 text-sm leading-relaxed text-neutral-700"
+                    >
+                      {langkah.body}
+                    </p>
+                    <p
+                      style={{ transform: "translateZ(15px)" }}
+                      className="mt-4 text-sm font-semibold text-slime-lime-800"
+                    >
                       {langkah.detail}
                     </p>
-                  </div>
+                  </ParallaxCard>
                 </RevealItem>
               ))}
             </RevealGroup>
@@ -388,22 +406,32 @@ export default function Home() {
 
             <div className="mt-12 grid gap-5 sm:grid-cols-12">
               <RevealItem scale className="sm:col-span-12 lg:col-span-7">
-                <div className="card-hover flex h-full flex-col rounded-2xl border border-slime-lime-200/80 bg-slime-lime-50 p-8 shadow-sm">
-                  <DocumentToCardsIllustration
-                    className="mb-6 h-44 w-full text-slime-lime-600"
-                    aria-hidden
-                  />
-                  <alasanFeatured.icon
-                    className="card-hover-icon size-8 text-slime-lime-700"
-                    aria-hidden
-                  />
-                  <CardTitle className="mt-4 text-xl font-bold text-neutral-900">
+                <ParallaxCard className="flex h-full flex-col rounded-2xl border border-slime-lime-200/80 bg-slime-lime-50 p-8 shadow-sm">
+                  <div style={{ transform: "translateZ(20px)" }}>
+                    <DocumentToCardsIllustration
+                      className="mb-6 h-44 w-full text-slime-lime-600"
+                      aria-hidden
+                    />
+                  </div>
+                  <div style={{ transform: "translateZ(30px)" }}>
+                    <alasanFeatured.icon
+                      className="size-8 text-slime-lime-700"
+                      aria-hidden
+                    />
+                  </div>
+                  <CardTitle
+                    style={{ transform: "translateZ(25px)" }}
+                    className="mt-4 text-xl font-bold text-neutral-900"
+                  >
                     {alasanFeatured.title}
                   </CardTitle>
-                  <CardDescription className="mt-3 text-sm leading-relaxed text-neutral-700 sm:text-base">
+                  <CardDescription
+                    style={{ transform: "translateZ(15px)" }}
+                    className="mt-3 text-sm leading-relaxed text-neutral-700 sm:text-base"
+                  >
                     {alasanFeatured.body}
                   </CardDescription>
-                </div>
+                </ParallaxCard>
               </RevealItem>
 
               <RevealGroup
@@ -412,14 +440,26 @@ export default function Home() {
               >
                 {alasanKecil.map((item) => (
                   <RevealItem key={item.title}>
-                    <div className="card-hover flex h-full flex-col gap-2.5 rounded-2xl border border-neutral-200/80 bg-neutral-50/80 p-5 shadow-sm">
-                      <item.icon
-                        className="card-hover-icon size-6 text-slime-lime-700"
-                        aria-hidden
-                      />
-                      <CardTitle className="text-base font-bold text-neutral-900">{item.title}</CardTitle>
-                      <CardDescription className="text-sm leading-relaxed text-neutral-700">{item.body}</CardDescription>
-                    </div>
+                    <ParallaxCard className="flex h-full flex-col gap-2.5 rounded-2xl border border-neutral-200/80 bg-neutral-50/80 p-5 shadow-sm">
+                      <div style={{ transform: "translateZ(30px)" }}>
+                        <item.icon
+                          className="size-6 text-slime-lime-700"
+                          aria-hidden
+                        />
+                      </div>
+                      <CardTitle
+                        style={{ transform: "translateZ(20px)" }}
+                        className="text-base font-bold text-neutral-900"
+                      >
+                        {item.title}
+                      </CardTitle>
+                      <CardDescription
+                        style={{ transform: "translateZ(10px)" }}
+                        className="text-sm leading-relaxed text-neutral-700"
+                      >
+                        {item.body}
+                      </CardDescription>
+                    </ParallaxCard>
                   </RevealItem>
                 ))}
               </RevealGroup>
@@ -428,7 +468,7 @@ export default function Home() {
         </section>
 
         {/* ====================================================
-            4b. UNTUK SISWA JUGA — abu muda
+            4b. UNTUK SISWA JUGA — dengan Parallax Focus Effect
             ==================================================== */}
         <section
           id="untuk-siswa"
@@ -450,23 +490,38 @@ export default function Home() {
               <RevealGroup className="mt-10 grid gap-5 sm:grid-cols-2" stagger={0.1}>
                 {alatPublik.map((alat) => (
                   <RevealItem key={alat.href}>
-                    <div className="card-hover flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-7 shadow-sm">
-                      <div className="flex size-12 items-center justify-center rounded-xl bg-slime-lime-100">
+                    <ParallaxCard className="flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-7 shadow-sm">
+                      <div
+                        style={{ transform: "translateZ(35px)" }}
+                        className="flex size-12 items-center justify-center rounded-xl bg-slime-lime-100 shadow-sm"
+                      >
                         <alat.icon
-                          className="card-hover-icon size-6 text-slime-lime-700"
+                          className="size-6 text-slime-lime-700"
                           aria-hidden
                         />
                       </div>
-                      <CardTitle className="mt-4 text-lg font-bold text-neutral-900">{alat.title}</CardTitle>
-                      <CardDescription className="mt-2 text-sm leading-relaxed text-neutral-700">{alat.body}</CardDescription>
-                      <Link
-                        href={alat.href}
-                        className="mt-5 inline-flex items-center gap-1.5 self-start text-sm font-bold text-slime-lime-700 hover:text-slime-lime-800"
+                      <CardTitle
+                        style={{ transform: "translateZ(25px)" }}
+                        className="mt-4 text-lg font-bold text-neutral-900"
                       >
-                        <span>{alat.cta}</span>
-                        <ArrowRight className="size-4" aria-hidden />
-                      </Link>
-                    </div>
+                        {alat.title}
+                      </CardTitle>
+                      <CardDescription
+                        style={{ transform: "translateZ(15px)" }}
+                        className="mt-2 text-sm leading-relaxed text-neutral-700"
+                      >
+                        {alat.body}
+                      </CardDescription>
+                      <div style={{ transform: "translateZ(20px)" }} className="mt-5">
+                        <Link
+                          href={alat.href}
+                          className="inline-flex items-center gap-1.5 text-sm font-bold text-slime-lime-700 hover:text-slime-lime-800"
+                        >
+                          <span>{alat.cta}</span>
+                          <ArrowRight className="size-4" aria-hidden />
+                        </Link>
+                      </div>
+                    </ParallaxCard>
                   </RevealItem>
                 ))}
               </RevealGroup>

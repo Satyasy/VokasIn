@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getSession } from "@/lib/auth";
 import { processSkkniMandiri } from "@/lib/skkni-etl";
+import { parseSkkniPdf, type ExtractedUnit, type ParsedSkkniDocument } from "@/lib/skkni-pdf-parser";
 
 export interface UploadSkkniMandiriResponse {
   success: boolean;
@@ -13,6 +14,120 @@ export interface UploadSkkniMandiriResponse {
   totalElemen?: number;
 }
 
+export interface ParsePdfResponse {
+  success: boolean;
+  error?: string;
+  document?: ParsedSkkniDocument;
+}
+
+export interface ImportBatchResponse {
+  success: boolean;
+  error?: string;
+  importedCount?: number;
+  units?: { id: string; kodeUnit: string; judulUnit: string }[];
+}
+
+/**
+ * Server Action: Ekstraksi otomatis seluruh Unit Kompetensi dari file PDF SKKNI Kemnaker.
+ */
+export async function parseSkkniPdfAction(formData: FormData): Promise<ParsePdfResponse> {
+  const session = await getSession();
+  if (!session) {
+    return { success: false, error: "Sesi telah berakhir. Silakan login kembali." };
+  }
+
+  const file = formData.get("pdfFile") as File | null;
+  if (!file || file.size === 0) {
+    return { success: false, error: "Pilih atau letakkan file PDF SKKNI terlebih dahulu." };
+  }
+
+  if (!file.name.toLowerCase().endsWith(".pdf")) {
+    return { success: false, error: "File harus berformat PDF (.pdf)." };
+  }
+
+  try {
+    const arrayBuffer = await file.arrayBuffer();
+    const parsed = await parseSkkniPdf(new Uint8Array(arrayBuffer));
+
+    return {
+      success: true,
+      document: parsed,
+    };
+  } catch (err) {
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : "Gagal mengekstrak struktur PDF SKKNI.",
+    };
+  }
+}
+
+/**
+ * Server Action: Mengimpor unit-unit pilihan guru/kaprogli hasil ekstraksi PDF.
+ */
+export async function importSelectedSkkniUnitsAction(payload: {
+  nomorDokumen: string;
+  programKeahlianId: string;
+  selectedUnits: {
+    kodeUnit: string;
+    judulUnit: string;
+    rawElemenText: string;
+  }[];
+}): Promise<ImportBatchResponse> {
+  const session = await getSession();
+  if (!session) {
+    return { success: false, error: "Sesi telah berakhir. Silakan login kembali." };
+  }
+
+  if (!payload.nomorDokumen.trim()) {
+    return { success: false, error: "Nomor SKKNI rujukan wajib terisi." };
+  }
+
+  if (!payload.selectedUnits || payload.selectedUnits.length === 0) {
+    return { success: false, error: "Pilih setidaknya 1 unit kompetensi untuk diimpor." };
+  }
+
+  try {
+    const importedUnits: { id: string; kodeUnit: string; judulUnit: string }[] = [];
+
+    for (const unit of payload.selectedUnits) {
+      const res = await processSkkniMandiri({
+        nomorDokumen: payload.nomorDokumen.trim(),
+        kodeUnit: unit.kodeUnit.trim(),
+        judulUnit: unit.judulUnit.trim(),
+        programKeahlianId: payload.programKeahlianId,
+        elemenRawText: unit.rawElemenText,
+        uploaderId: session.guruId,
+        uploaderRole: session.role,
+      });
+
+      importedUnits.push({
+        id: res.unitId,
+        kodeUnit: res.kodeUnit,
+        judulUnit: res.judulUnit,
+      });
+    }
+
+    revalidatePath("/guru");
+    revalidatePath("/kaprogli");
+    revalidatePath("/admin/skkni/kandidat");
+    revalidatePath("/admin");
+
+    return {
+      success: true,
+      importedCount: importedUnits.length,
+      units: importedUnits,
+    };
+  } catch (err) {
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : "Gagal memproses pendaftaran unit kompetensi.",
+    };
+  }
+}
+
+/**
+ * Server Action: Input manual potongan teks SKKNI (Cadangan).
+ */
 export async function uploadSkkniMandiriAction(
   _prevState: UploadSkkniMandiriResponse | null,
   formData: FormData

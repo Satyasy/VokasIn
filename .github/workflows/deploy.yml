@@ -24,7 +24,7 @@ jobs:
           cache: "npm"
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install --include=dev
 
       - name: Build Next.js Application
         run: npm run build
@@ -65,8 +65,8 @@ jobs:
             # Inject local PostgreSQL DATABASE_URL
             echo "DATABASE_URL=postgresql://vokasin:${{ secrets.DB_PASSWORD }}@localhost:5432/vokasin" > .env.local
 
-            # Install production dependencies
-            npm install
+            # Install all dependencies (including build tools)
+            npm install --include=dev
 
             # Build application with memory optimization
             export NODE_OPTIONS="--max-old-space-size=1536"

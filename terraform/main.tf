@@ -163,8 +163,8 @@ resource "aws_instance" "app_server" {
               sudo -u postgres psql -c "CREATE DATABASE vokasin OWNER vokasin;"
               sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE vokasin TO vokasin;"
 
-              # 4. Install Node.js 22.x LTS for ARM64
-              curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+              # 4. Install Node.js 24.x LTS for ARM64
+              curl -fsSL https://deb.nodesource.com/setup_24.x | bash -
               apt-get install -y nodejs
 
               # 5. Install PM2 Process Manager globally

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { BookOpenText, ArrowRight } from "lucide-react";
-import { getProgramKeahlian, getUnitKompetensiByProgram } from "@/lib/data-access";
+import { getSession } from "@/lib/auth";
+import { getProgramKeahlian, getUnitKompetensiByProgram, getGuruById } from "@/lib/data-access";
+import { listJadwal, getJpSummaryByGuru } from "@/lib/data-access-db";
 import { CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -8,31 +10,33 @@ import { ParallaxCard } from "@/components/ui/parallax-card";
 import { UnitSearch } from "@/components/guru/unit-search";
 import { AsistenKebutuhanModul } from "@/components/guru/asisten-kebutuhan-modul";
 import { DraftStatusBar } from "@/components/guru/draft-status-bar";
+import { GuruTabsContainer } from "@/components/guru/guru-tabs-container";
 
-export default function GuruPage() {
+export default async function GuruPage() {
+  const session = await getSession();
+  const guruId = session?.guruId || "guru-01";
+  const guru = getGuruById(guruId);
+  const programKeahlianId = guru?.programKeahlianId || "pk-tkj";
   const programList = getProgramKeahlian();
 
-  return (
-    <main className="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-6">
-      <div className="border-b border-neutral-200 pb-6">
-        <p className="text-xs font-bold uppercase tracking-wider text-slime-lime-700">
-          Alur Penyusunan Perangkat Ajar
-        </p>
-        <h1 className="mt-1.5 text-3xl font-extrabold tracking-tight text-neutral-900">
-          Pilih Unit Kompetensi SKKNI
-        </h1>
-        <p className="mt-2 text-base text-neutral-600">
-          Pilih unit kompetensi resmi untuk menyusun kartu saran jobsheet dan rencana praktikum berbasis standar nasional.
-        </p>
-      </div>
+  // Ambil data jadwal riil dan agregat JP dari database
+  const [jadwalList, jpSummary] = await Promise.all([
+    listJadwal({ guruId }),
+    getJpSummaryByGuru(guruId),
+  ]);
 
-      <div className="mt-8">
+  const allAvailableUnits = programList.flatMap((p) => getUnitKompetensiByProgram(p.id));
+
+  // Node penyusunan modul ajar (tab ke-3)
+  const modulAjarNode = (
+    <div className="space-y-10">
+      <div>
         <DraftStatusBar programList={programList} />
         <UnitSearch />
         <AsistenKebutuhanModul />
       </div>
 
-      <div className="mt-10 flex flex-col gap-10">
+      <div className="flex flex-col gap-10">
         {programList.map((program) => {
           const units = getUnitKompetensiByProgram(program.id);
           return (
@@ -85,6 +89,32 @@ export default function GuruPage() {
           );
         })}
       </div>
+    </div>
+  );
+
+  return (
+    <main className="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-6">
+      {/* Header Utama Guru */}
+      <div className="border-b border-neutral-200 pb-6 mb-6">
+        <p className="text-xs font-bold uppercase tracking-wider text-slime-lime-700">
+          Ruang Kerja Guru Produktif
+        </p>
+        <h1 className="mt-1.5 text-3xl font-extrabold tracking-tight text-neutral-900">
+          Dashboard Pembelajaran &amp; Modul Ajar
+        </h1>
+        <p className="mt-2 text-base text-neutral-600">
+          Kelola agenda mengajar harian, pantau alokasi Jam Pelajaran (JP), dan rancang perangkat ajar berbasis SKKNI resmi.
+        </p>
+      </div>
+
+      {/* Kontainer Tab Segmented Terpadu */}
+      <GuruTabsContainer
+        jadwalList={jadwalList}
+        jpSummary={jpSummary}
+        availableUnits={allAvailableUnits}
+        programKeahlianId={programKeahlianId}
+        modulAjarNode={modulAjarNode}
+      />
     </main>
   );
 }

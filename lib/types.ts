@@ -144,3 +144,67 @@ export interface SkillDeltaReport {
   gapKandidatCount: number;
   skorDelta: number; // 0-100, makin tinggi makin besar kesenjangan
 }
+
+export type StatusJadwal = "terjadwal" | "terlaksana" | "dijadwal_ulang" | "batal";
+
+export interface JadwalPembelajaran {
+  id: string;
+  guruId: string;
+  programKeahlianId: string;
+  unitKompetensiId?: string;
+  judulMateri: string;
+  kelas: string;
+  mingguKe: number;
+  tanggal: string; // format YYYY-MM-DD
+  jamMulai: string; // mis. "07:30"
+  jamSelesai: string; // mis. "11:30"
+  alokasiJp: number;
+  status: StatusJadwal;
+  catatanRefleksi?: string;
+  createdAt?: string;
+  // Joined fields for display
+  namaGuru?: string;
+  kodeUnit?: string;
+  judulUnit?: string;
+}
+
+export interface JpSummary {
+  targetJpSemester: number;
+  jpTerlaksana: number;
+  jpTerjadwal: number;
+  persentaseTerlaksana: number;
+  totalSesi: number;
+  sesiTerlaksana: number;
+}
+
+export interface ProgramCurriculumMetric {
+  programId: string;
+  programNama: string;
+  programSingkatan: string;
+  totalUnitSkkni: number;
+  unitTerajarkan: number;
+  persentaseModul: number;
+  targetJpSemester: number;
+  jpTerlaksana: number;
+  persentaseJp: number;
+  labKesiapanPersen: number;
+}
+
+export interface AdminAnalyticsData {
+  totalDokumen: number;
+  unitTerverifikasi: number;
+  kandidatMenunggu: number;
+  totalPengguna: number;
+  totalSesiJadwal: number;
+  totalJpTerlaksana: number;
+  totalTargetJp: number;
+  overallJpPersen: number;
+  programMetrics: ProgramCurriculumMetric[];
+  hitlMetrics: {
+    terima: number;
+    modifikasi: number;
+    tolak: number;
+    total: number;
+    persenTerima: number;
+  };
+}

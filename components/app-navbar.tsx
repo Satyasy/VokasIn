@@ -20,6 +20,12 @@ const ROLE_HOME: Record<Role, string> = {
   admin: "/admin",
 };
 
+const ROLE_WORKSPACE_LABEL: Record<Role, string> = {
+  guru_produktif: "Ruang Guru",
+  kaprogli: "Dasbor Kaprogli",
+  admin: "Dasbor Admin",
+};
+
 const publicToolLinks = [
   { href: "/roadmap", label: "Roadmap" },
   { href: "/jelajah-kompetensi", label: "Jelajah" },
@@ -92,6 +98,14 @@ export function AppNavbar({ nama, role }: { nama: string; role: Role }) {
           </Link>
 
           <ul className="hidden items-center gap-2 md:flex">
+            <li>
+              <Link
+                href={ROLE_HOME[role]}
+                className="rounded-full px-3 py-1 text-xs font-bold text-slime-lime-900 bg-slime-lime-100/90 border border-slime-lime-300/80 transition-all duration-200 hover:bg-slime-lime-200"
+              >
+                {ROLE_WORKSPACE_LABEL[role]}
+              </Link>
+            </li>
             {publicToolLinks.map((link) => (
               <li key={link.href}>
                 <Link
@@ -147,6 +161,14 @@ export function AppNavbar({ nama, role }: { nama: string; role: Role }) {
                 <p className="text-sm font-bold text-neutral-900">{nama}</p>
               </div>
             )}
+
+            <Link
+              href={ROLE_HOME[role]}
+              onClick={() => setMobileMenuOpen(false)}
+              className="rounded-xl px-3 py-2 text-sm font-bold text-slime-lime-900 bg-slime-lime-100/70 transition-colors"
+            >
+              {ROLE_WORKSPACE_LABEL[role]}
+            </Link>
 
             <p className="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-slime-lime-700">
               Alat &amp; Referensi SKKNI

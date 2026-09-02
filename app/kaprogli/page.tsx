@@ -1,35 +1,40 @@
 import Link from "next/link";
-import { AlertTriangle, Gauge, Package, Settings, CheckCircle2 } from "lucide-react";
+import { AlertTriangle, Gauge, Package, Settings, CheckCircle2, Wrench } from "lucide-react";
+import { getSession } from "@/lib/auth";
 import {
   getProgramKeahlian,
   getSkillDeltaReport,
   getGapKandidat,
   getLabForProgram,
+  getGuruById,
 } from "@/lib/data-access";
-import { ensureLabCacheFresh } from "@/lib/data-access-db";
+import { ensureLabCacheFresh, listAllGuru, listJadwal } from "@/lib/data-access-db";
 import { toggleGapReviewedAction } from "./actions";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { KaprogliTabsContainer } from "@/components/kaprogli/kaprogli-tabs-container";
 
 const SEMESTER = "Ganjil 2026/2027";
 
 export default async function KaprogliPage() {
   await ensureLabCacheFresh();
+  const session = await getSession();
   const programList = getProgramKeahlian();
 
-  return (
-    <main className="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-6">
-      <div className="border-b border-neutral-200 pb-6">
-        <h1 className="text-2xl font-bold tracking-tight text-neutral-900">Dashboard Skill Delta Score</h1>
-        <p className="mt-1 text-sm text-neutral-600">
-          Semester {SEMESTER}. Skor makin tinggi berarti kesenjangan antara materi ajar dan
-          SKKNI makin besar (bukan pengukuran mutlak, gunakan bersama penilaian lapangan).
-        </p>
-      </div>
+  const [guruList, jadwalList] = await Promise.all([
+    listAllGuru(),
+    listJadwal(),
+  ]);
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
+  const guru = session ? getGuruById(session.guruId) : undefined;
+  const currentProgramId = guru?.programKeahlianId || "pk-rpl";
+
+  // Node 1: Skill Delta Score & Gap Kandidat
+  const deltaScoreNode = (
+    <div className="space-y-10">
+      <div className="grid gap-4 sm:grid-cols-2">
         {programList.map((program) => {
           const report = getSkillDeltaReport(program.id, SEMESTER);
           const level =
@@ -99,7 +104,7 @@ export default async function KaprogliPage() {
         })}
       </div>
 
-      <section className="mt-10">
+      <section>
         <h2 className="mb-1 text-lg font-semibold text-foreground">Kandidat kesenjangan kompetensi</h2>
         <p className="mb-4 text-sm text-muted-foreground">
           Skill dari sumber sekunder yang belum match SKKNI ditandai sebagai gap, bukan
@@ -146,6 +151,86 @@ export default async function KaprogliPage() {
           })}
         </div>
       </section>
+    </div>
+  );
+
+  // Node 3: Inventaris Lab & Alat
+  const inventarisNode = (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between border-b border-neutral-200 pb-4">
+        <div>
+          <h2 className="text-lg font-bold text-neutral-900">
+            Inventaris &amp; Kesiapan Fasilitas Lab
+          </h2>
+          <p className="text-xs text-neutral-600">
+            Daftar peralatan praktikum kejuruan per program keahlian untuk pengujian kelayakan materi ajar.
+          </p>
+        </div>
+        <Link href="/kaprogli/lab">
+          <Button size="sm" className="bg-slime-lime-600 font-bold text-neutral-950 hover:bg-slime-lime-500">
+            <Settings className="size-3.5 mr-1.5" aria-hidden />
+            Buka Pengelolaan Lengkap
+          </Button>
+        </Link>
+      </div>
+
+      <div className="grid gap-6 sm:grid-cols-2">
+        {programList.map((program) => {
+          const items = getLabForProgram(program.id);
+          return (
+            <div key={program.id} className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
+              <div className="flex items-center justify-between border-b border-neutral-100 pb-3">
+                <h3 className="font-bold text-neutral-900">{program.nama} ({program.singkatan})</h3>
+                <Badge variant="brand">{items.length} Alat Terdata</Badge>
+              </div>
+
+              {items.length === 0 ? (
+                <p className="mt-4 text-xs text-neutral-500">Belum ada alat terdaftar untuk program ini.</p>
+              ) : (
+                <ul className="mt-4 divide-y divide-neutral-100">
+                  {items.map((item) => (
+                    <li key={item.id} className="py-2.5 flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-2">
+                        <Package className="size-4 text-slime-lime-700" aria-hidden />
+                        <span className="font-medium text-neutral-800">{item.nama}</span>
+                      </div>
+                      <Badge variant="default" className="font-bold">
+                        {item.jumlah} Unit
+                      </Badge>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  return (
+    <main className="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-6">
+      {/* Header Utama Kaprogli */}
+      <div className="border-b border-neutral-200 pb-6 mb-6">
+        <p className="text-xs font-bold uppercase tracking-wider text-slime-lime-700">
+          Area Kerja Ketua Program Keahlian
+        </p>
+        <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-neutral-900 sm:text-3xl">
+          Dashboard Kaprogli &amp; Supervisi Kurikulum
+        </h1>
+        <p className="mt-2 text-sm text-neutral-600 sm:text-base">
+          Semester {SEMESTER}. Pantau kesenjangan kurikulum (Skill Delta), supervisi beban JP guru produktif, dan kelola ketersediaan inventaris lab.
+        </p>
+      </div>
+
+      {/* Tab Navigasi Terpadu */}
+      <KaprogliTabsContainer
+        guruList={guruList}
+        jadwalList={jadwalList}
+        currentKaprogliProgramId={currentProgramId}
+        deltaScoreNode={deltaScoreNode}
+        inventarisNode={inventarisNode}
+      />
     </main>
   );
 }

@@ -190,3 +190,26 @@ CREATE TABLE IF NOT EXISTS skill_delta_report (
   gap_kandidat_count INTEGER NOT NULL,
   skor_delta INTEGER NOT NULL
 );
+
+-- JadwalPembelajaran: instrumen penjadwalan mingguan/bulanan dan alokasi Jam Pelajaran (JP)
+-- guru produktif berbasis unit kompetensi SKKNI resmi (Permendikdasmen No. 8/2026).
+CREATE TABLE IF NOT EXISTS jadwal_pembelajaran (
+  id TEXT PRIMARY KEY,
+  guru_id TEXT NOT NULL REFERENCES guru(id) ON DELETE CASCADE,
+  program_keahlian_id TEXT NOT NULL REFERENCES program_keahlian(id),
+  unit_kompetensi_id TEXT REFERENCES unit_kompetensi(id),
+  judul_materi TEXT NOT NULL,
+  kelas TEXT NOT NULL,
+  minggu_ke INTEGER NOT NULL CHECK (minggu_ke BETWEEN 1 AND 24),
+  tanggal DATE NOT NULL,
+  jam_mulai TIME NOT NULL,
+  jam_selesai TIME NOT NULL,
+  alokasi_jp INTEGER NOT NULL CHECK (alokasi_jp > 0),
+  status TEXT NOT NULL CHECK (status IN ('terjadwal', 'terlaksana', 'dijadwal_ulang', 'batal')) DEFAULT 'terjadwal',
+  catatan_refleksi TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_jadwal_guru_tanggal ON jadwal_pembelajaran(guru_id, tanggal);
+CREATE INDEX IF NOT EXISTS idx_jadwal_program_minggu ON jadwal_pembelajaran(program_keahlian_id, minggu_ke);
+

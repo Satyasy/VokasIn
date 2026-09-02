@@ -150,3 +150,33 @@ ON CONFLICT (id) DO NOTHING;
 INSERT INTO koreksi_guru (id, saran_topik_id, guru_id, tindakan, catatan, waktu) VALUES
   ('kg-01', 'st-02', 'guru-01', 'modifikasi', 'Ditambahkan studi kasus gangguan Wi-Fi, bukan hanya kabel.', '2026-08-12T09:30:00.000Z')
 ON CONFLICT (id) DO NOTHING;
+
+-- Seed jadwal pembelajaran mingguan/bulanan Semester Ganjil 2026/2027
+-- Berbasis unit kompetensi SKKNI resmi untuk guru produktif TKJ dan RPL
+INSERT INTO jadwal_pembelajaran (id, guru_id, program_keahlian_id, unit_kompetensi_id, judul_materi, kelas, minggu_ke, tanggal, jam_mulai, jam_selesai, alokasi_jp, status, catatan_refleksi) VALUES
+  ('jdw-01', 'guru-01', 'pk-tkj', 'uk-01', 'Praktik Instalasi & Konfigurasi Server Linux', 'XII TKJ 1', 1, '2026-08-04', '07:30', '11:30', 5, 'terlaksana', 'Siswa berhasil instal Debian 12 pada server fisik di lab jaringan.'),
+  ('jdw-02', 'guru-01', 'pk-tkj', 'uk-01', 'Konfigurasi DNS & Web Server Apache', 'XII TKJ 2', 1, '2026-08-05', '07:30', '11:30', 5, 'terlaksana', 'Virtual host berhasil dikonfigurasi oleh 90% kelompok.'),
+  ('jdw-03', 'guru-01', 'pk-tkj', 'uk-02', 'Konfigurasi Routing Statis & Dynamic OSPF', 'XII TKJ 1', 2, '2026-08-11', '07:30', '11:30', 5, 'terlaksana', 'Pengujian rute antar router Mikrotik berjalan lancar.'),
+  ('jdw-04', 'guru-01', 'pk-tkj', 'uk-02', 'Tautan WAN & Pengujian Throughput Jaringan', 'XII TKJ 2', 2, '2026-08-12', '07:30', '11:30', 5, 'terlaksana', 'Analisis bottleneck tautan menggunakan iperf.'),
+  ('jdw-05', 'guru-01', 'pk-tkj', 'uk-05', 'Pengenalan Infrastruktur Cloud & Virtualisasi', 'XII TKJ 1', 3, '2026-08-18', '07:30', '11:30', 5, 'terlaksana', 'Setup hypervisor Proxmox VE di komputer lab.'),
+  ('jdw-06', 'guru-01', 'pk-tkj', 'uk-05', 'Deploy Virtual Machine & Container LXC', 'XII TKJ 2', 3, '2026-08-19', '07:30', '11:30', 5, 'terlaksana', 'Pembuatan template VM dan alokasi resource RAM/vCPU.'),
+  ('jdw-07', 'guru-01', 'pk-tkj', 'uk-06', 'Audit Keamanan Server & Firewall Rules', 'XII TKJ 1', 4, '2026-08-25', '07:30', '11:30', 5, 'terlaksana', 'Konfigurasi iptables dan fail2ban untuk proteksi SSH.'),
+  ('jdw-08', 'guru-01', 'pk-tkj', 'uk-06', 'Mitigasi Gangguan & Backup Otomatis Cloud', 'XII TKJ 2', 4, '2026-08-26', '07:30', '11:30', 5, 'terlaksana', 'Automasi backup berkala menggunakan rsync dan cron.'),
+  ('jdw-09', 'guru-01', 'pk-tkj', 'uk-01', 'Pengujian Beban Server (Stress Testing) & HTTP Tuning', 'XII TKJ 1', 5, '2026-09-01', '07:30', '11:30', 5, 'terlaksana', 'Uji coba konkurensi web traffic dengan ApacheBench.'),
+  ('jdw-10', 'guru-01', 'pk-tkj', 'uk-02', 'Troubleshooting VPN IPSec Antar Cabang', 'XII TKJ 2', 5, '2026-09-02', '07:30', '11:30', 5, 'terlaksana', 'Penyelesaian kendala MTU dan firewall traversal.'),
+  ('jdw-11', 'guru-01', 'pk-tkj', 'uk-02', 'Simulasi Jaringan Enterprise & VLAN Trunking', 'XII TKJ 1', 6, '2026-09-08', '07:30', '11:30', 5, 'terjadwal', NULL),
+  ('jdw-12', 'guru-01', 'pk-tkj', 'uk-05', 'Manajemen Cluster High Availability Cloud', 'XII TKJ 2', 6, '2026-09-09', '07:30', '11:30', 5, 'terjadwal', NULL),
+  ('jdw-13', 'guru-01', 'pk-tkj', 'uk-03', 'Integrasi Sensor IoT ke Gateway Jaringan', 'XII TKJ 1', 7, '2026-09-15', '07:30', '11:30', 5, 'terjadwal', NULL),
+  ('jdw-14', 'guru-01', 'pk-tkj', 'uk-03', 'Monitoring Data Sensor IoT Berbasis Dashboard', 'XII TKJ 2', 7, '2026-09-16', '07:30', '11:30', 5, 'terjadwal', NULL),
+  ('jdw-21', 'guru-02', 'pk-rpl', 'uk-07', 'Setup Git & GitHub Classroom untuk Tim Pengembang', 'XII RPL 1', 1, '2026-08-03', '08:00', '12:00', 5, 'terlaksana', 'Seluruh siswa telah memiliki akun dan clone repositori starter.'),
+  ('jdw-22', 'guru-02', 'pk-rpl', 'uk-07', 'Pengenalan Scrum & Jira/Trello Software Management', 'XI RPL 2', 1, '2026-08-06', '08:00', '12:00', 5, 'terlaksana', 'Penyusunan user stories dan sprint backlog perdana.'),
+  ('jdw-23', 'guru-02', 'pk-rpl', 'uk-07', 'Branching Strategy (Git Flow) & Code Review', 'XII RPL 1', 2, '2026-08-10', '08:00', '12:00', 5, 'terlaksana', 'Simulasi merge conflict dan tata cara Pull Request.'),
+  ('jdw-24', 'guru-02', 'pk-rpl', 'uk-07', 'Manajemen Task & Sprint Planning 1', 'XI RPL 2', 2, '2026-08-13', '08:00', '12:00', 5, 'terlaksana', 'Estimasi story points pada proyek web profil sekolah.'),
+  ('jdw-25', 'guru-02', 'pk-rpl', 'uk-07', 'Sprint Review & Demo Perangkat Lunak Tahap 1', 'XII RPL 1', 3, '2026-08-17', '08:00', '12:00', 5, 'terlaksana', 'Presentasi MVP modul autentikasi dan database schema.'),
+  ('jdw-26', 'guru-02', 'pk-rpl', 'uk-07', 'Quality Assurance & Automated Testing Dasar', 'XI RPL 2', 3, '2026-08-20', '08:00', '12:00', 5, 'terlaksana', 'Penyusunan test scenario dan unit testing dasar.'),
+  ('jdw-27', 'guru-02', 'pk-rpl', 'uk-07', 'Continuous Integration (CI) dengan GitHub Actions', 'XII RPL 1', 4, '2026-08-24', '08:00', '12:00', 5, 'terlaksana', 'Pipeline otomatis lint dan build berhasil diterapkan di repositori tim.'),
+  ('jdw-28', 'guru-02', 'pk-rpl', 'uk-07', 'Peluncuran Staging & Evaluasi Kualitas Perangkat Lunak', 'XII RPL 1', 5, '2026-08-31', '08:00', '12:00', 5, 'terlaksana', 'Deploy prototipe ke server uji coba sekolah.'),
+  ('jdw-29', 'guru-02', 'pk-rpl', 'uk-07', 'Sprint Retrospective & Refactoring Arsitektur', 'XII RPL 1', 6, '2026-09-07', '08:00', '12:00', 5, 'terjadwal', NULL),
+  ('jdw-30', 'guru-02', 'pk-rpl', 'uk-07', 'Dokumentasi Teknis & Release Notes v1.0', 'XI RPL 2', 6, '2026-09-10', '08:00', '12:00', 5, 'terjadwal', NULL)
+ON CONFLICT (id) DO NOTHING;
+

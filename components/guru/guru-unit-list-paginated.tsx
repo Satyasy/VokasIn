@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, BookOpenText } from "lucide-react";
+import { ArrowRight, BookOpenText, UploadCloud } from "lucide-react";
 import type { ProgramKeahlian, UnitKompetensi } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
 import { CardTitle } from "@/components/ui/card";
 import { PaginatedList } from "@/components/ui/pagination";
-import { UploadSkkniModal } from "@/components/skkni/upload-skkni-modal";
 
 interface GuruUnitListPaginatedProps {
   units: (UnitKompetensi & { programSingkatan?: string })[];
@@ -56,8 +55,14 @@ export function GuruUnitListPaginated({ units, programList }: GuruUnitListPagina
         })}
         </div>
 
-        {/* Tombol Upload SKKNI Mandiri */}
-        <UploadSkkniModal defaultProgramId="pk-tkj" />
+        {/* Tombol Menuju Halaman Unggah & Ekstraksi SKKNI Mandiri */}
+        <Link
+          href="/guru/unggah-skkni"
+          className="inline-flex items-center gap-2 rounded-xl border border-slime-lime-300 bg-slime-lime-50 px-4 py-2 text-xs font-bold text-slime-lime-950 hover:bg-slime-lime-100 transition-colors shadow-2xs"
+        >
+          <UploadCloud className="size-4 text-slime-lime-800" aria-hidden />
+          <span>Unggah / Ekstraksi SKKNI Mandiri</span>
+        </Link>
       </div>
 
       {/* Paginated List Unit SKKNI (10 Kartu per Sub-Halaman) */}

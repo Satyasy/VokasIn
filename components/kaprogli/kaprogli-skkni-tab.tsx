@@ -1,13 +1,13 @@
 "use client";
 
 import { useTransition, useState } from "react";
-import { Check, X, FileText, AlertCircle, BookOpen, Clock, ShieldCheck, Columns3, List } from "lucide-react";
+import Link from "next/link";
+import { Check, X, FileText, AlertCircle, BookOpen, Clock, ShieldCheck, Columns3, List, UploadCloud } from "lucide-react";
 import type { UnitKompetensiKandidat, ProgramKeahlian } from "@/lib/types";
 import { confirmKandidatAction, rejectKandidatAction, bulkConfirmKandidatAction } from "@/app/admin/skkni/kandidat/actions";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { UploadSkkniModal } from "@/components/skkni/upload-skkni-modal";
 import { DragDropClassification } from "@/components/skkni/drag-drop-classification";
 
 interface KaprogliSkkniTabProps {
@@ -85,7 +85,13 @@ export function KaprogliSkkniTab({
               {viewMode === "list" ? <Columns3 className="w-4 h-4 mr-2" /> : <List className="w-4 h-4 mr-2" />}
               {viewMode === "list" ? "Mode Drag & Drop" : "Mode List"}
             </Button>
-            <UploadSkkniModal defaultProgramId={currentProgramId} />
+            <Link
+              href="/kaprogli/unggah-skkni"
+              className="inline-flex items-center gap-2 rounded-full border border-slime-lime-300 bg-slime-lime-50 px-4 py-2 text-xs font-bold text-slime-lime-950 hover:bg-slime-lime-100 transition-colors shadow-2xs"
+            >
+              <UploadCloud className="size-4 text-slime-lime-800" aria-hidden />
+              <span>Unggah / Ekstraksi SKKNI Mandiri</span>
+            </Link>
           </div>
         </div>
       </div>

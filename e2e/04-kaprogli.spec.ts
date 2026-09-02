@@ -16,11 +16,12 @@ test.describe("Kaprogli Dashboard & Lab Inventory", () => {
     await expect(rplCard).toBeVisible();
 
     // Navigate to Lab Inventory
-    const labLink = page.getByRole("link", { name: /Manajemen Inventaris Lab/i }).first();
-    if (await labLink.isVisible()) {
-      await labLink.click();
-      await expect(page).toHaveURL(/\/kaprogli\/lab/);
-      await expect(page.locator("h1")).toContainText("Manajemen Inventaris Lab");
-    }
+    const labLink = page.locator("a[href='/kaprogli/lab']").first();
+    await expect(labLink).toBeVisible();
+    await labLink.click();
+
+    await expect(page).toHaveURL(/\/kaprogli\/lab/);
+    await expect(page.locator("h1")).toContainText("Manajemen Inventaris Lab");
+    await page.screenshot({ path: "test-results/screenshots/10-kaprogli-lab-inventory.png", fullPage: true });
   });
 });

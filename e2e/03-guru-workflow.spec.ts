@@ -36,6 +36,8 @@ test.describe("Guru Workflow & Lesson Plan Assembly", () => {
     // Add a suggestion card to the lesson plan
     const addCardBtn = page.getByRole("button", { name: /Tambahkan ke modul ajar/i }).first();
     await expect(addCardBtn).toBeVisible();
+    await page.screenshot({ path: "test-results/screenshots/08-guru-builder-step.png", fullPage: true });
+
     await addCardBtn.click();
 
     // Go to Review & Export page
@@ -55,5 +57,7 @@ test.describe("Guru Workflow & Lesson Plan Assembly", () => {
     await expect(mdExportBtn).toBeVisible();
     await expect(docxExportBtn).toBeVisible();
     await expect(pdfExportBtn).toBeVisible();
+
+    await page.screenshot({ path: "test-results/screenshots/09-guru-review-export.png", fullPage: true });
   });
 });

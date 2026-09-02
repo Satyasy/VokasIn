@@ -13,6 +13,8 @@ test.describe("Mobile Responsive & Layout Testing", () => {
     const hamburgerBtn = page.getByRole("button", { name: /menu navigasi/i }).first();
     await expect(hamburgerBtn).toBeVisible();
 
+    await page.screenshot({ path: "test-results/screenshots/11-mobile-landing.png", fullPage: true });
+
     // Open mobile menu
     await hamburgerBtn.click();
 
@@ -20,6 +22,8 @@ test.describe("Mobile Responsive & Layout Testing", () => {
     await expect(page.getByRole("link", { name: "Cara Kerja", exact: true })).toBeVisible();
     await expect(page.getByRole("link", { name: "Regulasi", exact: true })).toBeVisible();
     await expect(page.getByRole("link", { name: "Roadmap Kompetensi", exact: true })).toBeVisible();
+
+    await page.screenshot({ path: "test-results/screenshots/12-mobile-menu-open.png" });
 
     // Close mobile menu
     await hamburgerBtn.click();

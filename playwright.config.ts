@@ -1,14 +1,16 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const BASE_URL = process.env.BASE_URL || "https://vokasin.resatya.dev";
+
 export default defineConfig({
   testDir: "./e2e",
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: "list",
+  retries: 0,
+  workers: 1,
+  reporter: [["list"], ["html", { open: "never", outputFolder: "playwright-report" }]],
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: BASE_URL,
     trace: "on-first-retry",
   },
   projects: [
@@ -17,10 +19,15 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
     },
   ],
-  webServer: {
-    command: "npm run start",
-    url: "http://localhost:3000",
-    reuseExistingServer: true,
-    timeout: 120000,
-  },
+  ...(BASE_URL.includes("localhost")
+    ? {
+        webServer: {
+          command: "npm run start",
+          url: "http://localhost:3000",
+          reuseExistingServer: true,
+          timeout: 120000,
+        },
+      }
+    : {}),
 });
+

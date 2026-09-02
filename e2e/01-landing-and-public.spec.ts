@@ -29,12 +29,18 @@ test.describe("Landing Page & Public Tools", () => {
     await expect(firstFaq).toBeVisible();
     await firstFaq.locator("summary").click();
     await expect(firstFaq).toHaveAttribute("open", "");
+
+    // Capture visual screenshots
+    await page.screenshot({ path: "test-results/screenshots/01-landing-full.png", fullPage: true });
+    await page.screenshot({ path: "test-results/screenshots/01-landing-hero.png" });
   });
 
   test("Roadmap Kompetensi renders program list and tracks mastered units", async ({ page }) => {
     await page.goto("/roadmap");
 
     await expect(page.locator("h1")).toContainText("Roadmap Kompetensi");
+    await page.screenshot({ path: "test-results/screenshots/02-roadmap-overview.png", fullPage: true });
+
     const rplLink = page.getByRole("link", { name: /Rekayasa Perangkat Lunak/i });
     await expect(rplLink).toBeVisible();
     await rplLink.click();
@@ -49,6 +55,8 @@ test.describe("Landing Page & Public Tools", () => {
       await checkbox.click();
       await expect(checkbox).toBeChecked({ checked: !isInitiallyChecked });
     }
+
+    await page.screenshot({ path: "test-results/screenshots/03-roadmap-detail-rpl.png", fullPage: true });
   });
 
   test("Jelajah Kompetensi searches by text and quick sample chips", async ({ page }) => {
@@ -63,5 +71,6 @@ test.describe("Landing Page & Public Tools", () => {
 
     // Expect search results container to appear
     await expect(page.locator("text=Daftar ini menunjukkan kompetensi")).toBeVisible({ timeout: 20000 });
+    await page.screenshot({ path: "test-results/screenshots/04-jelajah-kompetensi.png", fullPage: true });
   });
 });

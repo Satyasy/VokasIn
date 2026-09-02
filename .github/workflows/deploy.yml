@@ -62,8 +62,9 @@ jobs:
             git fetch origin main || git fetch origin master
             git reset --hard origin/main || git reset --hard origin/master
 
-            # Inject local PostgreSQL DATABASE_URL
+            # Inject local PostgreSQL DATABASE_URL and AUTH_SECRET
             echo "DATABASE_URL=postgresql://vokasin:${{ secrets.DB_PASSWORD }}@localhost:5432/vokasin" > .env.local
+            echo "AUTH_SECRET=${{ secrets.AUTH_SECRET || 'vokasin_auth_secret_production_2026_super_secure_key_12345' }}" >> .env.local
 
             # Install all dependencies (including build tools)
             npm install --include=dev

@@ -90,7 +90,7 @@ export function UnitSearch() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="font-bold text-slime-lime-900">{r.kodeUnit}</span>
-                    <span className="font-semibold text-neutral-900">— {r.judulUnit}</span>
+                    <span className="font-semibold text-neutral-900">: {r.judulUnit}</span>
                   </div>
                   <ArrowRight className="size-4 text-neutral-400 transition-transform group-hover:translate-x-1 group-hover:text-slime-lime-700" aria-hidden />
                 </div>

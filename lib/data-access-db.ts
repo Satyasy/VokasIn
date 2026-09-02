@@ -212,7 +212,7 @@ export async function uploadDokumenSkkni(
         u.judulUnit,
         sumber,
         "pk-belum-ditentukan",
-        elemen.map((e) => e.judul).join("\n") || "(lihat teks mentah — skema B tidak menghasilkan elemen terstruktur)",
+        elemen.map((e) => e.judul).join("\n") || "(lihat teks mentah, skema B tidak menghasilkan elemen terstruktur)",
         JSON.stringify(elemen),
         u.parsing_uncertain,
         u.catatan,

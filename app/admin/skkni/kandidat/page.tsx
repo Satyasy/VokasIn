@@ -22,7 +22,7 @@ export default async function TinjauKandidatPage() {
     <>
       <AdminTopbar
         title="Tinjau Kandidat"
-        context="Setiap kandidat wajib diproses satu per satu — bandingkan teks mentah vs hasil parsing"
+        context="Setiap kandidat wajib diproses satu per satu (bandingkan teks mentah vs hasil parsing)"
         nama={admin?.nama ?? "Admin"}
       />
       <main className="flex-1 px-8 py-6">

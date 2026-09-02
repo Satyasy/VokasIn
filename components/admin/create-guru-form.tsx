@@ -18,8 +18,8 @@ export function CreateGuruForm({ programList }: { programList: ProgramKeahlian[]
         <CardTitle>Buat Akun Baru</CardTitle>
       </div>
       <CardDescription className="mt-1">
-        Password acak ditampilkan sekali di bawah — sampaikan sendiri ke guru bersangkutan,
-        tidak ada email otomatis.
+        Password acak ditampilkan sekali di bawah (sampaikan sendiri ke guru bersangkutan,
+        tidak ada email otomatis).
       </CardDescription>
 
       <form action={formAction} className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">

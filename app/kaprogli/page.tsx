@@ -25,7 +25,7 @@ export default async function KaprogliPage() {
         <h1 className="text-2xl font-bold tracking-tight text-neutral-900">Dashboard Skill Delta Score</h1>
         <p className="mt-1 text-sm text-neutral-600">
           Semester {SEMESTER}. Skor makin tinggi berarti kesenjangan antara materi ajar dan
-          SKKNI makin besar — bukan pengukuran mutlak, gunakan bersama penilaian lapangan.
+          SKKNI makin besar (bukan pengukuran mutlak, gunakan bersama penilaian lapangan).
         </p>
       </div>
 
@@ -102,7 +102,7 @@ export default async function KaprogliPage() {
       <section className="mt-10">
         <h2 className="mb-1 text-lg font-semibold text-foreground">Kandidat kesenjangan kompetensi</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          Skill dari sumber sekunder yang belum match SKKNI — ditandai sebagai gap, bukan
+          Skill dari sumber sekunder yang belum match SKKNI ditandai sebagai gap, bukan
           ditolak otomatis.
         </p>
         <div className="flex flex-col gap-6">

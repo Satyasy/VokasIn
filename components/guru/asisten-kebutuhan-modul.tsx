@@ -65,7 +65,7 @@ export function AsistenKebutuhanModul() {
         </h2>
       </div>
       <p className="mt-1 text-sm text-muted-foreground">
-        Jelaskan kebutuhan modul ajar Anda dalam kalimat bebas — sistem menyarankan unit kompetensi SKKNI yang
+        Jelaskan kebutuhan modul ajar Anda dalam kalimat bebas; sistem menyarankan unit kompetensi SKKNI yang
         relevan lewat pencarian, bukan menyusun teks baru. Alternatif dari mencari unit satu per satu di bawah.
       </p>
 
@@ -85,7 +85,7 @@ export function AsistenKebutuhanModul() {
         <div className="mt-4">
           {hasilLayak.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              Tidak ditemukan unit yang cukup relevan — coba kata kunci lain atau jelajahi daftar unit di bawah
+              Tidak ditemukan unit yang cukup relevan. Coba kata kunci lain atau jelajahi daftar unit di bawah
               secara manual.
             </p>
           ) : (
@@ -107,7 +107,7 @@ export function AsistenKebutuhanModul() {
                       <div className="min-w-0 flex-1">
                         <div className="flex flex-wrap items-center gap-2">
                           <span className="font-medium text-foreground">{h.kodeUnit}</span>
-                          <span className="text-muted-foreground">— {h.judulUnit}</span>
+                          <span className="text-muted-foreground">: {h.judulUnit}</span>
                           {h.programKeahlian && <Badge variant="default">{h.programKeahlian}</Badge>}
                           <Badge variant={badgeVariantByTingkatKecocokan[tingkat]}>Tingkat kecocokan: {tingkat}</Badge>
                         </div>
@@ -119,7 +119,7 @@ export function AsistenKebutuhanModul() {
               </div>
               <p className="mt-2 text-xs text-muted-foreground">
                 Tingkat kecocokan berdasarkan kata kunci &amp; makna dari pencarian, bukan jaminan kesesuaian
-                kurikulum — tinjau tiap unit sebelum menambahkannya ke modul ajar.
+                kurikulum. Tinjau tiap unit sebelum menambahkannya ke modul ajar.
               </p>
               <Button className="mt-3" onClick={tinjauTerpilih} disabled={terpilih.size === 0}>
                 {terpilih.size === 0

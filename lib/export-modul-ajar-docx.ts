@@ -40,7 +40,7 @@ export async function buildModulAjarDocx(doc: ModulAjarDocument): Promise<Blob> 
         new Paragraph({
           children: [
             new TextRun({
-              text: `Tingkat keyakinan pencocokan sistem: ${Math.round(t.skorKeyakinan * 100)}% (bukan jaminan akurasi mutlak — tinjauan guru tetap final)`,
+              text: `Tingkat keyakinan pencocokan sistem: ${Math.round(t.skorKeyakinan * 100)}% (bukan jaminan akurasi mutlak, tinjauan guru tetap final)`,
               size: 20,
               italics: true,
             }),

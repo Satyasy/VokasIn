@@ -95,7 +95,7 @@ export function JelajahKompetensiClient() {
       {hasil !== null && (
         <div className="mt-8">
           <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-xs leading-relaxed text-neutral-600">
-            Daftar ini menunjukkan kompetensi resmi SKKNI yang berkaitan secara semantik dan kata kunci dengan teks Anda — bukan penilaian kelulusan otomatis.
+            Daftar ini menunjukkan kompetensi resmi SKKNI yang berkaitan secara semantik dan kata kunci dengan teks Anda (bukan penilaian kelulusan otomatis).
           </div>
 
           <div className="mt-4">

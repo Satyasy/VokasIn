@@ -10,7 +10,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "VokasIn — Asisten Analitik Kurikulum SMK",
+  title: "VokasIn: Asisten Analitik Kurikulum SMK",
   description:
     "Menerjemahkan SKKNI menjadi jobsheet, rencana praktikum, dan rubrik penilaian, dengan keputusan akhir di tangan guru.",
   icons: {

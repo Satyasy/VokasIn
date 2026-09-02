@@ -31,7 +31,7 @@ export interface ModulAjarDocument {
 
 export function buildModulAjarDocument(programKeahlianNama: string, unitGroups: DraftUnitGroup[]): ModulAjarDocument {
   return {
-    judul: `Modul Ajar — ${programKeahlianNama}`,
+    judul: `Modul Ajar: ${programKeahlianNama}`,
     programKeahlian: programKeahlianNama,
     tanggal: new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }),
     unitList: unitGroups.map((g) => ({

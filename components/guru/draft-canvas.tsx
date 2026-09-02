@@ -38,7 +38,7 @@ export function DraftCanvas({ onDropTopikId }: { onDropTopikId: (topikId: string
     <>
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-          Modul ajar — {unitGroups.length} unit
+          Modul ajar: {unitGroups.length} unit
         </h2>
         <div className="flex items-center gap-2">
           {jumlahKartu > 0 && (

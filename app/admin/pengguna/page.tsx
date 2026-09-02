@@ -15,7 +15,7 @@ export default async function PenggunaPage() {
     <>
       <AdminTopbar
         title="Manajemen Pengguna"
-        context="Guru produktif, kaprogli, dan admin — satu tabel akun untuk seluruh sekolah"
+        context="Guru produktif, kaprogli, dan admin: satu tabel akun untuk seluruh sekolah"
         nama={admin?.nama ?? "Admin"}
       />
       <main className="flex-1 px-8 py-6">

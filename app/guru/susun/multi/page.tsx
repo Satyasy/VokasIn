@@ -41,7 +41,7 @@ export default async function SusunModulMultiPage({
         <h1 className="text-2xl font-extrabold tracking-tight text-neutral-900">Tinjau kartu saran dari unit terpilih</h1>
         <p className="mt-1 text-sm text-neutral-600">
           {bundles.length} unit kompetensi dipilih lewat Asisten Kebutuhan Modul. Setiap kartu tetap perlu Anda
-          terima, tolak, atau modifikasi satu per satu — tidak ada yang masuk ke draft secara otomatis.
+          terima, tolak, atau modifikasi satu per satu (tidak ada yang masuk ke draft secara otomatis).
         </p>
       </div>
 

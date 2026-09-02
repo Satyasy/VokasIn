@@ -15,7 +15,7 @@ export function DraftStatusBar({ programList }: { programList: ProgramKeahlian[]
     return (
       <div className="mb-8 rounded-2xl border-2 border-dashed border-slime-lime-300 bg-slime-lime-50/50 p-5 shadow-sm">
         <p className="mb-3 text-sm font-bold text-neutral-900">
-          Mulai draft modul ajar baru — pilih program keahlian:
+          Mulai draft modul ajar baru. Pilih program keahlian:
         </p>
         <div className="flex flex-wrap gap-2.5">
           {programList.map((p) => (

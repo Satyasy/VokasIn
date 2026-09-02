@@ -42,14 +42,14 @@ const langkahKerja = [
   {
     icon: StepBacaKartu,
     title: "Baca kartu saran dari teks asli",
-    body: "Sistem menyusun kartu dari Elemen dan Kriteria Unjuk Kerja SKKNI — bukan karangan AI.",
+    body: "Sistem menyusun kartu langsung dari Elemen dan Kriteria Unjuk Kerja SKKNI resmi, bukan karangan AI.",
     detail: "Setiap kartu mencantumkan sumber asalnya dari teks standar.",
   },
   {
     icon: StepSeretKanvas,
     title: "Seret ke kanvas, cek alat lab",
     body: "Tarik kartu satu per satu ke modul ajar. Resource Feasibility Checker memeriksa kesiapan alat lab Anda.",
-    detail: "Tidak ada tombol 'setujui semua' — setiap keputusan ada di tangan Anda.",
+    detail: "Tidak ada tombol 'setujui semua', setiap keputusan ada di tangan Anda.",
   },
   {
     icon: StepEkspor,
@@ -62,14 +62,14 @@ const langkahKerja = [
 const alasanFeatured = {
   icon: FileText,
   title: "Bukan generator RPP asal jadi",
-  body: "Kartu saran ditarik langsung dari teks Unit Kompetensi dan Kriteria Unjuk Kerja SKKNI asli. Perluasan dengan AI bersifat opsional dan selalu ditandai jelas saat dipakai — tidak pernah dicampur diam-diam dengan teks standar.",
+  body: "Kartu saran ditarik langsung dari teks Unit Kompetensi dan Kriteria Unjuk Kerja SKKNI asli. Perluasan dengan AI bersifat opsional dan selalu ditandai jelas saat dipakai, tidak pernah dicampur diam-diam dengan teks standar.",
 };
 
 const alasanKecil = [
   {
     icon: MousePointerClick,
     title: "Anda yang memutuskan",
-    body: "Tiap kartu diseret satu per satu ke kanvas — tidak ada tombol 'setujui semua'.",
+    body: "Tiap kartu diseret satu per satu ke kanvas, tanpa tombol 'setujui semua'.",
   },
   {
     icon: Wrench,
@@ -110,7 +110,7 @@ const statsData = [
   {
     value: "1.000+",
     label: "dokumen SKKNI resmi",
-    sub: "tersedia terbuka sejak TW III 2022 — belum ada satu alat yang menerjemahkannya menjadi perangkat ajar siap pakai.",
+    sub: "tersedia terbuka sejak TW III 2022, namun belum ada satu alat yang menerjemahkannya menjadi perangkat ajar siap pakai.",
     icon: BookOpen,
   },
   {
@@ -124,11 +124,11 @@ const statsData = [
 const faq = [
   {
     q: "Apakah AI di VokasIn bisa salah?",
-    a: "Bisa. Model pencocokan (NER dan embedding similarity) bersifat probabilistik, bukan pasti benar — karena itu setiap kartu saran wajib dikonfirmasi guru sebelum masuk dokumen final. VokasIn tidak pernah mengklaim akurasi mutlak.",
+    a: "Bisa. Model pencocokan (NER dan embedding similarity) bersifat probabilistik dan bukan pasti benar. Oleh karena itu, setiap kartu saran wajib dikonfirmasi guru sebelum masuk dokumen final. VokasIn tidak pernah mengklaim akurasi mutlak.",
   },
   {
     q: "Apakah VokasIn menggantikan peran guru?",
-    a: "Tidak. VokasIn mempercepat penyusunan draf awal jobsheet dan rencana praktikum. Keputusan pedagogis — apa yang diajarkan dan bagaimana caranya — tetap sepenuhnya di tangan guru.",
+    a: "Tidak. VokasIn mempercepat penyusunan draf awal jobsheet dan rencana praktikum. Keputusan pedagogis mengenai materi dan metode pengajaran tetap sepenuhnya berada di tangan guru.",
   },
   {
     q: "Data lowongan kerja diambil dari mana?",
@@ -140,7 +140,7 @@ const faq = [
   },
   {
     q: "Bagaimana kalau SKKNI di bidang saya sudah ketinggalan zaman?",
-    a: "SKKNI memang tidak selalu mengikuti kecepatan industri. Untuk itu, skill dari sumber sekunder yang belum tercatat di SKKNI ditandai sebagai kandidat kesenjangan (gap) — bukan ditolak — sehingga kaprogli tetap punya bukti kuantitatif untuk mengusulkan revisi kurikulum.",
+    a: "SKKNI memang tidak selalu mengikuti kecepatan industri. Untuk itu, skill dari sumber sekunder yang belum tercatat di SKKNI ditandai sebagai kandidat kesenjangan (gap), bukan ditolak, sehingga kaprogli tetap punya bukti kuantitatif untuk mengusulkan revisi kurikulum.",
   },
 ];
 

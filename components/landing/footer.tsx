@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { Mail, ExternalLink, GitBranch } from "lucide-react";
+import { Mail, ExternalLink } from "lucide-react";
 import { SectionContainer } from "@/components/landing/section-container";
 
 const sumber = [
   {
-    label: "SKKNI — Kemnaker RI",
+    label: "SKKNI (Kemnaker RI)",
     href: "https://katalog.data.go.id/dataset/standar-kompetensi-kerja-nasional-indonesia-skkni-yang-ditetapkan-s-d-tw-iii-tahun-2022",
   },
   {
@@ -89,17 +89,6 @@ export function LandingFooter() {
                   </a>
                 </li>
               ))}
-              <li>
-                <a
-                  href="https://github.com/satyasy/VokasIn"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-neutral-700 transition-colors hover:text-slime-lime-800"
-                >
-                  <GitBranch className="size-3.5 shrink-0 opacity-60" aria-hidden />
-                  <span>Repositori Kode (GitHub)</span>
-                </a>
-              </li>
             </ul>
           </div>
 

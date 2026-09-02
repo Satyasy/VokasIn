@@ -34,7 +34,7 @@ export function buildModulAjarMarkdown(doc: ModulAjarDocument): string {
         "",
         `**Alat yang dibutuhkan:** ${t.alatDibutuhkan.join(", ")}`,
         "",
-        `_Tingkat keyakinan pencocokan sistem: ${Math.round(t.skorKeyakinan * 100)}% (bukan jaminan akurasi mutlak — tinjauan guru tetap final)_`,
+        `_Tingkat keyakinan pencocokan sistem: ${Math.round(t.skorKeyakinan * 100)}% (bukan jaminan akurasi mutlak, tinjauan guru tetap final)_`,
         "",
         "**Catatan cara mengajar (guru):**",
         "",

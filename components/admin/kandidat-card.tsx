@@ -64,7 +64,7 @@ export function KandidatCard({
           </p>
           <div className="max-h-48 overflow-auto rounded-md bg-muted p-3 text-xs text-foreground">
             {kandidat.elemenKompetensi.length === 0 ? (
-              <p className="text-muted-foreground">(tidak ada elemen terstruktur — lihat teks mentah)</p>
+              <p className="text-muted-foreground">(tidak ada elemen terstruktur, lihat teks mentah)</p>
             ) : (
               kandidat.elemenKompetensi.map((e, i) => (
                 <div key={i} className="mb-2">

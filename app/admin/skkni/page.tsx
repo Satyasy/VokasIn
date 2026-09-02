@@ -51,7 +51,7 @@ export default async function AdminSkkniPage({
               </thead>
               <tbody>
                 {dokumen.map((d, i) => (
-                  <tr key={d.id} className={i % 2 === 1 ? "bg-neutral-50" : undefined}>
+                  <tr key={d.id} className={i % 2 === 1 ? "bg-muted/40" : undefined}>
                     <td className="px-4 py-2.5 text-foreground">{d.nomor}</td>
                     <td className="px-4 py-2.5 text-muted-foreground">{d.namaFile ?? "(seed manual)"}</td>
                     <td className="px-4 py-2.5 text-muted-foreground">

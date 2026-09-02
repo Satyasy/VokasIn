@@ -3,22 +3,35 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
 import { ensureGuruCacheFresh } from "@/lib/data-access-db";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
+import { AdminThemeProvider } from "@/components/admin/admin-theme-context";
 
-// proxy.ts sudah menolak non-admin di /admin/*, ini pengecekan kedua di
-// server component — pola sama seperti app/guru/layout.tsx & app/kaprogli/layout.tsx.
-// ensureGuruCacheFresh() di sini membuat cache guru segar untuk seluruh
-// subtree /admin/*, termasuk AdminTopbar yang tiap page render sendiri.
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const session = await getSession();
   if (!session || session.role !== "admin") redirect("/login");
   await ensureGuruCacheFresh();
 
   return (
-    <div className="flex min-h-svh bg-neutral-950">
-      <AdminSidebar />
-      <div className="flex flex-1 flex-col min-w-0 bg-linear-to-b from-slime-lime-50/40 via-neutral-50 to-neutral-100/50">
-        {children}
+    <AdminThemeProvider>
+      <div className="relative flex min-h-screen overflow-x-hidden">
+        {/* Ambient Radial Blobs Harmonis dengan Hero LP (Aktif saat Dark Mode) */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-32 -left-32 size-[480px] rounded-full bg-slime-lime-300 opacity-10 blur-[95px] dark:block hidden"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute top-1/3 right-0 size-[520px] rounded-full bg-slime-lime-600 opacity-10 blur-[110px] dark:block hidden"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -bottom-24 left-1/4 size-[360px] rounded-full bg-slime-lime-900 opacity-30 blur-[80px] dark:block hidden"
+        />
+
+        <AdminSidebar />
+        <div className="relative z-10 flex flex-1 flex-col min-w-0">
+          {children}
+        </div>
       </div>
-    </div>
+    </AdminThemeProvider>
   );
 }

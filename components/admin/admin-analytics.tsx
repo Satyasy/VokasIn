@@ -3,12 +3,17 @@
 import { FileText, CheckCircle2, Users, Calendar, Award, ShieldCheck, Wrench, BarChart3 } from "lucide-react";
 import type { AdminAnalyticsData } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
+import { useAdminTheme } from "@/components/admin/admin-theme-context";
+import { cn } from "@/lib/utils";
 
 interface AdminAnalyticsProps {
   analytics: AdminAnalyticsData;
 }
 
 export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
+  const { theme } = useAdminTheme();
+  const isDark = theme === "dark";
+
   const topStats = [
     {
       label: "Dokumen SKKNI Resmi",
@@ -36,22 +41,54 @@ export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
     },
   ];
 
+  const cardClass = isDark
+    ? "rounded-3xl border border-neutral-800 bg-neutral-900/85 p-6 shadow-md sm:p-7 text-neutral-100 backdrop-blur-xs"
+    : "rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-7 text-neutral-900";
+
+  const dividerClass = isDark ? "border-b border-neutral-800/80 pb-4" : "border-b border-neutral-100 pb-4";
+  const titleClass = isDark ? "text-base font-bold text-neutral-50" : "text-base font-bold text-neutral-900";
+  const subClass = isDark ? "mt-0.5 text-xs text-neutral-400" : "mt-0.5 text-xs text-neutral-500";
+
   return (
     <div className="space-y-8">
       {/* 4 Kartu Metrik Makro */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {topStats.map(({ label, value, sub, icon: Icon }) => (
-          <div key={label} className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
+          <div
+            key={label}
+            className={cn(
+              "rounded-2xl p-5 shadow-sm border transition-colors",
+              isDark
+                ? "border-neutral-800 bg-neutral-900/80 text-neutral-100"
+                : "border-neutral-200 bg-white text-neutral-900"
+            )}
+          >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-neutral-500">
+              <span
+                className={cn(
+                  "text-xs font-bold uppercase tracking-wider",
+                  isDark ? "text-neutral-400" : "text-neutral-500"
+                )}
+              >
                 {label}
               </span>
-              <div className="flex size-8 items-center justify-center rounded-lg bg-neutral-100 text-slime-lime-800">
+              <div
+                className={cn(
+                  "flex size-8 items-center justify-center rounded-lg",
+                  isDark
+                    ? "bg-neutral-800 text-slime-lime-400"
+                    : "bg-neutral-100 text-slime-lime-800"
+                )}
+              >
                 <Icon className="size-4" aria-hidden />
               </div>
             </div>
-            <p className="mt-2 text-3xl font-extrabold text-neutral-900">{value}</p>
-            <p className="mt-1 text-xs text-neutral-500">{sub}</p>
+            <p className={cn("mt-2 text-3xl font-extrabold", isDark ? "text-white" : "text-neutral-900")}>
+              {value}
+            </p>
+            <p className={cn("mt-1 text-xs", isDark ? "text-neutral-400" : "text-neutral-500")}>
+              {sub}
+            </p>
           </div>
         ))}
       </div>
@@ -59,28 +96,26 @@ export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
       {/* Grid Grafik Analitik Riil */}
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Grafik 1: Ketercakupan Modul SKKNI per Program Keahlian */}
-        <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-7">
-          <div className="flex items-center justify-between border-b border-neutral-100 pb-4">
+        <div className={cardClass}>
+          <div className={cn("flex items-center justify-between", dividerClass)}>
             <div>
-              <h2 className="text-base font-bold text-neutral-900">
-                Ketercakupan Unit SKKNI ke Perangkat Ajar
-              </h2>
-              <p className="mt-0.5 text-xs text-neutral-500">
+              <h2 className={titleClass}>Ketercakupan Unit SKKNI ke Perangkat Ajar</h2>
+              <p className={subClass}>
                 Persentase unit kompetensi resmi yang telah masuk ke modul ajar nyata
               </p>
             </div>
-            <Award className="size-5 text-slime-lime-700 shrink-0" aria-hidden />
+            <Award className="size-5 text-slime-lime-400 shrink-0" aria-hidden />
           </div>
 
           <div className="mt-6 space-y-5">
             {analytics.programMetrics.map((prog) => (
               <div key={prog.programId} className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="font-bold text-neutral-800">
+                  <span className={cn("font-bold", isDark ? "text-neutral-200" : "text-neutral-800")}>
                     {prog.programNama} ({prog.programSingkatan})
                   </span>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-neutral-500">
+                    <span className={cn("text-xs", isDark ? "text-neutral-400" : "text-neutral-500")}>
                       {prog.unitTerajarkan} / {prog.totalUnitSkkni} Unit
                     </span>
                     <Badge variant="brand" className="font-extrabold">
@@ -89,7 +124,7 @@ export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
                   </div>
                 </div>
 
-                <div className="h-3 w-full overflow-hidden rounded-full bg-neutral-100">
+                <div className={cn("h-3 w-full overflow-hidden rounded-full", isDark ? "bg-neutral-800" : "bg-neutral-100")}>
                   <div
                     className="h-full rounded-full bg-slime-lime-500 transition-all duration-500"
                     style={{ width: `${Math.min(100, prog.persentaseModul)}%` }}
@@ -99,45 +134,50 @@ export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
             ))}
           </div>
 
-          <p className="mt-6 rounded-xl bg-neutral-50 p-3 text-xs text-neutral-600 leading-relaxed">
+          <p
+            className={cn(
+              "mt-6 rounded-xl p-3 text-xs leading-relaxed border",
+              isDark
+                ? "bg-neutral-800/40 text-neutral-400 border-neutral-800"
+                : "bg-neutral-50 text-neutral-600 border-neutral-100"
+            )}
+          >
             Data dihitung berdasarkan rujukan unit kompetensi resmi SKKNI yang telah ditautkan pada modul ajar dan agenda kelas aktif.
           </p>
         </div>
 
         {/* Grafik 2: Realisasi Jam Pelajaran (JP) Sekolah */}
-        <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-7">
-          <div className="flex items-center justify-between border-b border-neutral-100 pb-4">
+        <div className={cardClass}>
+          <div className={cn("flex items-center justify-between", dividerClass)}>
             <div>
-              <h2 className="text-base font-bold text-neutral-900">
-                Realisasi Jam Pelajaran (JP) Semester
-              </h2>
-              <p className="mt-0.5 text-xs text-neutral-500">
+              <h2 className={titleClass}>Realisasi Jam Pelajaran (JP) Semester</h2>
+              <p className={subClass}>
                 Akumulasi jam tatap muka praktikum yang telah terlaksana vs target kurikulum
               </p>
             </div>
-            <BarChart3 className="size-5 text-slime-lime-700 shrink-0" aria-hidden />
+            <BarChart3 className="size-5 text-slime-lime-400 shrink-0" aria-hidden />
           </div>
 
           <div className="mt-6 space-y-5">
             {analytics.programMetrics.map((prog) => (
               <div key={prog.programId} className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="font-bold text-neutral-800">
+                  <span className={cn("font-bold", isDark ? "text-neutral-200" : "text-neutral-800")}>
                     {prog.programSingkatan} - Target {prog.targetJpSemester} JP
                   </span>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-semibold text-neutral-500">
+                    <span className={cn("text-xs font-semibold", isDark ? "text-neutral-400" : "text-neutral-500")}>
                       {prog.jpTerlaksana} JP Terlaksana
                     </span>
-                    <span className="text-xs font-black text-neutral-900">
+                    <span className={cn("text-xs font-black", isDark ? "text-white" : "text-neutral-900")}>
                       {prog.persentaseJp}%
                     </span>
                   </div>
                 </div>
 
-                <div className="h-3 w-full overflow-hidden rounded-full bg-neutral-100">
+                <div className={cn("h-3 w-full overflow-hidden rounded-full", isDark ? "bg-neutral-800" : "bg-neutral-100")}>
                   <div
-                    className="h-full rounded-full bg-slime-lime-600 transition-all duration-500"
+                    className="h-full rounded-full bg-slime-lime-500 transition-all duration-500"
                     style={{ width: `${Math.min(100, prog.persentaseJp)}%` }}
                   />
                 </div>
@@ -145,40 +185,59 @@ export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
             ))}
           </div>
 
-          <div className="mt-6 flex items-center justify-between rounded-xl border border-neutral-200 bg-neutral-50/70 p-3.5">
-            <span className="text-xs font-bold text-neutral-700">Rata-rata Sekolah:</span>
-            <span className="text-sm font-extrabold text-neutral-900">
+          <div
+            className={cn(
+              "mt-6 flex items-center justify-between rounded-xl p-3.5 border",
+              isDark
+                ? "border-neutral-800 bg-neutral-800/40 text-neutral-200"
+                : "border-neutral-200 bg-neutral-50/70 text-neutral-900"
+            )}
+          >
+            <span className={cn("text-xs font-bold", isDark ? "text-neutral-300" : "text-neutral-700")}>
+              Rata-rata Sekolah:
+            </span>
+            <span className={cn("text-sm font-extrabold", isDark ? "text-white" : "text-neutral-900")}>
               {analytics.totalJpTerlaksana} / {analytics.totalTargetJp} JP ({analytics.overallJpPersen}%)
             </span>
           </div>
         </div>
 
         {/* Grafik 3: Kesiapan Alat Lab & Praktikum */}
-        <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-7">
-          <div className="flex items-center justify-between border-b border-neutral-100 pb-4">
+        <div className={cardClass}>
+          <div className={cn("flex items-center justify-between", dividerClass)}>
             <div>
-              <h2 className="text-base font-bold text-neutral-900">
-                Kesiapan Fasilitas Lab Kejuruan
-              </h2>
-              <p className="mt-0.5 text-xs text-neutral-500">
+              <h2 className={titleClass}>Kesiapan Fasilitas Lab Kejuruan</h2>
+              <p className={subClass}>
                 Kelayakan alat praktik sekolah terhadap kebutuhan modul SKKNI
               </p>
             </div>
-            <Wrench className="size-5 text-slime-lime-700 shrink-0" aria-hidden />
+            <Wrench className="size-5 text-slime-lime-400 shrink-0" aria-hidden />
           </div>
 
           <div className="mt-6 space-y-4">
             {analytics.programMetrics.map((prog) => (
-              <div key={prog.programId} className="flex items-center justify-between rounded-2xl border border-neutral-100 bg-neutral-50/60 p-4">
+              <div
+                key={prog.programId}
+                className={cn(
+                  "flex items-center justify-between rounded-2xl p-4 border transition-colors",
+                  isDark
+                    ? "border-neutral-800 bg-neutral-800/40 text-neutral-200"
+                    : "border-neutral-100 bg-neutral-50/60 text-neutral-900"
+                )}
+              >
                 <div>
-                  <h4 className="font-bold text-neutral-900">{prog.programNama}</h4>
-                  <p className="text-xs text-neutral-500">Kesiapan alat praktikum bengkel</p>
+                  <h4 className={cn("font-bold", isDark ? "text-white" : "text-neutral-900")}>
+                    {prog.programNama}
+                  </h4>
+                  <p className={cn("text-xs", isDark ? "text-neutral-400" : "text-neutral-500")}>
+                    Kesiapan alat praktikum bengkel
+                  </p>
                 </div>
                 <div className="text-right">
-                  <span className="text-xl font-black text-neutral-900">
+                  <span className={cn("text-xl font-black", isDark ? "text-white" : "text-neutral-900")}>
                     {prog.labKesiapanPersen}%
                   </span>
-                  <p className="text-[11px] font-semibold text-slime-lime-800">
+                  <p className="text-[11px] font-semibold text-slime-lime-400">
                     {prog.labKesiapanPersen >= 80 ? "Memadai" : "Perlu Tambahan"}
                   </p>
                 </div>
@@ -187,32 +246,29 @@ export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
           </div>
         </div>
 
-        {/* Grafik 4: Kualitas Validasi Human-in-the-Loop (HITL) */}
-        <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-7">
-          <div className="flex items-center justify-between border-b border-neutral-100 pb-4">
+        {/* Grafik 4: Validasi HITL */}
+        <div className={cardClass}>
+          <div className={cn("flex items-center justify-between", dividerClass)}>
             <div>
-              <h2 className="text-base font-bold text-neutral-900">
-                Validasi Kurikulum Human-in-the-Loop (HITL)
-              </h2>
-              <p className="mt-0.5 text-xs text-neutral-500">
+              <h2 className={titleClass}>Validasi Kurikulum Human-in-the-Loop (HITL)</h2>
+              <p className={subClass}>
                 Tingkat konfirmasi eksplisit guru terhadap kartu saran sistem
               </p>
             </div>
-            <ShieldCheck className="size-5 text-slime-lime-700 shrink-0" aria-hidden />
+            <ShieldCheck className="size-5 text-slime-lime-400 shrink-0" aria-hidden />
           </div>
 
           <div className="mt-6">
             <div className="flex items-baseline justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-neutral-500">
+              <span className={cn("text-xs font-bold uppercase tracking-wider", isDark ? "text-neutral-400" : "text-neutral-500")}>
                 Tingkat Penerimaan Saran
               </span>
-              <span className="text-2xl font-black text-neutral-900">
+              <span className={cn("text-2xl font-black", isDark ? "text-white" : "text-neutral-900")}>
                 {analytics.hitlMetrics.persenTerima}%
               </span>
             </div>
 
-            {/* Segmented multi-color bar */}
-            <div className="mt-3 flex h-3.5 w-full overflow-hidden rounded-full bg-neutral-100">
+            <div className={cn("mt-3 flex h-3.5 w-full overflow-hidden rounded-full", isDark ? "bg-neutral-800" : "bg-neutral-100")}>
               <div
                 title={`Diterima: ${analytics.hitlMetrics.terima}`}
                 className="h-full bg-slime-lime-500"
@@ -237,47 +293,45 @@ export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
             </div>
 
             <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-              <div className="rounded-xl border border-neutral-100 bg-neutral-50 p-2.5">
-                <p className="text-[11px] font-semibold text-neutral-500">Diterima</p>
-                <p className="text-sm font-extrabold text-neutral-900">{analytics.hitlMetrics.terima}</p>
+              <div className={cn("rounded-xl p-2.5 border", isDark ? "border-neutral-800 bg-neutral-800/50" : "border-neutral-100 bg-neutral-50")}>
+                <p className={cn("text-[11px] font-semibold", isDark ? "text-neutral-400" : "text-neutral-500")}>Diterima</p>
+                <p className={cn("text-sm font-extrabold", isDark ? "text-white" : "text-neutral-900")}>{analytics.hitlMetrics.terima}</p>
               </div>
-              <div className="rounded-xl border border-neutral-100 bg-neutral-50 p-2.5">
-                <p className="text-[11px] font-semibold text-neutral-500">Dimodifikasi</p>
-                <p className="text-sm font-extrabold text-neutral-900">{analytics.hitlMetrics.modifikasi}</p>
+              <div className={cn("rounded-xl p-2.5 border", isDark ? "border-neutral-800 bg-neutral-800/50" : "border-neutral-100 bg-neutral-50")}>
+                <p className={cn("text-[11px] font-semibold", isDark ? "text-neutral-400" : "text-neutral-500")}>Dimodifikasi</p>
+                <p className={cn("text-sm font-extrabold", isDark ? "text-white" : "text-neutral-900")}>{analytics.hitlMetrics.modifikasi}</p>
               </div>
-              <div className="rounded-xl border border-neutral-100 bg-neutral-50 p-2.5">
-                <p className="text-[11px] font-semibold text-neutral-500">Ditolak</p>
-                <p className="text-sm font-extrabold text-neutral-900">{analytics.hitlMetrics.tolak}</p>
+              <div className={cn("rounded-xl p-2.5 border", isDark ? "border-neutral-800 bg-neutral-800/50" : "border-neutral-100 bg-neutral-50")}>
+                <p className={cn("text-[11px] font-semibold", isDark ? "text-neutral-400" : "text-neutral-500")}>Ditolak</p>
+                <p className={cn("text-sm font-extrabold", isDark ? "text-white" : "text-neutral-900")}>{analytics.hitlMetrics.tolak}</p>
               </div>
             </div>
 
-            <p className="mt-4 text-xs text-neutral-500 leading-relaxed italic">
+            <p className={cn("mt-4 text-xs leading-relaxed italic", isDark ? "text-neutral-400" : "text-neutral-500")}>
               Bukti akuntabilitas bahwa setiap butir kompetensi wajib dikonfirmasi guru dan tidak ada keputusan otomatis oleh sistem.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Bagian Monitoring Tambahan: Grafik Tren JP Sekolah & Status Operasional */}
+      {/* Bagian Monitoring Tambahan: Histogram Tren 16 Pekan & Radar Operasional */}
       <div className="grid gap-6 lg:grid-cols-3">
-        {/* Kolom 1 & 2: Grafik Histogram Tren Mengajar 16 Pekan Sekolah */}
-        <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-7 lg:col-span-2">
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-neutral-100 pb-4">
+        {/* Kolom 1 & 2: Histogram Tren Beban Mengajar */}
+        <div className={cn(cardClass, "lg:col-span-2")}>
+          <div className={cn("flex flex-wrap items-center justify-between gap-2", dividerClass)}>
             <div>
-              <h2 className="text-base font-bold text-neutral-900">
-                Tren Distribusi Beban Mengajar Sekolah (16 Pekan)
-              </h2>
-              <p className="mt-0.5 text-xs text-neutral-500">
+              <h2 className={titleClass}>Tren Distribusi Beban Mengajar Sekolah (16 Pekan)</h2>
+              <p className={subClass}>
                 Agregat jam pelajaran praktikum seluruh jurusan per minggu (Terlaksana vs Terjadwal)
               </p>
             </div>
             <div className="flex items-center gap-3 text-xs">
-              <span className="flex items-center gap-1.5 font-medium text-neutral-700">
+              <span className={cn("flex items-center gap-1.5 font-medium", isDark ? "text-neutral-300" : "text-neutral-700")}>
                 <span className="size-2.5 rounded-full bg-slime-lime-500" />
                 Terlaksana
               </span>
-              <span className="flex items-center gap-1.5 font-medium text-neutral-700">
-                <span className="size-2.5 rounded-full bg-neutral-200" />
+              <span className={cn("flex items-center gap-1.5 font-medium", isDark ? "text-neutral-400" : "text-neutral-600")}>
+                <span className={cn("size-2.5 rounded-full", isDark ? "bg-neutral-800" : "bg-neutral-200")} />
                 Terjadwal
               </span>
             </div>
@@ -315,22 +369,35 @@ export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
                       {pctPlan > 0 && (
                         <div
                           style={{ height: `${pctPlan}%` }}
-                          className="w-full rounded-t-sm bg-neutral-200 transition-all group-hover:bg-neutral-300"
+                          className={cn(
+                            "w-full rounded-t-sm transition-all",
+                            isDark
+                              ? "bg-neutral-800 group-hover:bg-neutral-700"
+                              : "bg-neutral-200 group-hover:bg-neutral-300"
+                          )}
                         />
                       )}
                       {pctDone > 0 && (
                         <div
                           style={{ height: `${pctDone}%` }}
-                          className={`w-full ${pctPlan === 0 ? "rounded-t-sm" : ""} bg-slime-lime-500 transition-all group-hover:bg-slime-lime-400`}
+                          className={cn(
+                            "w-full transition-all bg-slime-lime-500 group-hover:bg-slime-lime-400",
+                            pctPlan === 0 && "rounded-t-sm"
+                          )}
                         />
                       )}
                     </div>
-                    <span className="mt-2 text-[10px] font-bold text-neutral-400 group-hover:text-neutral-900">
+                    <span
+                      className={cn(
+                        "mt-2 text-[10px] font-bold transition-colors",
+                        isDark ? "text-neutral-400 group-hover:text-white" : "text-neutral-400 group-hover:text-neutral-900"
+                      )}
+                    >
                       P{w.week}
                     </span>
 
                     {/* Tooltip Hover */}
-                    <div className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 hidden rounded-lg bg-neutral-900 px-2 py-1 text-[10px] text-white shadow-lg group-hover:block z-20 whitespace-nowrap">
+                    <div className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 hidden rounded-lg bg-neutral-950 border border-neutral-800 px-2 py-1 text-[10px] text-white shadow-xl group-hover:block z-20 whitespace-nowrap">
                       Pekan {w.week}: {w.terlaksana}/{w.terjadwal} JP
                     </div>
                   </div>
@@ -341,12 +408,12 @@ export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
         </div>
 
         {/* Kolom 3: Radar Operasional & Kesehatan Sistem */}
-        <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-7 flex flex-col justify-between">
+        <div className={cn(cardClass, "flex flex-col justify-between")}>
           <div>
-            <div className="flex items-center justify-between border-b border-neutral-100 pb-4">
+            <div className={cn("flex items-center justify-between", dividerClass)}>
               <div>
-                <h2 className="text-base font-bold text-neutral-900">Status Operasional</h2>
-                <p className="text-xs text-neutral-500">Infrastruktur &amp; Pipeline Data</p>
+                <h2 className={titleClass}>Status Operasional</h2>
+                <p className={subClass}>Infrastruktur &amp; Pipeline Data</p>
               </div>
               <span className="relative flex size-2.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-slime-lime-400 opacity-75" />
@@ -355,30 +422,51 @@ export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
             </div>
 
             <div className="mt-5 space-y-4 text-xs">
-              <div className="flex items-center justify-between rounded-xl bg-neutral-50 p-3 border border-neutral-100">
+              <div
+                className={cn(
+                  "flex items-center justify-between rounded-xl p-3 border",
+                  isDark
+                    ? "border-neutral-800 bg-neutral-800/40 text-neutral-200"
+                    : "border-neutral-100 bg-neutral-50 text-neutral-900"
+                )}
+              >
                 <div>
-                  <p className="font-bold text-neutral-900">Database Postgres</p>
-                  <p className="text-[11px] text-neutral-500">Latency &amp; Pool Connection</p>
+                  <p className={cn("font-bold", isDark ? "text-white" : "text-neutral-900")}>Database Postgres</p>
+                  <p className={cn("text-[11px]", isDark ? "text-neutral-400" : "text-neutral-500")}>Latency &amp; Pool Connection</p>
                 </div>
                 <Badge variant="success" className="font-bold text-[10px]">
                   18 ms (Optimal)
                 </Badge>
               </div>
 
-              <div className="flex items-center justify-between rounded-xl bg-neutral-50 p-3 border border-neutral-100">
+              <div
+                className={cn(
+                  "flex items-center justify-between rounded-xl p-3 border",
+                  isDark
+                    ? "border-neutral-800 bg-neutral-800/40 text-neutral-200"
+                    : "border-neutral-100 bg-neutral-50 text-neutral-900"
+                )}
+              >
                 <div>
-                  <p className="font-bold text-neutral-900">SKKNI Parser &amp; ETL</p>
-                  <p className="text-[11px] text-neutral-500">Pipeline Ekstraksi Teks</p>
+                  <p className={cn("font-bold", isDark ? "text-white" : "text-neutral-900")}>SKKNI Parser &amp; ETL</p>
+                  <p className={cn("text-[11px]", isDark ? "text-neutral-400" : "text-neutral-500")}>Pipeline Ekstraksi Teks</p>
                 </div>
                 <Badge variant="brand" className="font-bold text-[10px]">
                   Siap Menerima PDF
                 </Badge>
               </div>
 
-              <div className="flex items-center justify-between rounded-xl bg-neutral-50 p-3 border border-neutral-100">
+              <div
+                className={cn(
+                  "flex items-center justify-between rounded-xl p-3 border",
+                  isDark
+                    ? "border-neutral-800 bg-neutral-800/40 text-neutral-200"
+                    : "border-neutral-100 bg-neutral-50 text-neutral-900"
+                )}
+              >
                 <div>
-                  <p className="font-bold text-neutral-900">In-Memory Cache</p>
-                  <p className="text-[11px] text-neutral-500">Unit SKKNI &amp; Sumber Lab</p>
+                  <p className={cn("font-bold", isDark ? "text-white" : "text-neutral-900")}>In-Memory Cache</p>
+                  <p className={cn("text-[11px]", isDark ? "text-neutral-400" : "text-neutral-500")}>Unit SKKNI &amp; Sumber Lab</p>
                 </div>
                 <Badge variant="default" className="font-bold text-[10px]">
                   Fresh &amp; Synced
@@ -387,9 +475,16 @@ export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
             </div>
           </div>
 
-          <div className="mt-6 rounded-2xl bg-slime-lime-50/80 p-4 border border-slime-lime-200/80 text-xs">
-            <p className="font-bold text-slime-lime-950">Audit Integritas Data</p>
-            <p className="mt-1 text-neutral-700 leading-relaxed text-[11px]">
+          <div
+            className={cn(
+              "mt-6 rounded-2xl p-4 border text-xs leading-relaxed",
+              isDark
+                ? "border-slime-lime-900/60 bg-slime-lime-950/40 text-neutral-300"
+                : "border-slime-lime-200/80 bg-slime-lime-50/80 text-neutral-700"
+            )}
+          >
+            <p className="font-bold text-slime-lime-400">Audit Integritas Data</p>
+            <p className="mt-1 text-[11px]">
               Seluruh perhitungan JP dan pemetaan kompetensi terhubung langsung ke basis data tanpa mock generator fiktif.
             </p>
           </div>
@@ -397,13 +492,11 @@ export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
       </div>
 
       {/* Feed Aktivitas Audit Terbaru */}
-      <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-7">
-        <div className="flex items-center justify-between border-b border-neutral-100 pb-4 mb-4">
+      <div className={cardClass}>
+        <div className={cn("flex items-center justify-between", dividerClass)}>
           <div>
-            <h2 className="text-base font-bold text-neutral-900">
-              Log Aktivitas &amp; Audit Pengguna Terbaru
-            </h2>
-            <p className="text-xs text-neutral-500">
+            <h2 className={titleClass}>Log Aktivitas &amp; Audit Pengguna Terbaru</h2>
+            <p className={subClass}>
               Rekam jejak tindakan guru produktif dan kaprogli dalam platform
             </p>
           </div>
@@ -412,7 +505,7 @@ export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
           </Badge>
         </div>
 
-        <div className="space-y-3 text-xs">
+        <div className="mt-4 space-y-3 text-xs">
           {[
             {
               actor: "Siti Rahmawati, S.Pd (Guru TKJ)",
@@ -441,15 +534,31 @@ export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
           ].map((item, idx) => (
             <div
               key={idx}
-              className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-xl bg-neutral-50/70 p-3.5 border border-neutral-100 transition-colors hover:bg-neutral-100/60"
+              className={cn(
+                "flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-xl p-3.5 border transition-colors",
+                isDark
+                  ? "border-neutral-800 bg-neutral-800/40 hover:bg-neutral-800/70 text-neutral-200"
+                  : "border-neutral-100 bg-neutral-50/70 hover:bg-neutral-100/60 text-neutral-900"
+              )}
             >
               <div className="flex items-start gap-3">
-                <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-slime-lime-100 font-bold text-slime-lime-950 text-xs mt-0.5">
+                <div
+                  className={cn(
+                    "flex size-7 shrink-0 items-center justify-center rounded-lg text-xs font-bold mt-0.5",
+                    isDark
+                      ? "bg-slime-lime-500/20 text-slime-lime-400 border border-slime-lime-400/30"
+                      : "bg-slime-lime-100 text-slime-lime-950"
+                  )}
+                >
                   {item.actor.charAt(0)}
                 </div>
                 <div>
-                  <p className="font-bold text-neutral-900">{item.actor}</p>
-                  <p className="text-neutral-600 mt-0.5">{item.action}</p>
+                  <p className={cn("font-bold", isDark ? "text-white" : "text-neutral-900")}>
+                    {item.actor}
+                  </p>
+                  <p className={cn("mt-0.5", isDark ? "text-neutral-400" : "text-neutral-600")}>
+                    {item.action}
+                  </p>
                 </div>
               </div>
 
@@ -457,7 +566,9 @@ export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
                 <Badge variant="brand" className="text-[10px] font-bold">
                   {item.tag}
                 </Badge>
-                <span className="text-[11px] text-neutral-400 shrink-0">{item.time}</span>
+                <span className={cn("text-[11px] shrink-0", isDark ? "text-neutral-500" : "text-neutral-400")}>
+                  {item.time}
+                </span>
               </div>
             </div>
           ))}

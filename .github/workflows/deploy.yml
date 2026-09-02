@@ -1,0 +1,79 @@
+name: VokasIn CI/CD & AWS EC2 Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: production_deploy
+  cancel-in-progress: false
+
+jobs:
+  validate-and-build:
+    name: Build Verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Next.js Application
+        run: npm run build
+        env:
+          NODE_OPTIONS: "--max-old-space-size=2048"
+
+  deploy-to-ec2:
+    name: Deploy to AWS EC2 (t4g.small)
+    needs: validate-and-build
+    runs-on: ubuntu-latest
+    steps:  
+      - name: Execute Remote SSH Deployment
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            set -e
+            echo "Starting VokasIn deployment on EC2..."
+
+            # Ensure deployment directory exists
+            if [ ! -d "/var/www/vokasin/.git" ]; then
+              echo "Cloning repository for the first time..."
+              sudo chown -R ubuntu:ubuntu /var/www/vokasin
+              git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git /var/www/vokasin
+            fi
+
+            cd /var/www/vokasin
+
+            # Set remote URL with token for authenticated fetch (works for private repos)
+            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+            # Fetch and update to latest commit
+            git fetch origin main || git fetch origin master
+            git reset --hard origin/main || git reset --hard origin/master
+
+            # Inject local PostgreSQL DATABASE_URL
+            echo "DATABASE_URL=postgresql://vokasin:${{ secrets.DB_PASSWORD }}@localhost:5432/vokasin" > .env.local
+
+            # Install production dependencies
+            npm ci
+
+            # Build application with memory optimization
+            export NODE_OPTIONS="--max-old-space-size=1536"
+            npm run build
+
+            # Reload PM2 process with zero downtime
+            pm2 reload ecosystem.config.cjs --update-env || pm2 start ecosystem.config.cjs
+            pm2 save
+
+            echo "Deployment completed successfully."

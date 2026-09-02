@@ -1,0 +1,13 @@
+# AWS Deployment Configuration
+aws_region    = "ap-southeast-1" # Atau "ap-southeast-3" untuk Region Jakarta
+instance_type = "t4g.small"      # 2 vCPU, 2GB RAM (Graviton2 ARM64)
+key_name      = "vokasin-ec2-key" # Nama Key Pair di AWS Console
+disk_size_gb  = 30
+
+# Domain & Aplikasi
+app_name      = "vokasin"
+domain_name   = "_"              # Ganti dengan domain jika sudah ada (misal: vokasin.id)
+
+# Supabase PostgreSQL Connection String
+# Didapat dari Supabase Dashboard -> Project Settings -> Database -> Connection string (URI)
+database_url  = "postgresql://postgres.[YOUR-PROJECT-REF]:[YOUR-PASSWORD]@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres"

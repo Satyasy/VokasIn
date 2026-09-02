@@ -10,15 +10,16 @@ import {
   X,
   ArrowRight,
   ShieldCheck,
-  BookOpen,
   FileCheck,
-  Layers,
   ChevronDown,
   ChevronUp,
   Edit2,
   Check,
   AlertCircle,
   Loader2,
+  Minus,
+  Maximize2,
+  Minimize2,
 } from "lucide-react";
 import {
   parseSkkniPdfAction,
@@ -26,7 +27,8 @@ import {
   uploadSkkniMandiriAction,
   type UploadSkkniMandiriResponse,
 } from "@/app/guru/upload-skkni-action";
-import type { ExtractedUnit, ParsedSkkniDocument } from "@/lib/skkni-pdf-parser";
+import type { ExtractedUnit, ParsedSkkniDocument } from "@/lib/skkni-text-extractor";
+import { extractPdfTextInBrowser, type ParseProgress } from "@/lib/client-pdf-parser";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -47,11 +49,19 @@ const SAMPLE_CUSTOM_SKKNI = {
 
 export function UploadSkkniModal({ defaultProgramId = "pk-tkj" }: { defaultProgramId?: string }) {
   const [open, setOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [activeTab, setActiveTab] = useState<"pdf" | "manual">("pdf");
 
   // State untuk alur PDF Drag & Drop
   const [isDragging, setIsDragging] = useState(false);
   const [isParsing, setIsParsing] = useState(false);
+  const [currentFileName, setCurrentFileName] = useState<string>("");
+  const [parseProgress, setParseProgress] = useState<ParseProgress>({
+    currentPage: 0,
+    totalPages: 0,
+    percent: 0,
+    statusText: "Menyiapkan parser...",
+  });
   const [parseError, setParseError] = useState<string | null>(null);
   const [parsedDoc, setParsedDoc] = useState<ParsedSkkniDocument | null>(null);
   const [editableNomor, setEditableNomor] = useState("");
@@ -88,9 +98,10 @@ export function UploadSkkniModal({ defaultProgramId = "pk-tkj" }: { defaultProgr
 
   function handleClose() {
     setOpen(false);
+    setIsMinimized(false);
   }
 
-  // Handle PDF Drag & Drop & Parsing
+  // Handle PDF Drag & Drop & Client-Side Parsing (Instan & Hemat Kuota)
   async function handlePdfFile(file: File) {
     if (!file.name.toLowerCase().endsWith(".pdf")) {
       setParseError("File harus berekstensi .pdf resmi dari Kemnaker.");
@@ -98,33 +109,73 @@ export function UploadSkkniModal({ defaultProgramId = "pk-tkj" }: { defaultProgr
     }
 
     setIsParsing(true);
+    setCurrentFileName(file.name);
     setParseError(null);
     setImportSuccess(null);
-
-    const formData = new FormData();
-    formData.append("pdfFile", file);
-
-    const res = await parseSkkniPdfAction(formData);
-    setIsParsing(false);
-
-    if (!res.success || !res.document) {
-      setParseError(res.error || "Gagal membaca berkas PDF.");
-      return;
-    }
-
-    setParsedDoc(res.document);
-    setEditableNomor(res.document.nomorDokumen);
-
-    // Default: pilih semua unit
-    const allCodes = new Set(res.document.units.map((u) => u.kodeUnit));
-    setSelectedUnitCodes(allCodes);
-
-    // Inisialisasi state edit
-    const edits: Record<string, { kodeUnit: string; judulUnit: string }> = {};
-    res.document.units.forEach((u) => {
-      edits[u.kodeUnit] = { kodeUnit: u.kodeUnit, judulUnit: u.judulUnit };
+    setParseProgress({
+      currentPage: 0,
+      totalPages: 0,
+      percent: 5,
+      statusText: "Membaca dokumen ke memori...",
     });
-    setEditableUnits(edits);
+
+    try {
+      // 1. Ekstraksi langsung di browser (Client-Side) via PDF.js (Instan 2-4 detik, tidak ada jeda upload jaringan)
+      const doc = await extractPdfTextInBrowser(file, (p) => {
+        setParseProgress(p);
+      });
+
+      setParsedDoc(doc);
+      setEditableNomor(doc.nomorDokumen);
+
+      const allCodes = new Set(doc.units.map((u) => u.kodeUnit));
+      setSelectedUnitCodes(allCodes);
+
+      const edits: Record<string, { kodeUnit: string; judulUnit: string }> = {};
+      doc.units.forEach((u) => {
+        edits[u.kodeUnit] = { kodeUnit: u.kodeUnit, judulUnit: u.judulUnit };
+      });
+      setEditableUnits(edits);
+      setIsParsing(false);
+    } catch (err: unknown) {
+      console.warn("Ekstraksi browser mengalami kendala, beralih ke server parser:", err);
+      // 2. Otomatis fallback ke Server Action jika peramban tidak mendukung worker
+      try {
+        setParseProgress({
+          currentPage: 0,
+          totalPages: 0,
+          percent: 50,
+          statusText: "Memproses lewat server fallback...",
+        });
+        const formData = new FormData();
+        formData.append("pdfFile", file);
+        const res = await parseSkkniPdfAction(formData);
+
+        if (!res.success || !res.document) {
+          throw new Error(res.error || "Gagal membaca berkas PDF.");
+        }
+
+        setParsedDoc(res.document);
+        setEditableNomor(res.document.nomorDokumen);
+
+        const allCodes = new Set(res.document.units.map((u) => u.kodeUnit));
+        setSelectedUnitCodes(allCodes);
+
+        const edits: Record<string, { kodeUnit: string; judulUnit: string }> = {};
+        res.document.units.forEach((u) => {
+          edits[u.kodeUnit] = { kodeUnit: u.kodeUnit, judulUnit: u.judulUnit };
+        });
+        setEditableUnits(edits);
+      } catch (fallbackErr: unknown) {
+        setParseError(
+          fallbackErr instanceof Error
+            ? fallbackErr.message
+            : "Gagal mengekstrak PDF. Pastikan file bukan hasil foto/scan murni."
+        );
+      } finally {
+        setIsParsing(false);
+      }
+    }
   }
 
   function handleDrop(e: React.DragEvent<HTMLDivElement>) {
@@ -197,14 +248,96 @@ export function UploadSkkniModal({ defaultProgramId = "pk-tkj" }: { defaultProgr
       <Button
         type="button"
         variant="secondary"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setOpen(true);
+          setIsMinimized(false);
+        }}
         className="inline-flex items-center gap-2 border-slime-lime-300 bg-slime-lime-50 text-slime-lime-950 hover:bg-slime-lime-100 font-bold text-xs"
       >
         <UploadCloud className="size-4 text-slime-lime-800" aria-hidden />
         <span>Unggah / Tambah SKKNI Mandiri</span>
       </Button>
 
-      {open && (
+      {/* FLOATING MINI-DOCK (Saat di-minimize ke sudut kanan bawah) */}
+      {open && isMinimized && (
+        <aside
+          role="complementary"
+          aria-label="Proses ETL SKKNI di latar belakang"
+          className="fixed bottom-6 right-6 z-50 w-84 rounded-3xl bg-neutral-900/95 p-4 text-white shadow-2xl border border-neutral-700/80 backdrop-blur-md animate-in slide-in-from-bottom-5 transition-all"
+        >
+          <div className="flex items-center justify-between gap-2 border-b border-neutral-800 pb-2.5">
+            <div className="flex items-center gap-2">
+              <span className="relative flex size-2.5">
+                <span
+                  className={`absolute inline-flex h-full w-full rounded-full opacity-75 ${
+                    isParsing ? "animate-ping bg-slime-lime-400" : "bg-slime-lime-500"
+                  }`}
+                />
+                <span className="relative inline-flex size-2.5 rounded-full bg-slime-lime-500" />
+              </span>
+              <span className="text-xs font-bold text-neutral-200">ETL Pipeline Latar Belakang</span>
+            </div>
+
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={() => setIsMinimized(false)}
+                title="Buka Kembali Jendela"
+                className="rounded-lg p-1 text-neutral-400 hover:bg-neutral-800 hover:text-white transition-colors"
+              >
+                <Maximize2 className="size-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={handleClose}
+                title="Tutup"
+                className="rounded-lg p-1 text-neutral-400 hover:bg-neutral-800 hover:text-white transition-colors"
+              >
+                <X className="size-3.5" />
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-3">
+            <p className="text-xs font-semibold text-neutral-300 truncate">
+              {currentFileName || "Dokumen SKKNI Kemnaker"}
+            </p>
+
+            {isParsing ? (
+              <div className="mt-2 space-y-1.5">
+                <div className="flex justify-between text-[11px] text-neutral-400">
+                  <span className="truncate max-w-[190px]">{parseProgress.statusText}</span>
+                  <span className="font-bold text-slime-lime-400">{parseProgress.percent}%</span>
+                </div>
+                <div className="h-1.5 w-full rounded-full bg-neutral-800 overflow-hidden">
+                  <div
+                    className="h-full bg-slime-lime-500 transition-all duration-200"
+                    style={{ width: `${parseProgress.percent}%` }}
+                  />
+                </div>
+              </div>
+            ) : parsedDoc ? (
+              <div className="mt-2 flex items-center justify-between">
+                <span className="text-xs text-slime-lime-400 font-bold">
+                  {parsedDoc.units.length} Unit Siap Dipilih
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setIsMinimized(false)}
+                  className="rounded-full bg-slime-lime-500 px-3 py-1 text-[11px] font-bold text-slime-lime-950 hover:bg-slime-lime-400"
+                >
+                  Buka &amp; Pilih Unit
+                </button>
+              </div>
+            ) : (
+              <p className="mt-1 text-[11px] text-neutral-400">Menunggu berkas...</p>
+            )}
+          </div>
+        </aside>
+      )}
+
+      {/* FULL MODAL DIALOG */}
+      {open && !isMinimized && (
         <div
           role="dialog"
           aria-modal="true"
@@ -228,16 +361,29 @@ export function UploadSkkniModal({ defaultProgramId = "pk-tkj" }: { defaultProgr
                   Unggah &amp; Ekstraksi Unit SKKNI Mandiri
                 </h3>
                 <p className="mt-1 text-xs text-neutral-600 leading-relaxed">
-                  Unggah langsung dokumen PDF resmi Kemnaker tanpa perlu input manual. Sistem otomatis mengekstrak unit, elemen, dan KUK ke kanvas modul ajar Anda serta mendaftarkannya ke antrean Kaprogli.
+                  Unggah langsung dokumen PDF resmi Kemnaker tanpa perlu input manual. Sistem membedah teks langsung di browser Anda secara instan dalam hitungan detik.
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={handleClose}
-                className="rounded-full p-2 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700 transition-colors"
-              >
-                <X className="size-5" />
-              </button>
+
+              {/* Action Window: Minimize & Close */}
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setIsMinimized(true)}
+                  title="Minimize ke sudut kanan bawah"
+                  className="rounded-full p-2 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700 transition-colors"
+                >
+                  <Minus className="size-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleClose}
+                  title="Tutup Modal"
+                  className="rounded-full p-2 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700 transition-colors"
+                >
+                  <X className="size-4" />
+                </button>
+              </div>
             </div>
 
             {/* Navigasi Tab Ganda */}
@@ -323,22 +469,58 @@ export function UploadSkkniModal({ defaultProgramId = "pk-tkj" }: { defaultProgr
                       }}
                       onDragLeave={() => setIsDragging(false)}
                       onDrop={handleDrop}
-                      onClick={() => fileInputRef.current?.click()}
-                      className={`relative flex flex-col items-center justify-center rounded-3xl border-2 border-dashed p-10 text-center cursor-pointer transition-all ${
-                        isDragging
-                          ? "border-slime-lime-500 bg-slime-lime-50/60 scale-[1.01]"
-                          : "border-neutral-300 hover:border-slime-lime-500 hover:bg-neutral-50/60"
+                      onClick={() => {
+                        if (!isParsing) fileInputRef.current?.click();
+                      }}
+                      className={`relative flex flex-col items-center justify-center rounded-3xl border-2 border-dashed p-10 text-center transition-all ${
+                        isParsing
+                          ? "border-slime-lime-500 bg-slime-lime-50/40 cursor-default"
+                          : isDragging
+                          ? "border-slime-lime-500 bg-slime-lime-50/60 scale-[1.01] cursor-pointer"
+                          : "border-neutral-300 hover:border-slime-lime-500 hover:bg-neutral-50/60 cursor-pointer"
                       }`}
                     >
                       {isParsing ? (
-                        <div className="py-8 text-center space-y-3">
-                          <Loader2 className="mx-auto size-10 animate-spin text-slime-lime-600" />
-                          <p className="text-sm font-bold text-neutral-900">
-                            Membaca &amp; Mengekstrak Unit SKKNI Kemnaker...
-                          </p>
-                          <p className="text-xs text-neutral-500 max-w-sm">
-                            Sistem sedang membedah dokumen PDF, mengurai Kode Unit, Judul, Elemen, dan KUK.
-                          </p>
+                        <div className="w-full max-w-md py-4 text-center space-y-4">
+                          <div className="flex items-center justify-center gap-3">
+                            <Loader2 className="size-7 animate-spin text-slime-lime-600" />
+                            <span className="text-sm font-extrabold text-neutral-900">
+                              {parseProgress.statusText}
+                            </span>
+                          </div>
+
+                          {/* Live Step Progress Bar */}
+                          <div className="space-y-1.5">
+                            <div className="flex justify-between text-xs text-neutral-600">
+                              <span className="font-semibold text-neutral-700">
+                                {currentFileName || "Membaca Dokumen..."}
+                              </span>
+                              <span className="font-bold text-slime-lime-800">{parseProgress.percent}%</span>
+                            </div>
+                            <div className="h-2.5 w-full rounded-full bg-neutral-200 overflow-hidden shadow-inner">
+                              <div
+                                className="h-full bg-slime-lime-500 transition-all duration-200"
+                                style={{ width: `${parseProgress.percent}%` }}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="rounded-2xl bg-white p-3.5 border border-slime-lime-200 text-xs text-neutral-600 flex items-center justify-between">
+                            <span className="text-left text-[11px]">
+                              Ekstraksi berjalan di browser. Anda bisa meminimalkan jendela ini.
+                            </span>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setIsMinimized(true);
+                              }}
+                              className="inline-flex items-center gap-1 rounded-lg bg-neutral-100 px-2.5 py-1 font-bold text-neutral-800 hover:bg-neutral-200 text-[11px]"
+                            >
+                              <Minimize2 className="size-3" />
+                              <span>Minimize</span>
+                            </button>
+                          </div>
                         </div>
                       ) : (
                         <>
@@ -353,7 +535,7 @@ export function UploadSkkniModal({ defaultProgramId = "pk-tkj" }: { defaultProgr
                           </p>
                           <div className="mt-4 flex items-center gap-2 text-[11px] text-neutral-400">
                             <ShieldCheck className="size-4 text-slime-lime-600" />
-                            <span>Mendukung seluruh format SKKNI Kemnaker (Cloud Computing, IoT, RPL, TKJ, dll.)</span>
+                            <span>Ekstraksi instan lokal di browser • Tidak memakan kuota upload</span>
                           </div>
                         </>
                       )}

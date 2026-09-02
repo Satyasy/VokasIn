@@ -186,12 +186,11 @@ export default function Home() {
                 </Badge>
                 <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-neutral-50 sm:text-5xl lg:text-6xl lg:leading-[1.05]">
                   Susun jobsheet SMK dari{" "}
-                  <span className="text-slime-lime-400">SKKNI asli</span>{" "}
-                  {String.fromCharCode(8212)} bukan dari nol.
+                  <span className="text-slime-lime-400">SKKNI asli</span>, bukan dari nol.
                 </h1>
                 <p className="mt-5 text-base leading-relaxed text-neutral-300 sm:text-lg">
                   Kartu saran ditarik langsung dari teks Unit Kompetensi &amp; KUK resmi. Anda
-                  yang menyeret, mengecek alat lab, dan mengekspor {String.fromCharCode(8212)} sistem tidak mengarang
+                  yang menyeret, mengecek alat lab, dan mengekspor, sistem tidak mengarang
                   sendiri.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">

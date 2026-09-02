@@ -78,7 +78,7 @@ export function KaprogliSkkniTab({
 
           <div className="flex gap-2">
             <Button 
-              variant="outline" 
+              variant="secondary" 
               className="text-xs font-semibold rounded-full"
               onClick={() => setViewMode(v => v === "list" ? "drag-drop" : "list")}
             >

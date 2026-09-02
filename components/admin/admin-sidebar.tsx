@@ -179,36 +179,20 @@ export function AdminSidebar() {
       >
         {!collapsed ? (
           <>
-            <div
-              className={cn(
-                "rounded-2xl p-3 text-xs border",
-                isDark
-                  ? "border-neutral-800 bg-neutral-900/60"
-                  : "border-neutral-200 bg-neutral-50"
-              )}
-            >
-              <div className="flex items-center gap-2">
-                <span className="relative flex size-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-slime-lime-400 opacity-75" />
-                  <span className="relative inline-flex size-2 rounded-full bg-slime-lime-500" />
-                </span>
-                <span
-                  className={cn(
-                    "text-[11px] font-bold",
-                    isDark ? "text-neutral-200" : "text-neutral-800"
-                  )}
-                >
-                  Filament Engine Active
-                </span>
-              </div>
-              <p
+            {/* Status Sistem Minimalis */}
+            <div className="flex items-center gap-2 px-1 text-xs">
+              <span className="relative flex size-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-slime-lime-400 opacity-75" />
+                <span className="relative inline-flex size-2 rounded-full bg-slime-lime-500" />
+              </span>
+              <span
                 className={cn(
-                  "mt-1 text-[10px]",
+                  "text-[11px] font-medium",
                   isDark ? "text-neutral-400" : "text-neutral-500"
                 )}
               >
-                Postgres &bull; 0 Error &bull; Live
-              </p>
+                Status: <span className={cn("font-bold", isDark ? "text-neutral-200" : "text-neutral-800")}>Operasional</span>
+              </span>
             </div>
 
             <Link

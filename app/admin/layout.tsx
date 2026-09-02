@@ -14,9 +14,11 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   await ensureGuruCacheFresh();
 
   return (
-    <div className="flex min-h-svh">
+    <div className="flex min-h-svh bg-neutral-950">
       <AdminSidebar />
-      <div className="flex flex-1 flex-col">{children}</div>
+      <div className="flex flex-1 flex-col min-w-0 bg-linear-to-b from-slime-lime-50/40 via-neutral-50 to-neutral-100/50">
+        {children}
+      </div>
     </div>
   );
 }

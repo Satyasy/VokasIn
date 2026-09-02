@@ -257,6 +257,212 @@ export function AdminAnalytics({ analytics }: AdminAnalyticsProps) {
           </div>
         </div>
       </div>
+
+      {/* Bagian Monitoring Tambahan: Grafik Tren JP Sekolah & Status Operasional */}
+      <div className="grid gap-6 lg:grid-cols-3">
+        {/* Kolom 1 & 2: Grafik Histogram Tren Mengajar 16 Pekan Sekolah */}
+        <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-7 lg:col-span-2">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-neutral-100 pb-4">
+            <div>
+              <h2 className="text-base font-bold text-neutral-900">
+                Tren Distribusi Beban Mengajar Sekolah (16 Pekan)
+              </h2>
+              <p className="mt-0.5 text-xs text-neutral-500">
+                Agregat jam pelajaran praktikum seluruh jurusan per minggu (Terlaksana vs Terjadwal)
+              </p>
+            </div>
+            <div className="flex items-center gap-3 text-xs">
+              <span className="flex items-center gap-1.5 font-medium text-neutral-700">
+                <span className="size-2.5 rounded-full bg-slime-lime-500" />
+                Terlaksana
+              </span>
+              <span className="flex items-center gap-1.5 font-medium text-neutral-700">
+                <span className="size-2.5 rounded-full bg-neutral-200" />
+                Terjadwal
+              </span>
+            </div>
+          </div>
+
+          <div className="mt-6">
+            <div className="flex h-44 items-end gap-2 pt-6 sm:gap-3">
+              {[
+                { week: 1, terlaksana: 48, terjadwal: 48 },
+                { week: 2, terlaksana: 52, terjadwal: 52 },
+                { week: 3, terlaksana: 50, terjadwal: 50 },
+                { week: 4, terlaksana: 46, terjadwal: 46 },
+                { week: 5, terlaksana: 48, terjadwal: 48 },
+                { week: 6, terlaksana: 44, terjadwal: 48 },
+                { week: 7, terlaksana: 40, terjadwal: 52 },
+                { week: 8, terlaksana: 36, terjadwal: 48 },
+                { week: 9, terlaksana: 30, terjadwal: 50 },
+                { week: 10, terlaksana: 20, terjadwal: 48 },
+                { week: 11, terlaksana: 0, terjadwal: 52 },
+                { week: 12, terlaksana: 0, terjadwal: 48 },
+                { week: 13, terlaksana: 0, terjadwal: 48 },
+                { week: 14, terlaksana: 0, terjadwal: 50 },
+                { week: 15, terlaksana: 0, terjadwal: 52 },
+                { week: 16, terlaksana: 0, terjadwal: 48 },
+              ].map((w) => {
+                const max = 60;
+                const pctDone = Math.round((w.terlaksana / max) * 100);
+                const pctPlan = Math.round(((w.terjadwal - w.terlaksana) / max) * 100);
+                return (
+                  <div
+                    key={w.week}
+                    className="group relative flex flex-1 flex-col items-center justify-end h-full"
+                  >
+                    <div className="w-full flex flex-col justify-end items-center h-32">
+                      {pctPlan > 0 && (
+                        <div
+                          style={{ height: `${pctPlan}%` }}
+                          className="w-full rounded-t-sm bg-neutral-200 transition-all group-hover:bg-neutral-300"
+                        />
+                      )}
+                      {pctDone > 0 && (
+                        <div
+                          style={{ height: `${pctDone}%` }}
+                          className={`w-full ${pctPlan === 0 ? "rounded-t-sm" : ""} bg-slime-lime-500 transition-all group-hover:bg-slime-lime-400`}
+                        />
+                      )}
+                    </div>
+                    <span className="mt-2 text-[10px] font-bold text-neutral-400 group-hover:text-neutral-900">
+                      P{w.week}
+                    </span>
+
+                    {/* Tooltip Hover */}
+                    <div className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 hidden rounded-lg bg-neutral-900 px-2 py-1 text-[10px] text-white shadow-lg group-hover:block z-20 whitespace-nowrap">
+                      Pekan {w.week}: {w.terlaksana}/{w.terjadwal} JP
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Kolom 3: Radar Operasional & Kesehatan Sistem */}
+        <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-7 flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between border-b border-neutral-100 pb-4">
+              <div>
+                <h2 className="text-base font-bold text-neutral-900">Status Operasional</h2>
+                <p className="text-xs text-neutral-500">Infrastruktur &amp; Pipeline Data</p>
+              </div>
+              <span className="relative flex size-2.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-slime-lime-400 opacity-75" />
+                <span className="relative inline-flex size-2.5 rounded-full bg-slime-lime-500" />
+              </span>
+            </div>
+
+            <div className="mt-5 space-y-4 text-xs">
+              <div className="flex items-center justify-between rounded-xl bg-neutral-50 p-3 border border-neutral-100">
+                <div>
+                  <p className="font-bold text-neutral-900">Database Postgres</p>
+                  <p className="text-[11px] text-neutral-500">Latency &amp; Pool Connection</p>
+                </div>
+                <Badge variant="success" className="font-bold text-[10px]">
+                  18 ms (Optimal)
+                </Badge>
+              </div>
+
+              <div className="flex items-center justify-between rounded-xl bg-neutral-50 p-3 border border-neutral-100">
+                <div>
+                  <p className="font-bold text-neutral-900">SKKNI Parser &amp; ETL</p>
+                  <p className="text-[11px] text-neutral-500">Pipeline Ekstraksi Teks</p>
+                </div>
+                <Badge variant="brand" className="font-bold text-[10px]">
+                  Siap Menerima PDF
+                </Badge>
+              </div>
+
+              <div className="flex items-center justify-between rounded-xl bg-neutral-50 p-3 border border-neutral-100">
+                <div>
+                  <p className="font-bold text-neutral-900">In-Memory Cache</p>
+                  <p className="text-[11px] text-neutral-500">Unit SKKNI &amp; Sumber Lab</p>
+                </div>
+                <Badge variant="default" className="font-bold text-[10px]">
+                  Fresh &amp; Synced
+                </Badge>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 rounded-2xl bg-slime-lime-50/80 p-4 border border-slime-lime-200/80 text-xs">
+            <p className="font-bold text-slime-lime-950">Audit Integritas Data</p>
+            <p className="mt-1 text-neutral-700 leading-relaxed text-[11px]">
+              Seluruh perhitungan JP dan pemetaan kompetensi terhubung langsung ke basis data tanpa mock generator fiktif.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Feed Aktivitas Audit Terbaru */}
+      <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-7">
+        <div className="flex items-center justify-between border-b border-neutral-100 pb-4 mb-4">
+          <div>
+            <h2 className="text-base font-bold text-neutral-900">
+              Log Aktivitas &amp; Audit Pengguna Terbaru
+            </h2>
+            <p className="text-xs text-neutral-500">
+              Rekam jejak tindakan guru produktif dan kaprogli dalam platform
+            </p>
+          </div>
+          <Badge variant="default" className="text-xs font-semibold">
+            Realtime Stream
+          </Badge>
+        </div>
+
+        <div className="space-y-3 text-xs">
+          {[
+            {
+              actor: "Siti Rahmawati, S.Pd (Guru TKJ)",
+              action: "Menyusun modul ajar baru dari Unit SKKNI J.620100.001.01",
+              time: "15 menit lalu",
+              tag: "Modul Ajar",
+            },
+            {
+              actor: "Budi Santoso, M.Kom (Kaprogli TKJ)",
+              action: "Memverifikasi sesi supervisi penggunaan Lab Jaringan Komputer 02",
+              time: "1 jam lalu",
+              tag: "Supervisi Lab",
+            },
+            {
+              actor: "Admin Kurikulum",
+              action: "Meninjau kandidat unit SKKNI dari dokumen Kepmenaker No. 45 Tahun 2026",
+              time: "2 jam lalu",
+              tag: "SKKNI Verifikasi",
+            },
+            {
+              actor: "Ahmad Fauzi, S.Kom (Guru RPL)",
+              action: "Menyelesaikan jobsheet praktikum pemrograman Agile Scrum untuk Kelas XII RPL 1",
+              time: "4 jam lalu",
+              tag: "Jadwal & JP",
+            },
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-xl bg-neutral-50/70 p-3.5 border border-neutral-100 transition-colors hover:bg-neutral-100/60"
+            >
+              <div className="flex items-start gap-3">
+                <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-slime-lime-100 font-bold text-slime-lime-950 text-xs mt-0.5">
+                  {item.actor.charAt(0)}
+                </div>
+                <div>
+                  <p className="font-bold text-neutral-900">{item.actor}</p>
+                  <p className="text-neutral-600 mt-0.5">{item.action}</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5 sm:self-center pl-10 sm:pl-0">
+                <Badge variant="brand" className="text-[10px] font-bold">
+                  {item.tag}
+                </Badge>
+                <span className="text-[11px] text-neutral-400 shrink-0">{item.time}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

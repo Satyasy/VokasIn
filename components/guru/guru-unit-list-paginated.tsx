@@ -7,16 +7,14 @@ import type { ProgramKeahlian, UnitKompetensi } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
 import { CardTitle } from "@/components/ui/card";
 import { PaginatedList } from "@/components/ui/pagination";
+import { UploadSkkniModal } from "@/components/skkni/upload-skkni-modal";
 
 interface GuruUnitListPaginatedProps {
-  programList: ProgramKeahlian[];
   units: (UnitKompetensi & { programSingkatan?: string })[];
+  programList: ProgramKeahlian[];
 }
 
-export function GuruUnitListPaginated({
-  programList,
-  units,
-}: GuruUnitListPaginatedProps) {
+export function GuruUnitListPaginated({ units, programList }: GuruUnitListPaginatedProps) {
   const [selectedProgram, setSelectedProgram] = useState<string>("all");
 
   const filteredUnits = selectedProgram === "all"
@@ -25,19 +23,20 @@ export function GuruUnitListPaginated({
 
   return (
     <div className="space-y-6">
-      {/* Program Tabs Switcher */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-neutral-100 pb-3">
-        <button
-          type="button"
-          onClick={() => setSelectedProgram("all")}
-          className={`rounded-xl px-3.5 py-1.5 text-xs font-bold transition-colors ${
-            selectedProgram === "all"
-              ? "bg-slime-lime-500 text-neutral-950 shadow-sm"
-              : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900"
-          }`}
-        >
-          Semua Program ({units.length})
-        </button>
+      {/* Program Tabs Switcher & Upload Button */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-100 pb-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setSelectedProgram("all")}
+            className={`rounded-xl px-3.5 py-1.5 text-xs font-bold transition-colors ${
+              selectedProgram === "all"
+                ? "bg-slime-lime-500 text-neutral-950 shadow-sm"
+                : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900"
+            }`}
+          >
+            Semua Program ({units.length})
+          </button>
         {programList.map((prog) => {
           const count = units.filter((u) => u.programKeahlianId === prog.id).length;
           return (
@@ -55,6 +54,10 @@ export function GuruUnitListPaginated({
             </button>
           );
         })}
+        </div>
+
+        {/* Tombol Upload SKKNI Mandiri */}
+        <UploadSkkniModal defaultProgramId="pk-tkj" />
       </div>
 
       {/* Paginated List Unit SKKNI (10 Kartu per Sub-Halaman) */}

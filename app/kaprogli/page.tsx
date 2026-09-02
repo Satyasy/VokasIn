@@ -8,7 +8,7 @@ import {
   getLabForProgram,
   getGuruById,
 } from "@/lib/data-access";
-import { ensureLabCacheFresh, listAllGuru, listJadwal } from "@/lib/data-access-db";
+import { ensureLabCacheFresh, listAllGuru, listJadwal, listKandidat } from "@/lib/data-access-db";
 import { toggleGapReviewedAction } from "./actions";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -24,9 +24,10 @@ export default async function KaprogliPage() {
   const session = await getSession();
   const programList = getProgramKeahlian();
 
-  const [guruList, jadwalList] = await Promise.all([
+  const [guruList, jadwalList, kandidatList] = await Promise.all([
     listAllGuru(),
     listJadwal(),
+    listKandidat("menunggu"),
   ]);
 
   const guru = session ? getGuruById(session.guruId) : undefined;
@@ -244,6 +245,8 @@ export default async function KaprogliPage() {
         currentKaprogliProgramId={currentProgramId}
         deltaScoreNode={deltaScoreNode}
         inventarisNode={inventarisNode}
+        kandidatList={kandidatList}
+        programList={programList}
       />
     </main>
   );

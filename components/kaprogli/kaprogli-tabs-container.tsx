@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, ReactNode } from "react";
-import { Gauge, Users, Wrench } from "lucide-react";
-import type { Guru, JadwalPembelajaran } from "@/lib/types";
+import { Gauge, Users, Wrench, FileCheck2 } from "lucide-react";
+import type { Guru, JadwalPembelajaran, UnitKompetensiKandidat, ProgramKeahlian } from "@/lib/types";
 import { SegmentedTabs, type TabItem } from "@/components/ui/segmented-tabs";
 import { KaprogliSupervisiTab } from "@/components/kaprogli/kaprogli-supervisi-tab";
+import { KaprogliSkkniTab } from "@/components/kaprogli/kaprogli-skkni-tab";
 
 interface KaprogliTabsContainerProps {
   guruList: Guru[];
@@ -12,6 +13,8 @@ interface KaprogliTabsContainerProps {
   currentKaprogliProgramId: string;
   deltaScoreNode: ReactNode;
   inventarisNode: ReactNode;
+  kandidatList: UnitKompetensiKandidat[];
+  programList: ProgramKeahlian[];
 }
 
 export function KaprogliTabsContainer({
@@ -20,6 +23,8 @@ export function KaprogliTabsContainer({
   currentKaprogliProgramId,
   deltaScoreNode,
   inventarisNode,
+  kandidatList,
+  programList,
 }: KaprogliTabsContainerProps) {
   const [activeTab, setActiveTab] = useState<string>("delta");
 
@@ -39,6 +44,12 @@ export function KaprogliTabsContainer({
       id: "inventaris",
       label: "Inventaris Lab & Alat",
       icon: <Wrench className="size-4" />,
+    },
+    {
+      id: "skkni",
+      label: "Verifikasi & Upload SKKNI",
+      count: kandidatList.length,
+      icon: <FileCheck2 className="size-4" />,
     },
   ];
 
@@ -72,6 +83,16 @@ export function KaprogliTabsContainer({
         {activeTab === "inventaris" && (
           <div className="animate-in fade-in duration-300">
             {inventarisNode}
+          </div>
+        )}
+
+        {activeTab === "skkni" && (
+          <div className="animate-in fade-in duration-300">
+            <KaprogliSkkniTab
+              kandidatList={kandidatList}
+              currentProgramId={currentKaprogliProgramId}
+              programList={programList}
+            />
           </div>
         )}
       </div>

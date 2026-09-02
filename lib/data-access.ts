@@ -22,6 +22,25 @@ export function getUnitKompetensiById(id: string) {
   return unitKompetensi.find((u) => u.id === id);
 }
 
+export function registerCustomUnit(unit: import("./types").UnitKompetensi, topics?: SaranTopik[]) {
+  const existingIdx = unitKompetensi.findIndex((u) => u.id === unit.id);
+  if (existingIdx >= 0) {
+    unitKompetensi[existingIdx] = unit;
+  } else {
+    unitKompetensi.unshift(unit);
+  }
+  if (topics && topics.length > 0) {
+    for (const t of topics) {
+      const sIdx = saranTopik.findIndex((s) => s.id === t.id);
+      if (sIdx >= 0) {
+        saranTopik[sIdx] = t;
+      } else {
+        saranTopik.push(t);
+      }
+    }
+  }
+}
+
 export function getSaranTopikForUnit(unitKompetensiId: string): SaranTopik[] {
   return saranTopik.filter((s) => s.unitKompetensiId === unitKompetensiId);
 }

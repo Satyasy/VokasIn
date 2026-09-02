@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Users, Clock, Calendar, BookOpen, Filter } from "lucide-react";
 import type { Guru, JadwalPembelajaran } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
+import { KaprogliCharts } from "@/components/kaprogli/kaprogli-charts";
+import { PaginatedList } from "@/components/ui/pagination";
 
 interface GuruJpBreakdown {
   guru: Guru;
@@ -66,6 +68,13 @@ export function KaprogliSupervisiTab({
 
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
+      {/* Visual Chart Capaian Jurusan & Komparasi Antar-Guru */}
+      <KaprogliCharts
+        guruList={guruList}
+        jadwalList={jadwalList}
+        currentKaprogliProgramId={currentKaprogliProgramId}
+      />
+
       {/* Rekapitulasi Tabel Ketercapaian JP Guru */}
       <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
         <div className="flex flex-col justify-between gap-2 border-b border-neutral-100 pb-5 sm:flex-row sm:items-center">
@@ -135,7 +144,7 @@ export function KaprogliSupervisiTab({
         </div>
       </div>
 
-      {/* Monitoring Master Jadwal Praktikum Lab */}
+      {/* Monitoring Master Jadwal Praktikum Lab dengan Paginasi 10 Kartu & Search Bar */}
       <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
         <div className="flex flex-col justify-between gap-4 border-b border-neutral-100 pb-5 sm:flex-row sm:items-center">
           <div>
@@ -165,13 +174,24 @@ export function KaprogliSupervisiTab({
           </div>
         </div>
 
-        <div className="mt-6 space-y-3">
-          {filteredJadwal.length === 0 ? (
-            <p className="py-6 text-center text-sm text-neutral-500">
-              Tidak ada sesi jadwal pada filter ini.
-            </p>
-          ) : (
-            filteredJadwal.map((item) => (
+        <div className="mt-6">
+          <PaginatedList<JadwalPembelajaran>
+            items={filteredJadwal}
+            itemsPerPage={10}
+            searchPlaceholder="Cari sesi lab berdasarkan materi, kelas, nama guru, atau unit SKKNI..."
+            searchFilter={(item, q) =>
+              item.judulMateri.toLowerCase().includes(q) ||
+              item.kelas.toLowerCase().includes(q) ||
+              Boolean(item.namaGuru?.toLowerCase().includes(q)) ||
+              Boolean(item.kodeUnit?.toLowerCase().includes(q)) ||
+              Boolean(item.judulUnit?.toLowerCase().includes(q))
+            }
+            emptyState={
+              <div className="rounded-2xl border border-dashed border-neutral-200 bg-neutral-50/50 p-8 text-center text-xs text-neutral-500">
+                Tidak ada jadwal sesi lab yang sesuai pencarian atau filter.
+              </div>
+            }
+            renderItem={(item) => (
               <div
                 key={item.id}
                 className="flex flex-col justify-between gap-3 rounded-2xl border border-neutral-200 bg-neutral-50/50 p-4 transition-all sm:flex-row sm:items-center"
@@ -202,8 +222,8 @@ export function KaprogliSupervisiTab({
                   <p className="font-semibold text-neutral-800">{item.jamMulai} - {item.jamSelesai} WIB</p>
                 </div>
               </div>
-            ))
-          )}
+            )}
+          />
         </div>
       </div>
     </div>

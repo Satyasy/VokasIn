@@ -6,6 +6,7 @@ import type { JadwalPembelajaran, JpSummary } from "@/lib/types";
 import { updateStatusJadwalAction } from "@/app/guru/jadwal/actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { GuruJpChart } from "@/components/guru/guru-jp-chart";
 
 interface GuruOverviewTabProps {
   jadwalList: JadwalPembelajaran[];
@@ -50,7 +51,10 @@ export function GuruOverviewTab({
 
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
-      {/* Kartu Ringkasan Metrik */}
+      {/* Visual Chart Capaian JP & Distribusi Mingguan */}
+      <GuruJpChart jpSummary={jpSummary} jadwalList={jadwalList} />
+
+      {/* Kartu Ringkasan Metrik Tambahan */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* Metrik 1: Realisasi Target JP */}
         <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">

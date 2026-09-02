@@ -14,6 +14,7 @@ import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { CircularProgress } from "@/components/ui/circular-progress";
 import { KaprogliTabsContainer } from "@/components/kaprogli/kaprogli-tabs-container";
 
 const SEMESTER = "Ganjil 2026/2027";
@@ -46,10 +47,23 @@ export default async function KaprogliPage() {
                   <CardTitle>{program.nama}</CardTitle>
                   <CardDescription>{program.singkatan}</CardDescription>
                 </div>
-                <Badge variant={level as "error" | "warning" | "success"}>
-                  <Gauge className="size-3" aria-hidden />
-                  Skor {report.skorDelta}
-                </Badge>
+                <div className="flex items-center gap-3">
+                  <CircularProgress
+                    value={report.skorDelta}
+                    size={48}
+                    strokeWidth={5}
+                    label={`${report.skorDelta}`}
+                    className={cn(
+                      level === "error" && "[&_circle:nth-child(2)]:text-red-500",
+                      level === "warning" && "[&_circle:nth-child(2)]:text-amber-500",
+                      level === "success" && "[&_circle:nth-child(2)]:text-slime-lime-500"
+                    )}
+                  />
+                  <Badge variant={level as "error" | "warning" | "success"}>
+                    <Gauge className="size-3" aria-hidden />
+                    Skor {report.skorDelta}
+                  </Badge>
+                </div>
               </div>
 
               <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">

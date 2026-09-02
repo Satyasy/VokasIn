@@ -1,11 +1,11 @@
 import { Compass } from "lucide-react";
 import { JelajahKompetensiClient } from "@/components/jelajah/jelajah-kompetensi-client";
-import { LandingNavbar } from "@/components/landing/navbar";
+import { AdaptiveNavbar } from "@/components/adaptive-navbar";
 
 export default function JelajahKompetensiPage() {
   return (
     <>
-      <LandingNavbar />
+      <AdaptiveNavbar />
       <div className="pt-24 sm:pt-28 pb-16">
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 sm:px-6">
           <div className="border-b border-neutral-200 pb-6">

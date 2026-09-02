@@ -6,6 +6,7 @@ import type { JadwalPembelajaran, JpSummary, StatusJadwal, UnitKompetensi } from
 import { createJadwalAction, updateStatusJadwalAction } from "@/app/guru/jadwal/actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { PaginatedList } from "@/components/ui/pagination";
 
 interface GuruJadwalTabProps {
   jadwalList: JadwalPembelajaran[];
@@ -153,20 +154,31 @@ export function GuruJadwalTab({
         </div>
       </div>
 
-      {/* Daftar Sesi Pertemuan */}
-      <div className="space-y-3">
-        {filteredJadwal.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-neutral-200 bg-white p-12 text-center shadow-sm">
-            <Calendar className="mx-auto size-10 text-neutral-400" aria-hidden />
-            <p className="mt-3 text-sm font-bold text-neutral-900">
-              Tidak ada sesi jadwal pada filter ini.
-            </p>
-            <p className="mt-1 text-xs text-neutral-500">
-              Silakan sesuaikan filter atau tambahkan jadwal pembelajaran baru.
-            </p>
-          </div>
-        ) : (
-          filteredJadwal.map((item) => {
+      {/* Daftar Sesi Pertemuan dengan Paginasi 10 Kartu & Search Bar */}
+      <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
+        <PaginatedList<JadwalPembelajaran>
+          items={filteredJadwal}
+          itemsPerPage={10}
+          searchPlaceholder="Cari berdasarkan judul materi, kelas (mis. XII TKJ 1), atau kode unit SKKNI..."
+          searchFilter={(item, q) =>
+            item.judulMateri.toLowerCase().includes(q) ||
+            item.kelas.toLowerCase().includes(q) ||
+            Boolean(item.kodeUnit?.toLowerCase().includes(q)) ||
+            Boolean(item.judulUnit?.toLowerCase().includes(q)) ||
+            Boolean(item.catatanRefleksi?.toLowerCase().includes(q))
+          }
+          emptyState={
+            <div className="rounded-2xl border border-dashed border-neutral-200 bg-neutral-50/50 p-12 text-center">
+              <Calendar className="mx-auto size-10 text-neutral-400" aria-hidden />
+              <p className="mt-3 text-sm font-bold text-neutral-900">
+                Tidak ada sesi jadwal yang cocok dengan filter atau pencarian.
+              </p>
+              <p className="mt-1 text-xs text-neutral-500">
+                Coba sesuaikan kata kunci pencarian atau tambahkan sesi mengajar baru.
+              </p>
+            </div>
+          }
+          renderItem={(item) => {
             const isTerlaksana = item.status === "terlaksana";
             const isDijadwalUlang = item.status === "dijadwal_ulang";
 
@@ -258,8 +270,8 @@ export function GuruJadwalTab({
                 </div>
               </div>
             );
-          })
-        )}
+          }}
+        />
       </div>
 
       {/* Modal Dialog Tambah Sesi Pembelajaran Baru */}

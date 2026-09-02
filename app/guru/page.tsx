@@ -13,7 +13,13 @@ import { DraftStatusBar } from "@/components/guru/draft-status-bar";
 import { GuruTabsContainer } from "@/components/guru/guru-tabs-container";
 import { GuruUnitListPaginated } from "@/components/guru/guru-unit-list-paginated";
 
-export default async function GuruPage() {
+export default async function GuruPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ tab?: string }>;
+}) {
+  const params = searchParams ? await searchParams : undefined;
+  const initialTab = params?.tab;
   const session = await getSession();
   const guruId = session?.guruId || "guru-01";
   const guru = getGuruById(guruId);
@@ -82,6 +88,7 @@ export default async function GuruPage() {
         availableUnits={allAvailableUnits}
         programKeahlianId={programKeahlianId}
         modulAjarNode={modulAjarNode}
+        initialTab={initialTab}
       />
     </main>
   );

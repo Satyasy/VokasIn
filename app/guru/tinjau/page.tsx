@@ -7,11 +7,11 @@ export default function TinjauAkhirPage() {
   return (
     <main className="mx-auto w-full max-w-3xl flex-1 px-4 sm:px-6">
       <Link
-        href="/guru"
+        href="/guru?tab=modul"
         className="mb-4 inline-flex items-center gap-1 text-sm font-semibold text-neutral-600 transition-colors hover:text-slime-lime-800"
       >
         <ChevronLeft className="size-4" aria-hidden />
-        <span>Kembali ke kanvas</span>
+        <span>Kembali ke kanvas penyusunan modul</span>
       </Link>
 
       <div className="border-b border-neutral-200 pb-5">

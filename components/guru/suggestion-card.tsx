@@ -55,24 +55,31 @@ export function SuggestionCard({
             </span>
           </div>
 
-          <h3 className="mt-2 font-semibold text-foreground">{topik.judul}</h3>
-          <p className="mt-1 text-sm text-muted-foreground italic">&ldquo;{topik.isiEkstraktif}&rdquo;</p>
+          <h3 className="mt-2.5 text-base font-bold text-neutral-900 leading-snug">
+            {topik.judul}
+          </h3>
 
-          <div className="mt-3 flex flex-wrap gap-1.5">
+          {/* Box Kutipan Ekstraktif SKKNI yang Jelas & Nyaman Dibaca */}
+          <div className="mt-2.5 rounded-xl border border-neutral-200 bg-neutral-50 p-3 text-xs leading-relaxed text-neutral-800 font-medium">
+            &ldquo;{topik.isiEkstraktif}&rdquo;
+          </div>
+
+          <div className="mt-3 flex flex-wrap items-center gap-1.5">
+            <span className="text-[11px] font-bold text-neutral-500 mr-1">Alat Praktikum:</span>
             {topik.alatDibutuhkan.map((alat) => {
               const tersedia = feasibility.tersedia.some((t) => t.label === alat.label);
               return (
                 <span
                   key={alat.label}
                   className={cn(
-                    "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs",
+                    "inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[11px] font-bold shadow-xs",
                     tersedia
-                      ? "border-success/30 text-success-fg"
-                      : "border-error/30 text-error"
+                      ? "border-slime-lime-300 bg-slime-lime-50 text-slime-lime-950"
+                      : "border-amber-300 bg-amber-50 text-amber-950"
                   )}
                 >
                   <Wrench className="size-3" aria-hidden />
-                  {alat.label}
+                  {alat.label} ({tersedia ? "Tersedia" : "Perlu Tambahan"})
                 </span>
               );
             })}

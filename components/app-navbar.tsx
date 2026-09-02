@@ -29,6 +29,7 @@ const ROLE_WORKSPACE_LABEL: Record<Role, string> = {
 const publicToolLinks = [
   { href: "/roadmap", label: "Roadmap" },
   { href: "/jelajah-kompetensi", label: "Jelajah" },
+  { href: "/kunjungan-industri", label: "Mitra Industri" },
 ];
 
 export function AppNavbar({ nama, role }: { nama: string; role: Role }) {

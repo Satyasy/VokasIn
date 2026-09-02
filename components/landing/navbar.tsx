@@ -15,6 +15,7 @@ const links = [
 const publicToolLinks = [
   { href: "/roadmap", label: "Roadmap Kompetensi" },
   { href: "/jelajah-kompetensi", label: "Jelajah Kompetensi" },
+  { href: "/kunjungan-industri", label: "Mitra Industri" },
 ];
 
 export function LandingNavbar() {

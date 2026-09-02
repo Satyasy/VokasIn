@@ -5,8 +5,7 @@ import Link from "next/link";
 import { ArrowRight, BookOpenText } from "lucide-react";
 import type { ProgramKeahlian, UnitKompetensi } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
-import { CardTitle, CardDescription } from "@/components/ui/card";
-import { ParallaxCard } from "@/components/ui/parallax-card";
+import { CardTitle } from "@/components/ui/card";
 import { PaginatedList } from "@/components/ui/pagination";
 
 interface GuruUnitListPaginatedProps {
@@ -78,7 +77,7 @@ export function GuruUnitListPaginated({
         }
         renderItem={(unit) => (
           <Link key={unit.id} href={`/guru/susun/${unit.id}`} className="group block">
-            <ParallaxCard className="flex flex-col justify-between rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition-all group-hover:border-slime-lime-500 group-hover:shadow-md sm:flex-row sm:items-center">
+            <div className="flex flex-col justify-between rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition-all group-hover:border-slime-lime-500 group-hover:shadow-md sm:flex-row sm:items-center">
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge
@@ -103,7 +102,7 @@ export function GuruUnitListPaginated({
                 <span>Susun Modul Ajar</span>
                 <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" aria-hidden />
               </div>
-            </ParallaxCard>
+            </div>
           </Link>
         )}
       />

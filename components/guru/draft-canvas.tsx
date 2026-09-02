@@ -78,27 +78,27 @@ export function DraftCanvas({ onDropTopikId }: { onDropTopikId: (topikId: string
         ) : (
           <div className="flex flex-col gap-5">
             {unitGroups.map((group) => (
-              <div key={group.unit.id}>
-                <div className="mb-2">
+              <div key={group.unit.id} className="rounded-2xl border border-neutral-200 bg-neutral-50/60 p-4">
+                <div className="mb-3 border-b border-neutral-200/80 pb-2.5">
                   <div className="flex flex-wrap items-center gap-2">
-                    <Badge variant="brand">{group.unit.kodeUnit}</Badge>
-                    <span className="text-sm font-semibold text-foreground">{group.unit.judulUnit}</span>
+                    <Badge variant="brand" className="font-bold">{group.unit.kodeUnit}</Badge>
+                    <span className="text-sm font-bold text-neutral-900">{group.unit.judulUnit}</span>
                   </div>
-                  <p className="mt-0.5 text-xs text-muted-foreground">{group.unit.sumber}</p>
+                  <p className="mt-1 text-xs font-medium text-neutral-500">{group.unit.sumber}</p>
                 </div>
                 <div className="flex flex-col gap-3">
                   {group.topikDiterima.map((topik, i) => (
-                    <Card key={topik.id} className="p-3">
-                      <div className="flex items-center gap-2">
-                        <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
+                    <Card key={topik.id} className="p-4 rounded-xl border border-neutral-200 bg-white shadow-xs">
+                      <div className="flex items-center gap-2.5">
+                        <span className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-slime-lime-100 text-xs font-extrabold text-slime-lime-950">
                           {i + 1}
                         </span>
-                        <CardTitle className="text-sm">{topik.judul}</CardTitle>
+                        <CardTitle className="text-sm font-bold text-neutral-900 leading-snug">{topik.judul}</CardTitle>
                       </div>
                       <Textarea
-                        className="mt-2"
+                        className="mt-3 text-xs"
                         label="Catatan cara mengajar / strategi pedagogi untuk kompetensi ini"
-                        placeholder="Mis. mulai dengan demo alat, lalu praktik berpasangan…"
+                        placeholder="Mis. mulai dengan demo alat di proyektor, lalu penugasan praktik berpasangan…"
                         rows={2}
                         value={topik.catatanPedagogi ?? ""}
                         onChange={(e) => ubahCatatanPedagogi(topik.id, e.target.value)}

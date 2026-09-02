@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, ReactNode } from "react";
+import { useState, useEffect, ReactNode } from "react";
+import { useSearchParams } from "next/navigation";
 import { LayoutDashboard, CalendarDays, FileText } from "lucide-react";
 import type { JadwalPembelajaran, JpSummary, UnitKompetensi } from "@/lib/types";
 import { SegmentedTabs, type TabItem } from "@/components/ui/segmented-tabs";
@@ -13,6 +14,7 @@ interface GuruTabsContainerProps {
   availableUnits: UnitKompetensi[];
   programKeahlianId: string;
   modulAjarNode: ReactNode;
+  initialTab?: string;
 }
 
 export function GuruTabsContainer({
@@ -21,8 +23,19 @@ export function GuruTabsContainer({
   availableUnits,
   programKeahlianId,
   modulAjarNode,
+  initialTab,
 }: GuruTabsContainerProps) {
-  const [activeTab, setActiveTab] = useState<string>("overview");
+  const searchParams = useSearchParams();
+  const urlTab = searchParams.get("tab");
+  const [activeTab, setActiveTab] = useState<string>(
+    urlTab || initialTab || "overview"
+  );
+
+  useEffect(() => {
+    if (urlTab && ["overview", "jadwal", "modul"].includes(urlTab)) {
+      setActiveTab(urlTab);
+    }
+  }, [urlTab]);
 
   const tabs: TabItem[] = [
     {

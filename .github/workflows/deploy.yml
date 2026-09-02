@@ -68,7 +68,8 @@ jobs:
             # Install all dependencies (including build tools)
             npm install --include=dev
 
-            # Build application with memory optimization
+            # Clean stale build cache and build application with memory optimization
+            rm -rf .next
             export NODE_OPTIONS="--max-old-space-size=1536"
             npm run build
 

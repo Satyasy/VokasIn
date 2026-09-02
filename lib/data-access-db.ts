@@ -242,6 +242,8 @@ interface KandidatRow {
   parsing_uncertain: boolean;
   catatan: string | null;
   status: UnitKompetensiKandidat["status"];
+  skor_ai?: number;
+  saran_program_keahlian_id?: string;
 }
 
 function mapKandidat(r: KandidatRow): UnitKompetensiKandidat {
@@ -255,15 +257,18 @@ function mapKandidat(r: KandidatRow): UnitKompetensiKandidat {
     teksMentah: r.teks_mentah,
     elemenKompetensi: r.elemen_kompetensi,
     parsingUncertain: r.parsing_uncertain,
-    catatan: r.catatan,
+    catatan: r.catatan ?? undefined,
     status: r.status,
+    dibuatPada: new Date().toISOString(), // Fallback, not strictly required for now
+    skor_ai: r.skor_ai,
+    saran_program_keahlian_id: r.saran_program_keahlian_id,
   };
 }
 
 export async function listKandidat(status: UnitKompetensiKandidat["status"] = "menunggu"): Promise<UnitKompetensiKandidat[]> {
   const { rows } = await pool.query<KandidatRow>(
     `SELECT id, dokumen_skkni_id, kode_unit, judul_unit, sumber, program_keahlian_id,
-            teks_mentah, elemen_kompetensi, parsing_uncertain, catatan, status
+            teks_mentah, elemen_kompetensi, parsing_uncertain, catatan, status, skor_ai, saran_program_keahlian_id
      FROM unit_kompetensi_kandidat WHERE status = $1 ORDER BY dokumen_skkni_id, kode_unit`,
     [status]
   );
@@ -273,7 +278,7 @@ export async function listKandidat(status: UnitKompetensiKandidat["status"] = "m
 export async function getKandidatById(id: string): Promise<UnitKompetensiKandidat | undefined> {
   const { rows } = await pool.query<KandidatRow>(
     `SELECT id, dokumen_skkni_id, kode_unit, judul_unit, sumber, program_keahlian_id,
-            teks_mentah, elemen_kompetensi, parsing_uncertain, catatan, status
+            teks_mentah, elemen_kompetensi, parsing_uncertain, catatan, status, skor_ai, saran_program_keahlian_id
      FROM unit_kompetensi_kandidat WHERE id = $1`,
     [id]
   );
@@ -319,6 +324,20 @@ export async function confirmKandidat(id: string): Promise<void> {
     }
   }
   await pool.query(`UPDATE unit_kompetensi_kandidat SET status = 'dikonfirmasi' WHERE id = $1`, [id]);
+}
+
+export async function bulkConfirmKandidat(mapped: Record<string, string>): Promise<void> {
+  // mapped: { kandidatId: programKeahlianId }
+  for (const [id, programId] of Object.entries(mapped)) {
+    if (programId === "unassigned") continue;
+    // Update program keahlian
+    await pool.query(
+      `UPDATE unit_kompetensi_kandidat SET program_keahlian_id = $2 WHERE id = $1`,
+      [id, programId]
+    );
+    // Confirm it
+    await confirmKandidat(id);
+  }
 }
 
 export async function rejectKandidat(id: string): Promise<void> {

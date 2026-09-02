@@ -147,7 +147,46 @@ export async function processSkkniMandiri(input: SkkniUploadInput): Promise<EtlR
   // 4. Daftarkan langsung ke in-memory untuk penggunaan seketika oleh Guru (Instant Personal Use)
   registerCustomUnit(customUnit, saranList);
 
-  // 5. Simpan ke database Postgres sebagai Kandidat Menunggu Verifikasi Kaprogli/Admin
+  // 5. Semantic Classification: Gabungkan teks untuk embedding
+  const corpusText = [
+    input.judulUnit,
+    ...elemenList.flatMap(e => [e.judul, ...e.kriteriaUnjukKerja.map(k => k.teks)])
+  ].join(" ");
+  
+  // Karena next.js edge func dan ts-node runtime bisa beda, jalankan dinamis.
+  let vectorLiteral = "null";
+  let maxSimilarity = 0;
+  let saranProgramKeahlianId = null;
+
+  try {
+    const { embedPassage, toVectorLiteral } = await import("./embedding");
+    const vector = await embedPassage(corpusText);
+    vectorLiteral = toVectorLiteral(vector);
+
+    const anchorRes = await pool.query(
+      `
+      SELECT 
+        program_keahlian_id, 
+        1 - (embedding <=> $1::vector) as similarity
+      FROM jurusan_anchor_text
+      ORDER BY similarity DESC
+      LIMIT 1
+      `,
+      [vectorLiteral]
+    );
+
+    if (anchorRes.rows.length > 0) {
+      maxSimilarity = anchorRes.rows[0].similarity;
+      // Gunakan threshold 0.75
+      if (maxSimilarity >= 0.75) {
+        saranProgramKeahlianId = anchorRes.rows[0].program_keahlian_id;
+      }
+    }
+  } catch (err) {
+    console.error("Gagal melakukan semantic classification:", err);
+  }
+
+  // 6. Simpan ke database Postgres sebagai Kandidat Menunggu Verifikasi Kaprogli/Admin
   try {
     await pool.query(
       `INSERT INTO dokumen_skkni (id, nomor, nama_file, diupload_pada, diupload_oleh)
@@ -163,8 +202,8 @@ export async function processSkkniMandiri(input: SkkniUploadInput): Promise<EtlR
 
     await pool.query(
       `INSERT INTO unit_kompetensi_kandidat
-         (id, dokumen_skkni_id, kode_unit, judul_unit, sumber, program_keahlian_id, teks_mentah, elemen_kompetensi, parsing_uncertain, catatan, status)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'menunggu')
+         (id, dokumen_skkni_id, kode_unit, judul_unit, sumber, program_keahlian_id, teks_mentah, elemen_kompetensi, parsing_uncertain, catatan, status, embedding, skor_ai, saran_program_keahlian_id)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'menunggu', $11, $12, $13)
        ON CONFLICT (id) DO NOTHING`,
       [
         kandidatId,
@@ -177,6 +216,9 @@ export async function processSkkniMandiri(input: SkkniUploadInput): Promise<EtlR
         JSON.stringify(kandidatElemen),
         false,
         `Diunggah mandiri oleh ${input.uploaderRole} (${input.uploaderId}) untuk modul ajar spesifik`,
+        vectorLiteral !== "null" ? vectorLiteral : null,
+        maxSimilarity,
+        saranProgramKeahlianId
       ]
     );
   } catch (err) {

@@ -47,8 +47,11 @@ export interface UnitKompetensiKandidat {
   teksMentah: string;
   elemenKompetensi: KandidatElemenKompetensi[];
   parsingUncertain: boolean;
-  catatan: string | null;
-  status: StatusKandidat;
+  catatan?: string;
+  status: "menunggu" | "dikonfirmasi" | "ditolak";
+  dibuatPada: string;
+  skor_ai?: number;
+  saran_program_keahlian_id?: string;
 }
 
 export interface KriteriaUnjukKerja {

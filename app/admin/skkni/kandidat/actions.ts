@@ -39,3 +39,13 @@ export async function rejectKandidatAction(id: string) {
   await rejectKandidat(id);
   revalidateAll();
 }
+
+export async function bulkConfirmKandidatAction(mapped: Record<string, string>) {
+  const session = await getSession();
+  if (!session || (session.role !== "admin" && session.role !== "kaprogli")) {
+    redirect("/login");
+  }
+  const { bulkConfirmKandidat } = await import("@/lib/data-access-db");
+  await bulkConfirmKandidat(mapped);
+  revalidateAll();
+}

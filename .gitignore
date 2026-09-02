@@ -14,6 +14,8 @@
 
 # testing
 /coverage
+/test-results
+/playwright-report
 
 # next.js
 /.next/
@@ -31,8 +33,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+*.txt
 
-# env files (can opt-in for committing if needed)
+# env files
 .env*
 !.env.local.example
 
@@ -43,5 +46,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.vercel
-.env*
+# terraform — state & secrets, never commit
+terraform/.terraform/
+terraform/terraform.tfvars
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/.terraform.lock.hcl
+
+# playwright-mcp snapshots (local dev artefacts)
+.playwright-mcp/

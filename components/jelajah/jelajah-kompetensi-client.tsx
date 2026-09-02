@@ -169,91 +169,125 @@ export function JelajahKompetensiClient() {
 
       {/* Modal Popup Detail Lengkap Unit SKKNI */}
       {selectedUnit && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 animate-in fade-in">
-          <div className="w-full max-w-2xl rounded-3xl bg-white p-6 shadow-2xl border border-neutral-200 max-h-[90vh] overflow-y-auto">
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 sm:p-6 animate-in fade-in"
+          onClick={() => setSelectedUnit(null)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-3xl rounded-3xl bg-white p-7 sm:p-8 shadow-2xl border border-neutral-200 max-h-[88vh] overflow-y-auto"
+          >
             {/* Header Modal */}
-            <div className="flex items-start justify-between border-b border-neutral-100 pb-4">
-              <div>
+            <div className="flex items-start justify-between gap-4 border-b border-neutral-100 pb-5">
+              <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant="brand" className="font-bold">
+                  <Badge variant="brand" className="font-extrabold text-xs px-2.5 py-0.5">
                     {selectedUnit.kodeUnit}
                   </Badge>
                   {selectedUnit.programKeahlian && (
-                    <Badge variant="default" className="font-bold">
+                    <Badge variant="default" className="font-bold text-xs px-2.5 py-0.5">
                       {selectedUnit.programKeahlian}
                     </Badge>
                   )}
                 </div>
-                <h3 className="mt-2 text-lg font-extrabold text-neutral-900 leading-snug">
+                <h3 className="mt-2.5 text-xl sm:text-2xl font-extrabold text-neutral-900 leading-snug tracking-tight">
                   {selectedUnit.judulUnit}
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={() => setSelectedUnit(null)}
-                className="rounded-full p-1.5 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700"
+                aria-label="Tutup detail modal"
+                className="flex size-9 shrink-0 items-center justify-center rounded-xl text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700 transition-colors"
               >
                 <X className="size-5" aria-hidden />
               </button>
             </div>
 
             {/* Isi Detail Modal */}
-            <div className="mt-5 space-y-5">
-              {/* Dokumen & Sumber */}
-              <div className="rounded-xl bg-neutral-50 p-3.5 border border-neutral-100 text-xs space-y-1">
-                <p className="text-neutral-500">
-                  Dokumen SKKNI: <strong className="text-neutral-900">{activeDetailUnit?.dokumenSkkni ?? selectedUnit.kodeUnit}</strong>
-                </p>
-                <p className="text-neutral-500">
-                  Keputusan Menaker: <strong className="text-neutral-900">{activeDetailUnit?.sumber ?? "Standar Kompetensi Kerja Nasional Indonesia"}</strong>
-                </p>
+            <div className="mt-6 space-y-6">
+              {/* Dokumen & Legalitas */}
+              <div className="rounded-2xl bg-neutral-50 p-4 sm:p-5 border border-neutral-200/80">
+                <div className="grid gap-3 sm:grid-cols-2 text-sm">
+                  <div>
+                    <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-0.5">
+                      Dokumen SKKNI
+                    </span>
+                    <strong className="font-bold text-neutral-900 text-sm">
+                      {activeDetailUnit?.dokumenSkkni ?? selectedUnit.kodeUnit}
+                    </strong>
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-0.5">
+                      Keputusan Menteri Ketenagakerjaan
+                    </span>
+                    <strong className="font-bold text-neutral-900 text-sm">
+                      {activeDetailUnit?.sumber ?? "Standar Kompetensi Kerja Nasional Indonesia"}
+                    </strong>
+                  </div>
+                </div>
               </div>
 
               {/* Kutipan Relevansi Semantik */}
               {selectedUnit.snippet && (
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-500">
-                    Relevansi dengan Pengalaman Anda
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">
+                    Relevansi Berdasarkan Portofolio Anda
                   </h4>
-                  <p className="mt-1.5 rounded-xl border border-slime-lime-200 bg-slime-lime-50/50 p-3.5 text-xs leading-relaxed text-neutral-800">
+                  <div className="rounded-2xl border border-slime-lime-200 bg-slime-lime-50/70 p-4 sm:p-5 text-sm leading-relaxed text-neutral-900 font-medium">
                     &ldquo;{selectedUnit.snippet}&rdquo;
-                  </p>
+                  </div>
                 </div>
               )}
 
               {/* Topik Praktikum & Alat yang Dibutuhkan */}
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">
-                  Rencana Topik Praktikum &amp; Alat Lab ({activeDetailSaran.length} Topik)
-                </h4>
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-500">
+                    Rencana Topik Praktikum Kejuruan ({activeDetailSaran.length} Topik Tersedia)
+                  </h4>
+                  <span className="text-xs font-semibold text-slime-lime-800">
+                    Dapat Disusun ke Modul Ajar
+                  </span>
+                </div>
+
                 {activeDetailSaran.length === 0 ? (
-                  <p className="text-xs text-neutral-500 italic">
-                    Belum ada kartu topik praktikum yang digenerate untuk unit ini.
-                  </p>
+                  <div className="rounded-2xl border border-dashed border-neutral-200 p-6 text-center text-sm text-neutral-500">
+                    Belum ada topik praktikum jobsheet spesifik yang tercatat untuk unit ini.
+                  </div>
                 ) : (
-                  <div className="space-y-2.5">
+                  <div className="space-y-3.5">
                     {activeDetailSaran.map((saran, idx) => (
                       <div
                         key={saran.id}
-                        className="rounded-xl border border-neutral-200 bg-white p-3.5 shadow-sm text-xs"
+                        className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-xs space-y-2.5 transition-all hover:border-slime-lime-300"
                       >
-                        <div className="flex items-center justify-between">
-                          <span className="font-bold text-neutral-900">
+                        <div className="flex items-start justify-between gap-3">
+                          <h5 className="text-base font-bold text-neutral-900 leading-snug">
                             {idx + 1}. {saran.judul}
+                          </h5>
+                          <span className="shrink-0 text-xs font-semibold text-neutral-400">
+                            Keyakinan {Math.round(saran.skorKeyakinan * 100)}%
                           </span>
                         </div>
-                        <p className="mt-1 text-neutral-600 leading-relaxed">
+
+                        <p className="text-sm text-neutral-700 leading-relaxed font-normal">
                           {saran.isiEkstraktif}
                         </p>
+
                         {saran.alatDibutuhkan.length > 0 && (
-                          <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                            <span className="text-[11px] font-semibold text-neutral-500">Alat Praktikum:</span>
+                          <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-neutral-100">
+                            <span className="text-xs font-bold text-neutral-500 mr-1">
+                              Alat Praktikum:
+                            </span>
                             {saran.alatDibutuhkan.map((alat) => (
                               <span
                                 key={alat.label}
-                                className="inline-flex items-center gap-1 rounded-full bg-neutral-100 px-2 py-0.5 text-[10px] font-bold text-neutral-700"
+                                className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 bg-neutral-100 px-2.5 py-1 text-xs font-bold text-neutral-800"
                               >
-                                <Wrench className="size-2.5" />
+                                <Wrench className="size-3 text-slime-lime-700" />
                                 {alat.label}
                               </span>
                             ))}
@@ -267,21 +301,22 @@ export function JelajahKompetensiClient() {
             </div>
 
             {/* Footer Modal Actions */}
-            <div className="mt-6 flex items-center justify-end gap-2 border-t border-neutral-100 pt-4">
+            <div className="mt-8 flex items-center justify-end gap-3 border-t border-neutral-100 pt-5">
               <Button
                 variant="secondary"
                 size="sm"
                 onClick={() => setSelectedUnit(null)}
+                className="h-10 px-5 text-xs font-bold"
               >
                 Tutup
               </Button>
               <Link href={`/guru/susun/${selectedUnit.id}`}>
                 <Button
                   size="sm"
-                  className="bg-slime-lime-600 font-bold text-neutral-950 hover:bg-slime-lime-500"
+                  className="h-10 px-5 text-xs font-bold bg-slime-lime-500 text-neutral-950 hover:bg-slime-lime-400 shadow-sm"
                 >
                   <BookOpen className="size-3.5 mr-1.5" />
-                  Susun Modul Ajar
+                  Susun Modul Ajar dengan Unit Ini
                 </Button>
               </Link>
             </div>

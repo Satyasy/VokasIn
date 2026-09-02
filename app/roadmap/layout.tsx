@@ -3,9 +3,9 @@ import { AdaptiveNavbar } from "@/components/adaptive-navbar";
 
 export default function RoadmapLayout({ children }: { children: ReactNode }) {
   return (
-    <>
+    <div className="min-h-screen bg-neutral-50/50">
       <AdaptiveNavbar />
-      <div className="pt-24 sm:pt-28 pb-16">{children}</div>
-    </>
+      {children}
+    </div>
   );
 }

@@ -1,6 +1,7 @@
 import { Building2 } from "lucide-react";
 import { AdaptiveNavbar } from "@/components/adaptive-navbar";
 import { MitraIndustriClient } from "@/components/industri/mitra-industri-client";
+import { SubpageHero } from "@/components/ui/subpage-hero";
 
 export const metadata = {
   title: "Mitra Industri & Pembelajaran Lapangan - VokasIn",
@@ -10,25 +11,24 @@ export const metadata = {
 
 export default function KunjunganIndustriPage() {
   return (
-    <>
+    <div className="min-h-screen bg-neutral-50/50">
       <AdaptiveNavbar />
-      <div className="pt-24 sm:pt-28 pb-16">
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 sm:px-6">
-          <div className="border-b border-neutral-200 pb-6 mb-8">
-            <div className="flex items-center gap-2">
-              <Building2 className="size-6 text-slime-lime-800" aria-hidden />
-              <h1 className="text-2xl font-bold tracking-tight text-neutral-900 sm:text-3xl">
-                Mitra Industri &amp; Pembelajaran Lapangan
-              </h1>
-            </div>
-            <p className="mt-2 text-sm text-neutral-600 sm:text-base leading-relaxed">
-              Daftar mitra industri nyata untuk referensi kunjungan industri, studi observasi, dan mini pelatihan kejuruan SMK. Seluruh topik lapangan telah diselaraskan dengan Unit SKKNI rujukan kurikulum nasional.
-            </p>
-          </div>
+      <SubpageHero
+        badgeIcon={<Building2 className="size-3.5 text-slime-lime-400" aria-hidden />}
+        badgeText="PENYELARASAN DUDI (PERMENDIKDASMEN NO. 8/2026)"
+        title="Mitra Industri & Pembelajaran"
+        titleHighlight="Lapangan"
+        oneLiner="Jembatani kurikulum SMK dengan kebutuhan industri nyata lewat kunjungan terarah dan mini pelatihan yang terpetakan langsung ke Unit SKKNI."
+        stats={[
+          { value: "6 Korporasi", label: "Mitra Industri Nasional" },
+          { value: "100%", label: "Terpetakan ke SKKNI" },
+          { value: "Full-Day", label: "Agenda Observasi & Lab" },
+        ]}
+      />
 
-          <MitraIndustriClient />
-        </main>
-      </div>
-    </>
+      <main className="mx-auto w-full max-w-5xl px-4 sm:px-6 py-10 sm:py-12">
+        <MitraIndustriClient />
+      </main>
+    </div>
   );
 }

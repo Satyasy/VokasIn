@@ -1,27 +1,28 @@
 import { Compass } from "lucide-react";
 import { JelajahKompetensiClient } from "@/components/jelajah/jelajah-kompetensi-client";
 import { AdaptiveNavbar } from "@/components/adaptive-navbar";
+import { SubpageHero } from "@/components/ui/subpage-hero";
 
 export default function JelajahKompetensiPage() {
   return (
-    <>
+    <div className="min-h-screen bg-neutral-50/50">
       <AdaptiveNavbar />
-      <div className="pt-24 sm:pt-28 pb-16">
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 sm:px-6">
-          <div className="border-b border-neutral-200 pb-6">
-            <div className="flex items-center gap-2">
-              <Compass className="size-5 text-slime-lime-700" aria-hidden />
-              <h1 className="text-2xl font-bold tracking-tight text-neutral-900">Jelajah Kompetensi</h1>
-            </div>
-            <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
-              Tempelkan ringkasan pengalaman, proyek, atau portofolio Anda untuk melihat unit
-              kompetensi SKKNI yang berkaitan secara otomatis.
-            </p>
-          </div>
+      <SubpageHero
+        badgeIcon={<Compass className="size-3.5 text-slime-lime-400" aria-hidden />}
+        badgeText="PENCOCOKAN SEMANTIK INSTAN"
+        title="Jelajahi Kompetensi dari Portofolio"
+        titleHighlight="Nyata"
+        oneLiner="Temukan unit SKKNI yang paling relevan dengan riwayat proyek, pengalaman magang, atau portofolio teknis Anda secara otomatis."
+        stats={[
+          { value: "Hybrid Match", label: "Semantik & Kata Kunci" },
+          { value: "< 1 Detik", label: "Kecepatan Analisis" },
+          { value: "1.000+", label: "Unit Terintegrasi" },
+        ]}
+      />
 
-          <JelajahKompetensiClient />
-        </main>
-      </div>
-    </>
+      <main className="mx-auto w-full max-w-5xl px-4 sm:px-6 py-10 sm:py-12">
+        <JelajahKompetensiClient />
+      </main>
+    </div>
   );
 }

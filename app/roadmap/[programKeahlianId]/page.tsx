@@ -1,10 +1,9 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+import { Map, BookOpenText } from "lucide-react";
 import { getProgramKeahlian, getUnitKompetensiByProgram } from "@/lib/data-access";
 import { EmptyState } from "@/components/ui/empty-state";
-import { BookOpenText } from "lucide-react";
 import { RoadmapJalurClient } from "@/components/roadmap/roadmap-jalur-client";
+import { SubpageHero } from "@/components/ui/subpage-hero";
 
 export default async function RoadmapJalurPage({
   params,
@@ -18,31 +17,35 @@ export default async function RoadmapJalurPage({
   const units = getUnitKompetensiByProgram(programKeahlianId);
 
   return (
-    <main className="mx-auto w-full max-w-5xl flex-1 px-4 sm:px-6">
-      <Link
-        href="/roadmap"
-        className="mb-4 inline-flex items-center gap-1 text-sm font-semibold text-neutral-600 transition-colors hover:text-slime-lime-800"
-      >
-        <ChevronLeft className="size-4" aria-hidden />
-        <span>Pilih program keahlian lain</span>
-      </Link>
+    <>
+      <SubpageHero
+        badgeIcon={<Map className="size-3.5 text-slime-lime-400" aria-hidden />}
+        badgeText={`PROGRAM KEAHLIAN ${program.singkatan}`}
+        title={program.nama}
+        titleHighlight={`(${program.singkatan})`}
+        oneLiner={`Alur penguasaan unit kompetensi SKKNI resmi untuk kurikulum kejuruan ${program.nama}.`}
+        backLink={{
+          href: "/roadmap",
+          label: "Kembali ke Direktori Program Keahlian",
+        }}
+        stats={[
+          { value: `${units.length}`, label: "Unit SKKNI Terdaftar" },
+          { value: "Fase F", label: "Jenjang SMK Kelas XI & XII" },
+        ]}
+      />
 
-      <div className="border-b border-neutral-200 pb-5">
-        <h1 className="text-2xl font-bold tracking-tight text-neutral-900">
-          {program.nama} ({program.singkatan})
-        </h1>
-      </div>
-
-      {units.length === 0 ? (
-        <EmptyState
-          className="mt-8"
-          icon={<BookOpenText className="size-8" />}
-          title="Belum ada unit kompetensi"
-          description="Dokumen SKKNI untuk program keahlian ini belum diunggah."
-        />
-      ) : (
-        <RoadmapJalurClient programKeahlianId={programKeahlianId} units={units} />
-      )}
-    </main>
+      <main className="mx-auto w-full max-w-5xl px-4 sm:px-6 py-10 sm:py-12">
+        {units.length === 0 ? (
+          <EmptyState
+            className="mt-4"
+            icon={<BookOpenText className="size-8" />}
+            title="Belum ada unit kompetensi"
+            description="Dokumen SKKNI untuk program keahlian ini belum diunggah."
+          />
+        ) : (
+          <RoadmapJalurClient programKeahlianId={programKeahlianId} units={units} />
+        )}
+      </main>
+    </>
   );
 }

@@ -892,19 +892,24 @@ export function SkkniExtractionPageClient({
                                 </h2>
                               )}
 
-                              {/* Deskripsi Unit jika ada */}
+                              {/* Deskripsi Unit dalam kotak terpisah font normal, bukan bold */}
                               {unit.deskripsiUnit && (
-                                <p className="mt-2 text-xs sm:text-sm text-neutral-600 leading-relaxed line-clamp-2">
-                                  {unit.deskripsiUnit}
-                                </p>
+                                <div className="mt-3.5 rounded-2xl bg-neutral-50/90 p-4 border border-neutral-200/80">
+                                  <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-500 block mb-1">
+                                    Deskripsi Unit:
+                                  </span>
+                                  <p className="text-xs sm:text-sm text-neutral-700 font-normal leading-relaxed">
+                                    {unit.deskripsiUnit}
+                                  </p>
+                                </div>
                               )}
 
                               {/* Toggle Accordion untuk Intip KUK */}
-                              <div className="mt-4 pt-3 border-t border-neutral-100 flex items-center justify-between">
+                              <div className="mt-4 pt-3.5 border-t border-neutral-100 flex items-center justify-between">
                                 <button
                                   type="button"
                                   onClick={() => toggleAccordion(unit.kodeUnit)}
-                                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-neutral-600 hover:text-neutral-900 transition-colors"
+                                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-neutral-700 hover:text-neutral-950 transition-colors"
                                 >
                                   {isExpanded ? (
                                     <>
@@ -924,7 +929,7 @@ export function SkkniExtractionPageClient({
                                 </span>
                               </div>
 
-                              {/* Detail Elemen & KUK dengan Tipografi Longgar & Jelas */}
+                              {/* Detail Elemen & KUK dengan Tipografi Longgar & Poin Terpisah */}
                               {isExpanded && (
                                 <div className="mt-4 rounded-2xl bg-neutral-50/80 p-5 sm:p-6 border border-neutral-200/80 space-y-5 animate-in fade-in">
                                   <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-500">
@@ -933,18 +938,18 @@ export function SkkniExtractionPageClient({
 
                                   <div className="space-y-4">
                                     {unit.elemen.map((el, elIdx) => (
-                                      <div key={elIdx} className="rounded-xl bg-white p-4 border border-neutral-200 shadow-2xs">
-                                        <h5 className="text-sm sm:text-base font-extrabold text-neutral-900 leading-snug mb-3">
+                                      <div key={elIdx} className="rounded-2xl bg-white p-5 border border-neutral-200 shadow-2xs space-y-3">
+                                        <h5 className="text-sm sm:text-base font-extrabold text-neutral-900 leading-snug">
                                           {elIdx + 1}. {el.judul}
                                         </h5>
 
-                                        <ul className="space-y-2.5 pl-3 border-l-2 border-slime-lime-300">
+                                        <ul className="space-y-3 pl-3 border-l-2 border-slime-lime-300">
                                           {el.kuk.map((k, kIdx) => (
-                                            <li key={kIdx} className="text-xs sm:text-sm text-neutral-700 flex items-start gap-2.5 leading-relaxed">
-                                              <span className="font-mono text-xs font-bold text-slime-lime-900 bg-slime-lime-100 px-1.5 py-0.5 rounded shrink-0">
+                                            <li key={kIdx} className="text-xs sm:text-sm text-neutral-700 flex items-start gap-3 leading-relaxed">
+                                              <span className="font-mono text-xs font-extrabold text-slime-lime-950 bg-slime-lime-200 px-2 py-0.5 rounded-md shrink-0">
                                                 {k.kode}
                                               </span>
-                                              <span>{k.teks}</span>
+                                              <span className="font-normal text-neutral-800 leading-relaxed">{k.teks}</span>
                                             </li>
                                           ))}
                                         </ul>

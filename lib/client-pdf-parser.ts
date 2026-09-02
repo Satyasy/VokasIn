@@ -11,8 +11,8 @@ export interface ParseProgress {
 
 /**
  * Mengekstrak teks dokumen PDF langsung di browser klien menggunakan PDF.js.
- * Memberikan progres persentase per halaman secara real-time.
- * Menghilangkan waktu tunggu unggah berkas puluhan megabyte ke server.
+ * Mempertahankan posisi koordinat Y untuk baris baru (\n) dan mendeteksi kerning
+ * agar kata tidak terpotong (seperti "Hu bungan" -> "Hubungan").
  */
 export async function extractPdfTextInBrowser(
   file: File,
@@ -54,11 +54,42 @@ export async function extractPdfTextInBrowser(
   for (let pageNum = 1; pageNum <= numPages; pageNum++) {
     const page = await pdfDocument.getPage(pageNum);
     const textContent = await page.getTextContent();
-    
-    // Gabungkan item string pada halaman
-    const pageString = textContent.items
-      .map((item) => ("str" in item ? item.str : ""))
-      .join(" ");
+
+    let pageString = "";
+    let lastY: number | null = null;
+    let lastX: number | null = null;
+    let lastWidth = 0;
+
+    for (const item of textContent.items) {
+      if (!("str" in item)) continue;
+      const str = item.str;
+      if (!str) continue;
+
+      const x = item.transform[4];
+      const y = item.transform[5];
+
+      if (lastY === null) {
+        pageString += str;
+      } else {
+        const isNewLine = Math.abs(y - lastY) > 5 || item.hasEOL;
+        if (isNewLine) {
+          pageString += "\n" + str;
+        } else {
+          // Pada baris yang sama, cek jarak horizontal
+          const spaceDistance = x - (lastX! + lastWidth);
+          // Hanya tambahkan spasi jika jarak nyata > 2.5px dan bukan karakter penyambung
+          if (spaceDistance > 2.5 && !str.startsWith(" ") && !pageString.endsWith(" ")) {
+            pageString += " " + str;
+          } else {
+            pageString += str;
+          }
+        }
+      }
+
+      lastY = y;
+      lastX = x;
+      lastWidth = item.width || 0;
+    }
 
     pageTexts.push(pageString);
 

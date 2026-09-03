@@ -5,8 +5,9 @@
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.3-black?logo=next.js)](https://nextjs.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16%2B%20%7C%20pgvector-blue?logo=postgresql)](https://github.com/pgvector/pgvector)
-[![ONNX Runtime](https://img.shields.io/badge/Embeddings-Local%20ONNX%20(Rp%200%20Token)-emerald)](https://huggingface.co/Xenova/multilingual-e5-small)
-[![License](https://img.shields.io/badge/License-Academic%20%2F%20Open-orange)](#)
+[![ONNX Runtime](https://img.shields.io/badge/Embeddings-Local%20ONNX%20Inference-emerald)](https://huggingface.co/Xenova/multilingual-e5-small)
+[![Terraform](https://img.shields.io/badge/IaC-Terraform%20(AWS%20Graviton)-623CE4?logo=terraform)](./terraform)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
 ---
 
@@ -15,9 +16,9 @@
 Di jenjang SMK, terjadi kesenjangan (*mismatch*) besar antara **SKKNI resmi Kemnaker** (berisi puluhan unit kompetensi tebal) dengan **kebutuhan praktikum di bengkel/lab sekolah**:
 1. **Beban Administratif Guru**: Guru produktif menghabiskan puluhan jam membedah dokumen PDF SKKNI menjadi Modul Ajar, jobsheet, dan rubrik penilaian secara manual.
 2. **Keterbatasan Fasilitas Lab**: Modul ajar sering kali tidak realistis karena dirancang tanpa memeriksa apakah alat/mesin di lab sekolah benar-benar tersedia.
-3. **Ketergantungan API LLM Mahal**: Solusi AI generik membutuhkan biaya token API yang mahal dan rentan berhalusinasi pada istilah teknis vokasi spesifik.
+3. **Ketergantungan API Eksternal**: Solusi AI generatif berbasis API pihak ketiga memiliki latensi jaringan, risiko kebocoran data kurikulum, serta rentan halusinasi pada terminologi teknis vokasi spesifik.
 
-**VokasIn hadir memecahkan masalah ini** menggunakan pendekatan *AI-Assisted Hybrid Classification* tanpa LLM generatif, menjamin akurasi 100% rujukan resmi dengan biaya operasional **Rp 0,-**.
+**VokasIn hadir memecahkan masalah ini** menggunakan pendekatan *AI-Assisted Hybrid Classification* berbasis inferensi lokal, menjamin akurasi deterministik berdasar rujukan resmi, menjaga kedaulatan data sekolah, dan tidak bergantung pada API berbayar eksternal.
 
 ---
 
@@ -68,9 +69,9 @@ Di jenjang SMK, terjadi kesenjangan (*mismatch*) besar antara **SKKNI resmi Kemn
 
 ### 3. Eksekusi Inferensi AI Lokal: `@huggingface/transformers` (ONNX Runtime Q8)
 - **Alasan**: Menjalankan model `Xenova/multilingual-e5-small` terkuantisasi 8-bit murni di CPU server/lokal. 
-  - **Memory Footprint Rendah**: Hanya memakan ~220 MB RAM.
-  - **Latensi Cepat**: Inferensi selesai dalam 15–35 ms tanpa GPU.
-  - **Biaya Token = Rp 0,-**: Mandiri secara infrastruktur (*data sovereignty*), tidak ada data sekolah yang dikirim ke API pihak ketiga berbayar.
+  - **Memory Footprint Ringan**: Alokasi memori konstan hanya ~220 MB RAM.
+  - **Latensi Cepat**: Inferensi vektor selesai dalam 15–35 ms tanpa memerlukan GPU dedicated.
+  - **Kedaulatan Data & Bebas Ketergantungan**: Inferensi berjalan mandiri (*on-premise / on-instance*); tidak ada data kurikulum atau portofolio sekolah yang dikirim ke penyedia AI eksternal.
 
 ### 4. Client-Side PDF Extraction (`pdfjs-dist` via Web Worker)
 - **Alasan**: Dokumen SKKNI tebalnya bisa mencapai 100+ halaman (20–60 MB). Mengekstrak teks di memori browser pengguna menghilangkan *upload bottleneck* bermenit-menit pada koneksi internet sekolah yang terbatas.
@@ -80,10 +81,38 @@ Di jenjang SMK, terjadi kesenjangan (*mismatch*) besar antara **SKKNI resmi Kemn
 
 ---
 
-## 🚀 Memulai (Panduan Lokal)
+## ☁️ Infrastruktur Otomatis (Infrastructure as Code — Terraform)
+
+Seluruh infrastruktur cloud produksi VokasIn dikodifikasi secara deklaratif menggunakan **Terraform** pada direktori [`terraform/`](./terraform), menjamin replikasi lingkungan yang cepat, aman, dan dapat diaudit:
+
+- **Komputasi Efisien (AWS Graviton2)**: Menggunakan instans **EC2 `t4g.small` (ARM64)** yang hemat energi dan memiliki rasio *price-to-performance* tinggi untuk eksekusi runtime Node.js dan ONNX.
+- **Jaringan & Keamanan**:
+  - Konfigurasi Security Group terisolasi: port `22` (SSH terkelola), port `80` (HTTP reverse proxy Nginx), dan port `443` (HTTPS terenkripsi SSL via Certbot).
+  - Alokasi **Elastic IP (EIP)** statis untuk konsistensi DNS domain produksi.
+- **Automated Provisioning (Cloud-Init `user_data`)**:
+  - Konfigurasi **2 GB Swapfile** otomatis untuk mencegah *Out-of-Memory* saat kompilasi build pada RAM 2 GB.
+  - Pemasangan otomatis Node.js 24 LTS, Nginx (*reverse proxy* dengan batas muatan `client_max_body_size 50M`), PM2 Process Manager (*systemd auto-restart on boot*), dan PostgreSQL lokal.
+
+### Cara Menerapkan Infrastruktur:
+```bash
+cd terraform
+
+# 1. Inisialisasi provider AWS
+terraform init
+
+# 2. Periksa rencana perubahan infrastruktur
+terraform plan
+
+# 3. Terapkan provisioning ke AWS
+terraform apply
+```
+
+---
+
+## 🚀 Memulai (Panduan Menjalankan Lokal)
 
 ### Prasyarat
-- **Node.js**: `v20.x` atau `v22.x`
+- **Node.js**: `v20.x` atau `v22.x` / `v24.x`
 - **PostgreSQL**: `v15+` dengan ekstensi `pgvector` terpasang
 - **NPM** / **PNPM**
 
@@ -121,7 +150,7 @@ Akses aplikasi melalui peramban di [http://localhost:3000](http://localhost:3000
 ```text
 ├── app/                      # Next.js App Router (Rute & Server Actions)
 │   ├── admin/                # Dasbor Admin, Manajemen Pengguna & SKKNI
-│   ├── guru/                 # Dasbor Guru, Kanvas Modul Ajar, Unggah SKKNI
+│   ├── guru/                 # Dasbor Guru, Kanvas Modul Ajar, Halaman Unggah SKKNI
 │   ├── kaprogli/             # Dasbor Kaprogli, Verifikasi Jurusan, Validasi Lab
 │   ├── jelajah-kompetensi/   # Pencarian Semantik Portofolio Siswa (Client-side)
 │   └── roadmap/              # Visualisasi Roadmap Kompetensi Kejuruan
@@ -131,11 +160,12 @@ Akses aplikasi melalui peramban di [http://localhost:3000](http://localhost:3000
 │   ├── skkni/                # Drag-and-Drop Classification & Ekstraksi PDF
 │   └── ui/                   # Sistem Desain (Design System) VokasIn
 ├── lib/                      # Utilitas Inti & Logika Bisnis
-│   ├── embedding.ts          # Pipeline Embedding ONNX Lokal (Zero Token Cost)
-│   ├── skkni-pdf-parser.ts   # Ekstraktor Struktur SKKNI Kemnaker
+│   ├── embedding.ts          # Pipeline Embedding ONNX Lokal
+│   ├── skkni-text-extractor.ts # Ekstraktor Teks & Heuristic Word Healing
 │   ├── client-pdf-parser.ts  # Mesin Ekstraksi PDF di Browser (PDF.js)
 │   ├── data-access-db.ts     # Hybrid Search RRF & Query PostgreSQL
 │   └── types.ts              # Kontrak Tipe Data TypeScript (ERD Domain)
+├── terraform/                # Infrastructure as Code (AWS EC2, EIP, Nginx, PM2)
 ├── public/                   # Asset Statis & pdf.worker.min.mjs
 └── scripts/                  # Skrip Migrasi SQL & Seed Data SKKNI
 ```
@@ -146,6 +176,12 @@ Akses aplikasi melalui peramban di [http://localhost:3000](http://localhost:3000
 - **UU No. 27 Tahun 2022 (Perlindungan Data Pribadi)**: VokasIn tidak menyimpan profil, identitas, maupun data komputasi siswa di basis data (*Zero-Student Database*).
 - **Permendikdasmen No. 8 Tahun 2026**: Struktur alokasi jam pembelajaran dan pelaporan JP guru dirancang selaras dengan panduan beban ajar kejuruan terbaru.
 - **Kedaulatan Konten**: Dokumen hasil susunan modul ajar adalah milik penuh institusi sekolah dan dapat diunduh kapan saja tanpa pembatasan platform.
+
+---
+
+## 📄 Lisensi
+
+Proyek ini dilisensikan di bawah lisensi terbuka [MIT License](./LICENSE). Silakan gunakan, pelajari, dan kembangkan untuk kemajuan pendidikan vokasi di Indonesia.
 
 ---
 

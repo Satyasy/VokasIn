@@ -20,8 +20,7 @@ import {
   ShieldCheck,
   ExternalLink,
 } from "lucide-react";
-import type { TingkatKelas, UnitKompetensi } from "@/lib/types";
-import type { MataPelajaranWithDetails } from "@/lib/data-access-db";
+import type { TingkatKelas, UnitKompetensi, MataPelajaranWithDetails } from "@/lib/types";
 import { syncMapelAction, createMapelAction } from "@/app/kaprogli/mapel-actions";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

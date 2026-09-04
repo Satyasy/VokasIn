@@ -1139,14 +1139,10 @@ import type {
   GuruMataPelajaran,
   BahanAjarMapel,
   TingkatKelas,
+  MataPelajaranWithDetails,
 } from "./types";
 
-export interface MataPelajaranWithDetails extends MataPelajaran {
-  totalSkkniSync: number;
-  units: { id: string; kodeUnit: string; judulUnit: string; sumber?: string }[];
-  labKesiapanPersen: number;
-  guruAssigned?: { id: string; nama: string }[];
-}
+export type { MataPelajaranWithDetails };
 
 export async function listUnitKompetensi(): Promise<
   { id: string; kodeUnit: string; judulUnit: string; programKeahlianId: string }[]

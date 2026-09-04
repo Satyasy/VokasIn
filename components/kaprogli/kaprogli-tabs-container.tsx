@@ -2,8 +2,13 @@
 
 import { useState, ReactNode } from "react";
 import { Gauge, Users, Wrench, FileCheck2, BookOpen } from "lucide-react";
-import type { Guru, JadwalPembelajaran, UnitKompetensiKandidat, ProgramKeahlian } from "@/lib/types";
-import type { MataPelajaranWithDetails } from "@/lib/data-access-db";
+import type {
+  Guru,
+  JadwalPembelajaran,
+  UnitKompetensiKandidat,
+  ProgramKeahlian,
+  MataPelajaranWithDetails,
+} from "@/lib/types";
 import { SegmentedTabs, type TabItem } from "@/components/ui/segmented-tabs";
 import { KaprogliSupervisiTab } from "@/components/kaprogli/kaprogli-supervisi-tab";
 import { KaprogliSkkniTab } from "@/components/kaprogli/kaprogli-skkni-tab";

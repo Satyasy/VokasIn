@@ -10,6 +10,7 @@ import {
 } from "@/lib/data-access";
 import {
   ensureLabCacheFresh,
+  ensureGuruCacheFresh,
   listAllGuru,
   listJadwal,
   listKandidat,
@@ -27,7 +28,10 @@ import { KaprogliTabsContainer } from "@/components/kaprogli/kaprogli-tabs-conta
 const SEMESTER = "Ganjil 2026/2027";
 
 export default async function KaprogliPage() {
-  await ensureLabCacheFresh();
+  await Promise.all([
+    ensureLabCacheFresh(),
+    ensureGuruCacheFresh(),
+  ]);
   const session = await getSession();
   const programList = getProgramKeahlian();
 

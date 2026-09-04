@@ -29,8 +29,8 @@ import type {
   ProyekKelompokItem,
   RubrikKktpItem,
   AssessmentInput,
+  MataPelajaranWithDetails,
 } from "@/lib/types";
-import type { MataPelajaranWithDetails } from "@/lib/data-access-db";
 import { evaluateKKTP, generateDefaultRubrikKktp } from "@/lib/kktp-evaluator";
 import { saveBahanAjarAction } from "@/app/kaprogli/mapel-actions";
 import { Button } from "@/components/ui/button";

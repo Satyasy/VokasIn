@@ -109,12 +109,12 @@ test.describe("E2E Test Rute Baru: Ekstraksi SKKNI, Kurikulum Mapel & Bahan Ajar
       await expect(page.locator("h1")).toContainText("Bahan Ajar, Jobsheet & Rubrik KKTP");
 
       // Verify class level tabs (X, XI, XII)
-      await expect(page.getByRole("link", { name: /Kelas X/i })).toBeVisible();
-      await expect(page.getByRole("link", { name: /Kelas XI/i })).toBeVisible();
-      await expect(page.getByRole("link", { name: /Kelas XII/i })).toBeVisible();
+      await expect(page.getByRole("link", { name: "Kelas X", exact: true })).toBeVisible();
+      await expect(page.getByRole("link", { name: "Kelas XI", exact: true })).toBeVisible();
+      await expect(page.getByRole("link", { name: "Kelas XII", exact: true })).toBeVisible();
 
       // Click "Kelas XI" tab
-      await page.getByRole("link", { name: /Kelas XI/i }).click();
+      await page.getByRole("link", { name: "Kelas XI", exact: true }).click();
       await expect(page).toHaveURL(/tingkat=XI/);
       await expect(page.locator("text=Sistem Komputer Jaringan (SisKomJar)").first()).toBeVisible();
 

@@ -250,6 +250,13 @@ export interface GuruMataPelajaran {
   tahunAjaran: string;
 }
 
+export interface MataPelajaranWithDetails extends MataPelajaran {
+  totalSkkniSync: number;
+  units: { id: string; kodeUnit: string; judulUnit: string; sumber?: string }[];
+  labKesiapanPersen: number;
+  guruAssigned?: { id: string; nama: string }[];
+}
+
 export interface JobsheetItem {
   mingguKe: number;
   judulPraktik: string;

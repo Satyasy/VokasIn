@@ -9,7 +9,7 @@ test.describe("Kaprogli Dashboard & Lab Inventory", () => {
   });
 
   test("Kaprogli views Skill Delta Score and navigates to Lab Inventory", async ({ page }) => {
-    await expect(page.locator("h1")).toContainText("Dashboard Skill Delta Score");
+    await expect(page.locator("h1")).toContainText("Dashboard Kaprogli");
 
     // Verify program delta cards
     const rplCard = page.locator("text=Rekayasa Perangkat Lunak").first();

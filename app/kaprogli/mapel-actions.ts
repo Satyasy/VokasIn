@@ -6,9 +6,22 @@ import {
   syncMapelWithUnits,
   createMataPelajaran,
   saveBahanAjarMapel,
+  searchUnitKompetensiHybrid,
+  type SearchHit,
   type MataPelajaranWithDetails,
 } from "@/lib/data-access-db";
 import type { TingkatKelas, BahanAjarMapel } from "@/lib/types";
+
+export async function getSuggestedUnitsRrfAction(query: string, limit = 5): Promise<SearchHit[]> {
+  const trimmed = query.trim();
+  if (!trimmed) return [];
+  try {
+    return await searchUnitKompetensiHybrid(trimmed, limit);
+  } catch (err) {
+    console.error("Gagal mendapatkan saran unit RRF:", err);
+    return [];
+  }
+}
 
 export async function syncMapelAction(mapelId: string, unitIds: string[]) {
   const session = await getSession();

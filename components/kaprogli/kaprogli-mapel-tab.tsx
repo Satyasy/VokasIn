@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useMemo } from "react";
+import { useState, useTransition, useMemo, useEffect } from "react";
 import Link from "next/link";
 import {
   BookOpen,
@@ -19,13 +19,16 @@ import {
   ChevronRight,
   ShieldCheck,
   ExternalLink,
+  Loader2,
 } from "lucide-react";
 import type { TingkatKelas, UnitKompetensi, MataPelajaranWithDetails } from "@/lib/types";
-import { syncMapelAction, createMapelAction } from "@/app/kaprogli/mapel-actions";
+import { syncMapelAction, createMapelAction, getSuggestedUnitsRrfAction } from "@/app/kaprogli/mapel-actions";
+import type { SearchHit } from "@/lib/data-access-db";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 interface KaprogliMapelTabProps {
   mapelList: MataPelajaranWithDetails[];
@@ -52,6 +55,56 @@ export function KaprogliMapelTab({
   const [syncSearch, setSyncSearch] = useState("");
   const [syncPending, startSyncTransition] = useTransition();
   const [syncSuccess, setSyncSuccess] = useState(false);
+
+  // State Rekomendasi RRF
+  const [rrfSuggestions, setRrfSuggestions] = useState<SearchHit[]>([]);
+  const [isRrfLoading, setIsRrfLoading] = useState(false);
+
+  // Efek RRF Dinamis & Adaptif (Konteks Mapel + Pencarian)
+  useEffect(() => {
+    if (!syncingMapel) {
+      setRrfSuggestions([]);
+      setIsRrfLoading(false);
+      return;
+    }
+
+    const trimmedSearch = syncSearch.trim();
+    // Jika ada pencarian, gunakan query pencarian. Jika kosong, gunakan konteks penuh Mapel
+    const query = trimmedSearch
+      ? trimmedSearch
+      : [syncingMapel.namaMapel, syncingMapel.deskripsi, syncingMapel.rujukanWsos].filter(Boolean).join(" ");
+
+    const delay = trimmedSearch ? 300 : 0;
+    setIsRrfLoading(true);
+
+    const timer = setTimeout(() => {
+      getSuggestedUnitsRrfAction(query, 5)
+        .then((hits) => {
+          setRrfSuggestions(hits);
+        })
+        .catch((e) => {
+          console.error("Gagal memuat saran RRF:", e);
+        })
+        .finally(() => {
+          setIsRrfLoading(false);
+        });
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [syncSearch, syncingMapel]);
+
+  // Section 2: Katalog unit SKKNI lainnya (Deduplikasi dari Top RRF)
+  const otherUnits = useMemo(() => {
+    const rrfIdSet = new Set(rrfSuggestions.map((s) => s.id));
+    return availableUnits.filter((u) => {
+      if (rrfIdSet.has(u.id)) return false;
+      if (syncSearch.trim()) {
+        const q = syncSearch.toLowerCase().trim();
+        return u.kodeUnit.toLowerCase().includes(q) || u.judulUnit.toLowerCase().includes(q);
+      }
+      return true;
+    });
+  }, [availableUnits, rrfSuggestions, syncSearch]);
 
   // Filter Mata Pelajaran
   const filteredMapel = useMemo(() => {
@@ -350,54 +403,177 @@ export function KaprogliMapelTab({
               />
             </div>
 
-            {/* List Unit Kompetensi Checkbox */}
-            <div className="flex-1 overflow-y-auto space-y-2.5 pr-1 max-h-[360px]">
-              {availableUnits
-                .filter(
-                  (u) =>
-                    !syncSearch ||
-                    u.kodeUnit.toLowerCase().includes(syncSearch.toLowerCase()) ||
-                    u.judulUnit.toLowerCase().includes(syncSearch.toLowerCase())
-                )
-                .map((unit) => {
-                  const isChecked = selectedUnitIds.has(unit.id);
-                  return (
-                    <div
-                      key={unit.id}
-                      onClick={() => toggleUnitSelection(unit.id)}
-                      className={`flex items-start gap-3 p-3.5 rounded-2xl border transition-colors cursor-pointer ${
-                        isChecked
-                          ? "border-slime-lime-400 bg-slime-lime-50/30"
-                          : "border-neutral-200 hover:border-neutral-300"
-                      }`}
-                    >
-                      <button
-                        type="button"
-                        className="mt-0.5 shrink-0"
-                        title={isChecked ? "Batal Pilih" : "Pilih Unit"}
-                      >
-                        {isChecked ? (
-                          <div className="flex size-5 items-center justify-center rounded-md bg-slime-lime-500 text-slime-lime-950 font-bold">
-                            <Check className="size-3 stroke-[3]" />
-                          </div>
-                        ) : (
-                          <div className="size-5 rounded-md border-2 border-neutral-300 bg-white" />
-                        )}
-                      </button>
-
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-0.5">
-                          <span className="font-mono text-xs font-bold text-neutral-700">
-                            {unit.kodeUnit}
-                          </span>
-                        </div>
-                        <p className="text-xs font-semibold text-neutral-900 leading-snug">
-                          {unit.judulUnit}
-                        </p>
-                      </div>
+            {/* List Unit Kompetensi Checkbox (2 Section: TOP RRF & Katalog Umum) */}
+            <div className="flex-1 overflow-y-auto space-y-5 pr-1.5 max-h-[420px]">
+              {/* SECTION 1: TOP HASIL DARI RRF (Reciprocal Rank Fusion) */}
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="flex size-5 items-center justify-center rounded-lg bg-gradient-to-tr from-[#4285F4] via-[#9B72CB] to-[#D96570] text-white shadow-xs">
+                      <Sparkles className="size-3 text-white" />
                     </div>
-                  );
-                })}
+                    <span className="text-xs font-black uppercase tracking-wider text-neutral-800">
+                      Rekomendasi Unggulan (TOP RRF)
+                    </span>
+                    <span className="rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-[10px] font-bold text-purple-700">
+                      {rrfSuggestions.length} Unit Paling Relevan
+                    </span>
+                  </div>
+
+                  {isRrfLoading && (
+                    <div className="flex items-center gap-1.5 text-[11px] font-medium text-purple-600">
+                      <Loader2 className="size-3.5 animate-spin" />
+                      <span>Mencari kecocokan...</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Skeletons saat loading */}
+                {isRrfLoading && rrfSuggestions.length === 0 ? (
+                  <div className="space-y-2.5">
+                    {[1, 2].map((i) => (
+                      <div
+                        key={i}
+                        className="rounded-2xl p-[1.5px] bg-gradient-to-r from-[#4285F4]/40 via-[#9B72CB]/40 to-[#D96570]/40 animate-pulse"
+                      >
+                        <div className="h-16 rounded-[14.5px] bg-neutral-50 p-3.5 flex items-center gap-3">
+                          <div className="size-5 rounded-md bg-neutral-200 shrink-0" />
+                          <div className="flex-1 space-y-1.5">
+                            <div className="h-3 w-1/4 rounded bg-neutral-200" />
+                            <div className="h-3.5 w-3/4 rounded bg-neutral-200" />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : rrfSuggestions.length > 0 ? (
+                  <div className="space-y-2.5">
+                    {rrfSuggestions.map((unit, idx) => {
+                      const isChecked = selectedUnitIds.has(unit.id);
+                      return (
+                        <div
+                          key={unit.id}
+                          onClick={() => toggleUnitSelection(unit.id)}
+                          className={cn(
+                            "group relative rounded-2xl p-[1.5px] transition-all duration-200 cursor-pointer",
+                            // Outline gradient khas Gemini (Google AI: Biru - Ungu - Coral)
+                            "bg-gradient-to-r from-[#4285F4] via-[#9B72CB] to-[#D96570]",
+                            "hover:shadow-[0_0_16px_rgba(155,114,203,0.35)] shadow-xs"
+                          )}
+                        >
+                          <div
+                            className={cn(
+                              "flex items-start gap-3 p-3.5 rounded-[14.5px] transition-colors",
+                              isChecked
+                                ? "bg-purple-50/80"
+                                : "bg-white hover:bg-neutral-50/90"
+                            )}
+                          >
+                            <button
+                              type="button"
+                              className="mt-0.5 shrink-0"
+                              title={isChecked ? "Batal Pilih" : "Pilih Unit"}
+                            >
+                              {isChecked ? (
+                                <div className="flex size-5 items-center justify-center rounded-md bg-slime-lime-500 text-slime-lime-950 font-bold">
+                                  <Check className="size-3 stroke-[3]" />
+                                </div>
+                              ) : (
+                                <div className="size-5 rounded-md border-2 border-neutral-300 bg-white group-hover:border-purple-400 transition-colors" />
+                              )}
+                            </button>
+
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-1 flex-wrap">
+                                <span className="font-mono text-xs font-extrabold text-neutral-800">
+                                  {unit.kodeUnit}
+                                </span>
+                                {unit.programKeahlian && (
+                                  <span className="rounded-md bg-neutral-100 px-1.5 py-0.5 text-[10px] font-bold text-neutral-600 uppercase">
+                                    {unit.programKeahlian}
+                                  </span>
+                                )}
+                                <div className="flex items-center gap-1 text-[10px] font-black text-purple-700 bg-purple-100/90 px-2 py-0.5 rounded-full ml-auto">
+                                  <Sparkles className="size-2.5 text-purple-600" />
+                                  <span>Top RRF #{idx + 1}</span>
+                                </div>
+                              </div>
+                              <p className="text-xs font-bold text-neutral-900 leading-snug">
+                                {unit.judulUnit}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="rounded-2xl border border-dashed border-neutral-200 p-4 text-center text-xs text-neutral-500">
+                    Tidak ditemukan rekomendasi spesifik untuk kata kunci ini.
+                  </div>
+                )}
+              </div>
+
+              {/* SECTION 2: KATALOG SKKNI TI LAINNYA (DILUAR HASIL TOP RRF) */}
+              <div className="space-y-2.5 pt-2 border-t border-neutral-100">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black uppercase tracking-wider text-neutral-700">
+                    Katalog SKKNI TI Lainnya
+                  </span>
+                  <span className="rounded-full bg-neutral-100 px-2.5 py-0.5 text-[10px] font-bold text-neutral-600">
+                    {otherUnits.length} Unit
+                  </span>
+                </div>
+
+                {otherUnits.length === 0 ? (
+                  <p className="text-xs text-neutral-400 py-3 text-center">
+                    Tidak ada unit SKKNI tambahan yang sesuai kriteria pencarian.
+                  </p>
+                ) : (
+                  <div className="space-y-2">
+                    {otherUnits.map((unit) => {
+                      const isChecked = selectedUnitIds.has(unit.id);
+                      return (
+                        <div
+                          key={unit.id}
+                          onClick={() => toggleUnitSelection(unit.id)}
+                          className={cn(
+                            "flex items-start gap-3 p-3.5 rounded-2xl border transition-colors cursor-pointer",
+                            isChecked
+                              ? "border-slime-lime-400 bg-slime-lime-50/30"
+                              : "border-neutral-200 hover:border-neutral-300 bg-white"
+                          )}
+                        >
+                          <button
+                            type="button"
+                            className="mt-0.5 shrink-0"
+                            title={isChecked ? "Batal Pilih" : "Pilih Unit"}
+                          >
+                            {isChecked ? (
+                              <div className="flex size-5 items-center justify-center rounded-md bg-slime-lime-500 text-slime-lime-950 font-bold">
+                                <Check className="size-3 stroke-[3]" />
+                              </div>
+                            ) : (
+                              <div className="size-5 rounded-md border-2 border-neutral-300 bg-white" />
+                            )}
+                          </button>
+
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <span className="font-mono text-xs font-bold text-neutral-700">
+                                {unit.kodeUnit}
+                              </span>
+                            </div>
+                            <p className="text-xs font-semibold text-neutral-900 leading-snug">
+                              {unit.judulUnit}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Footer Modal */}

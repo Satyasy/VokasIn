@@ -69,6 +69,10 @@ jobs:
             # Install all dependencies (including build tools)
             npm install --include=dev
 
+            # Execute database migrations (idempotent DDL & seeds)
+            echo "Running database migrations on EC2..."
+            npx tsx scripts/run-mapel-migration.ts || true
+
             # Clean stale build cache and build application with memory optimization
             rm -rf .next
             export NODE_OPTIONS="--max-old-space-size=1536"

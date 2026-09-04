@@ -131,17 +131,29 @@ export function getGuruById(id: string) {
   return guruCache.find((g) => g.id === id);
 }
 
-// Agregat sederhana untuk Skill Delta Score (F8) — proporsi unit kompetensi
-// program keahlian yang sudah punya jejak saran topik, dikombinasikan dengan
-// jumlah kandidat gap yang belum tercakup SKKNI.
+// Agregat Skill Delta Score (F8) — skala 0-100% yang mengkombinasikan:
+// 1. Defisit cakupan unit kompetensi SKKNI kurikulum (bobot maks 70%)
+// 2. Akumulasi bobot kesenjangan kebutuhan industri aktual (bobot maks 30%)
+//    dengan pembobotan dinamis: Kritis (+10%), Standar (+6%), Opsional (+4%).
 export function getSkillDeltaReport(programKeahlianId: string, semester: string): SkillDeltaReport {
   const unitList = getUnitKompetensiByProgram(programKeahlianId);
   const unitTerajarkan = unitList.filter((u) =>
     saranTopik.some((s) => s.unitKompetensiId === u.id)
   ).length;
-  const gapCount = getGapKandidat(programKeahlianId).length;
+  const gapList = getGapKandidat(programKeahlianId);
+  const gapCount = gapList.length;
   const cakupan = unitList.length === 0 ? 0 : unitTerajarkan / unitList.length;
-  const skorDelta = Math.round((1 - cakupan) * 70 + Math.min(gapCount, 5) * 6);
+
+  const gapScore = Math.min(
+    gapList.reduce((acc, g) => {
+      const weight = g.tingkatUrgensi === "kritis" ? 10 : g.tingkatUrgensi === "opsional" ? 4 : 6;
+      return acc + weight;
+    }, 0),
+    30
+  );
+
+  const skorDelta = Math.max(0, Math.min(100, Math.round((1 - cakupan) * 70 + gapScore)));
+  const keselarasanPersen = 100 - skorDelta;
 
   return {
     programKeahlianId,
@@ -150,5 +162,6 @@ export function getSkillDeltaReport(programKeahlianId: string, semester: string)
     unitTerajarkan,
     gapKandidatCount: gapCount,
     skorDelta,
+    keselarasanPersen,
   };
 }

@@ -93,6 +93,7 @@ export interface SumberDayaLab {
 }
 
 export type StatusPemetaan = "terpetakan_skkni" | "gap_kandidat";
+export type TingkatUrgensiGap = "kritis" | "standar" | "opsional";
 
 export interface SkillEntity {
   id: string;
@@ -103,6 +104,8 @@ export interface SkillEntity {
   unitKompetensiTerkaitId?: string; // terisi jika terpetakan_skkni
   skorKemiripan?: number; // 0-1, hanya relevan bila terpetakan
   sudahDitinjau?: boolean; // kaprogli sudah meninjau kandidat gap ini (F6)
+  tingkatUrgensi?: TingkatUrgensiGap;
+  rekomendasiTindakLanjut?: string;
 }
 
 export type KategoriAlatDibutuhkan = {
@@ -145,7 +148,8 @@ export interface SkillDeltaReport {
   totalUnitKompetensi: number;
   unitTerajarkan: number;
   gapKandidatCount: number;
-  skorDelta: number; // 0-100, makin tinggi makin besar kesenjangan
+  skorDelta: number; // 0-100%, persentase kesenjangan kurikulum & industri
+  keselarasanPersen: number; // 0-100%, persentase keselarasan industri (100 - skorDelta)
 }
 
 export type StatusJadwal = "terjadwal" | "terlaksana" | "dijadwal_ulang" | "batal";

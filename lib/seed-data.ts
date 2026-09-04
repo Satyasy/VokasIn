@@ -612,10 +612,12 @@ export const skillEntity: SkillEntity[] = [
   {
     id: "se-01",
     namaSkill: "Konfigurasi Container Orchestration (Kubernetes dasar)",
-    sumberSekunder: "Input manual kaprogli — hasil kunjungan industri",
+    sumberSekunder: "Input manual kaprogli — hasil kunjungan industri PT Telkom Infra",
     programKeahlianId: "pk-tkj",
     statusPemetaan: "gap_kandidat",
     sudahDitinjau: false,
+    tingkatUrgensi: "kritis",
+    rekomendasiTindakLanjut: "Sisipkan ke Jobsheet Praktikum Sistem Operasi Jaringan & Proxmox/Container",
   },
   {
     id: "se-02",
@@ -625,14 +627,17 @@ export const skillEntity: SkillEntity[] = [
     statusPemetaan: "terpetakan_skkni",
     unitKompetensiTerkaitId: "uk-01",
     skorKemiripan: 0.91,
+    tingkatUrgensi: "standar",
   },
   {
     id: "se-03",
     namaSkill: "Automated Testing dengan CI/CD Pipeline",
-    sumberSekunder: "Input manual kaprogli — hasil kunjungan industri",
+    sumberSekunder: "Input manual kaprogli — hasil kunjungan industri Software House",
     programKeahlianId: "pk-rpl",
     statusPemetaan: "gap_kandidat",
     sudahDitinjau: false,
+    tingkatUrgensi: "kritis",
+    rekomendasiTindakLanjut: "Integrasikan ke jobsheet praktikum Pemrograman & Git Version Control",
   },
 ];
 

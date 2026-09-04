@@ -11,15 +11,31 @@ import {
   type MataPelajaranWithDetails,
 } from "@/lib/data-access-db";
 import type { TingkatKelas, BahanAjarMapel } from "@/lib/types";
+import { expandVocationalQuery } from "@/lib/thesaurus";
 
-export async function getSuggestedUnitsRrfAction(query: string, limit = 5): Promise<SearchHit[]> {
+export interface SuggestedUnitsResult {
+  hits: SearchHit[];
+  matchedSynonyms: string[];
+  expandedQuery: string;
+}
+
+export async function getSuggestedUnitsRrfAction(
+  query: string,
+  limit = 5
+): Promise<SuggestedUnitsResult> {
   const trimmed = query.trim();
-  if (!trimmed) return [];
+  if (!trimmed) return { hits: [], matchedSynonyms: [], expandedQuery: "" };
   try {
-    return await searchUnitKompetensiHybrid(trimmed, limit);
+    const { expandedQuery, matchedSynonyms } = await expandVocationalQuery(trimmed);
+    const hits = await searchUnitKompetensiHybrid(expandedQuery, limit);
+    return {
+      hits,
+      matchedSynonyms,
+      expandedQuery,
+    };
   } catch (err) {
     console.error("Gagal mendapatkan saran unit RRF:", err);
-    return [];
+    return { hits: [], matchedSynonyms: [], expandedQuery: trimmed };
   }
 }
 

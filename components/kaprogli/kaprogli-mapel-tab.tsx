@@ -17,6 +17,8 @@ import {
   Check,
   X,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
   ShieldCheck,
   ExternalLink,
   Loader2,
@@ -56,14 +58,17 @@ export function KaprogliMapelTab({
   const [syncPending, startSyncTransition] = useTransition();
   const [syncSuccess, setSyncSuccess] = useState(false);
 
-  // State Rekomendasi RRF
+  // State Rekomendasi RRF & Ekspansi Kata Kunci
   const [rrfSuggestions, setRrfSuggestions] = useState<SearchHit[]>([]);
+  const [matchedSynonyms, setMatchedSynonyms] = useState<string[]>([]);
+  const [showExpansionDetails, setShowExpansionDetails] = useState(false);
   const [isRrfLoading, setIsRrfLoading] = useState(false);
 
   // Efek RRF Dinamis & Adaptif (Konteks Mapel + Pencarian)
   useEffect(() => {
     if (!syncingMapel) {
       setRrfSuggestions([]);
+      setMatchedSynonyms([]);
       setIsRrfLoading(false);
       return;
     }
@@ -79,8 +84,9 @@ export function KaprogliMapelTab({
 
     const timer = setTimeout(() => {
       getSuggestedUnitsRrfAction(query, 5)
-        .then((hits) => {
-          setRrfSuggestions(hits);
+        .then((res) => {
+          setRrfSuggestions(res.hits || []);
+          setMatchedSynonyms(res.matchedSynonyms || []);
         })
         .catch((e) => {
           console.error("Gagal memuat saran RRF:", e);
@@ -125,6 +131,8 @@ export function KaprogliMapelTab({
     setSelectedUnitIds(new Set(mapel.units.map((u) => u.id)));
     setSyncSearch("");
     setSyncSuccess(false);
+    setMatchedSynonyms([]);
+    setShowExpansionDetails(false);
   }
 
   function toggleUnitSelection(unitId: string) {
@@ -402,6 +410,48 @@ export function KaprogliMapelTab({
                 className="pl-9 text-xs rounded-xl"
               />
             </div>
+
+            {/* Alert Info: Konteks Pencarian Diperluas (Collapsible) */}
+            {matchedSynonyms.length > 0 && (
+              <div className="mb-3 rounded-2xl border border-blue-200/80 bg-blue-50/60 p-2.5 text-xs text-blue-900 transition-all">
+                <button
+                  type="button"
+                  onClick={() => setShowExpansionDetails(!showExpansionDetails)}
+                  className="flex w-full items-center justify-between text-left font-bold text-blue-950 hover:text-blue-800"
+                >
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <Sparkles className="size-3.5 text-blue-600 shrink-0" />
+                    <span>Konteks Pencarian Diperluas (AI &amp; Tesaurus Vokasi)</span>
+                    <span className="rounded-full bg-blue-200/70 px-2 py-0.5 text-[10px] font-black text-blue-800">
+                      +{matchedSynonyms.length} Istilah Padanan
+                    </span>
+                  </div>
+                  {showExpansionDetails ? (
+                    <ChevronUp className="size-4 text-blue-700 shrink-0" />
+                  ) : (
+                    <ChevronDown className="size-4 text-blue-700 shrink-0" />
+                  )}
+                </button>
+
+                {showExpansionDetails && (
+                  <div className="mt-2.5 pt-2 border-t border-blue-200/60 text-[11px] space-y-1.5 text-blue-900 animate-in fade-in duration-200">
+                    <p className="text-neutral-600">
+                      Kata kunci teknis SKKNI yang otomatis dipadankan untuk memaksimalkan akurasi pencarian:
+                    </p>
+                    <div className="flex flex-wrap gap-1.5 pt-0.5">
+                      {matchedSynonyms.map((syn, i) => (
+                        <span
+                          key={i}
+                          className="rounded-lg bg-white/90 px-2 py-0.5 font-mono text-[10.5px] font-bold text-blue-950 border border-blue-200 shadow-2xs"
+                        >
+                          #{syn}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* List Unit Kompetensi Checkbox (2 Section: TOP RRF & Katalog Umum) */}
             <div className="flex-1 overflow-y-auto space-y-5 pr-1.5 max-h-[420px]">

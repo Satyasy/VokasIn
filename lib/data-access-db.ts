@@ -265,6 +265,122 @@ function mapKandidat(r: KandidatRow): UnitKompetensiKandidat {
   };
 }
 
+export interface DuplicateUnitMatch {
+  kodeUnit: string;
+  judulUnit: string;
+  status: "resmi" | "menunggu" | "dikonfirmasi" | "ditolak";
+  sumber?: string;
+}
+
+export interface DuplicateCheckResult {
+  hasDuplicate: boolean;
+  documentDuplicate?: {
+    id: string;
+    nomor: string;
+    namaFile?: string;
+    diuploadPada?: string;
+  } | null;
+  duplicateUnits: DuplicateUnitMatch[];
+}
+
+export async function checkDuplicateSkkniUnits(
+  kodeUnits: string[],
+  nomorDokumen?: string
+): Promise<DuplicateCheckResult> {
+  let docDup: { id: string; nomor: string; namaFile?: string; diuploadPada?: string } | null = null;
+  if (nomorDokumen && nomorDokumen.trim()) {
+    const { rows } = await pool.query<{
+      id: string;
+      nomor: string;
+      nama_file: string | null;
+      diupload_pada: Date | null;
+    }>(
+      `SELECT id, nomor, nama_file, diupload_pada 
+       FROM dokumen_skkni 
+       WHERE lower(trim(nomor)) = lower(trim($1)) 
+       LIMIT 1`,
+      [nomorDokumen.trim()]
+    );
+    if (rows.length > 0) {
+      docDup = {
+        id: rows[0].id,
+        nomor: rows[0].nomor,
+        namaFile: rows[0].nama_file || undefined,
+        diuploadPada: rows[0].diupload_pada ? rows[0].diupload_pada.toISOString() : undefined,
+      };
+    }
+  }
+
+  const cleanedCodes = Array.from(new Set(kodeUnits.map((c) => c.trim().toUpperCase()))).filter(Boolean);
+  if (cleanedCodes.length === 0) {
+    return {
+      hasDuplicate: !!docDup,
+      documentDuplicate: docDup,
+      duplicateUnits: [],
+    };
+  }
+
+  // 1. Cek di unit_kompetensi resmi (katalog aktif)
+  const { rows: resmiRows } = await pool.query<{
+    kode_unit: string;
+    judul_unit: string;
+    sumber: string;
+  }>(
+    `SELECT kode_unit, judul_unit, sumber 
+     FROM unit_kompetensi 
+     WHERE UPPER(kode_unit) = ANY($1)`,
+    [cleanedCodes]
+  );
+
+  // 2. Cek di unit_kompetensi_kandidat (menunggu/dikonfirmasi/ditolak)
+  const { rows: kandidatRows } = await pool.query<{
+    kode_unit: string;
+    judul_unit: string;
+    status: string;
+    sumber: string;
+  }>(
+    `SELECT kode_unit, judul_unit, status, sumber 
+     FROM unit_kompetensi_kandidat 
+     WHERE UPPER(kode_unit) = ANY($1)`,
+    [cleanedCodes]
+  );
+
+  const seen = new Set<string>();
+  const duplicateUnits: DuplicateUnitMatch[] = [];
+
+  for (const r of resmiRows) {
+    const key = r.kode_unit.toUpperCase();
+    if (!seen.has(key)) {
+      seen.add(key);
+      duplicateUnits.push({
+        kodeUnit: r.kode_unit,
+        judulUnit: r.judul_unit,
+        status: "resmi",
+        sumber: r.sumber,
+      });
+    }
+  }
+
+  for (const k of kandidatRows) {
+    const key = k.kode_unit.toUpperCase();
+    if (!seen.has(key)) {
+      seen.add(key);
+      duplicateUnits.push({
+        kodeUnit: k.kode_unit,
+        judulUnit: k.judul_unit,
+        status: (k.status as DuplicateUnitMatch["status"]) || "menunggu",
+        sumber: k.sumber,
+      });
+    }
+  }
+
+  return {
+    hasDuplicate: !!docDup || duplicateUnits.length > 0,
+    documentDuplicate: docDup,
+    duplicateUnits,
+  };
+}
+
 export async function listKandidat(status: UnitKompetensiKandidat["status"] = "menunggu"): Promise<UnitKompetensiKandidat[]> {
   const { rows } = await pool.query<KandidatRow>(
     `SELECT id, dokumen_skkni_id, kode_unit, judul_unit, sumber, program_keahlian_id,
@@ -674,13 +790,18 @@ export async function searchUnitKompetensiHybrid(query: string, limit = 10): Pro
   ]);
 
   const ftsIds = new Set(ftsRows.map((r) => r.id));
-  // Filter baris vektor yang terlalu jauh (cosine distance > 0.36 / kemiripan < 0.64) jika tidak cocok di FTS
-  const relevantVecRows = vecRows.filter((r) => {
-    if (r.distance !== undefined && Number(r.distance) > 0.36 && !ftsIds.has(r.id)) {
+  // Berikan ambang batas jarak semantik yang wajar (cosine distance <= 0.55) jika tidak match di FTS
+  let relevantVecRows = vecRows.filter((r) => {
+    if (r.distance !== undefined && Number(r.distance) > 0.55 && !ftsIds.has(r.id)) {
       return false;
     }
     return true;
   });
+
+  // Fallback: Jika setelah filter vecRows habis dan ftsRows juga kosong, gunakan top 3 vektor terdekat
+  if (relevantVecRows.length === 0 && ftsRows.length === 0 && vecRows.length > 0) {
+    relevantVecRows = vecRows.slice(0, 3);
+  }
 
   const K = 60;
   const fused = new Map<string, SearchHit>();

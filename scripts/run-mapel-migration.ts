@@ -41,7 +41,33 @@ async function run() {
 
     // 5. Pastikan dimensi embedding 768 untuk Gemini Embedding
     console.log("Memastikan tipe kolom embedding vector(768)...");
-    await pool.query("ALTER TABLE unit_kompetensi ALTER COLUMN embedding TYPE vector(768);");
+    try {
+      await pool.query("ALTER TABLE unit_kompetensi ALTER COLUMN embedding TYPE vector(768);");
+    } catch {
+      console.log("Resetting embedding column to NULL before altering to vector(768)...");
+      await pool.query("ALTER TABLE unit_kompetensi ALTER COLUMN embedding TYPE vector(768) USING NULL;");
+    }
+
+    // 5b. Pastikan corpus_text unit kompetensi terisi agar FTS dan RRF langsung aktif
+    console.log("Memastikan corpus_text unit kompetensi terisi dari elemen & KUK...");
+    await pool.query(`
+      UPDATE unit_kompetensi uk
+      SET corpus_text = (
+        SELECT uk.judul_unit || E'\n' || COALESCE(string_agg(ek.judul || E'\n' || COALESCE(kuk_agg.kuk_text, ''), E'\n'), '')
+        FROM elemen_kompetensi ek
+        LEFT JOIN (
+          SELECT elemen_kompetensi_id, string_agg(teks, E'\n') as kuk_text
+          FROM kriteria_unjuk_kerja
+          GROUP BY elemen_kompetensi_id
+        ) kuk_agg ON kuk_agg.elemen_kompetensi_id = ek.id
+        WHERE ek.unit_kompetensi_id = uk.id
+      )
+      WHERE uk.corpus_text IS NULL OR trim(uk.corpus_text) = '';
+
+      UPDATE unit_kompetensi
+      SET corpus_text = judul_unit
+      WHERE corpus_text IS NULL OR trim(corpus_text) = '';
+    `);
 
     // 6. Jalankan pembaruan embedding untuk unit kompetensi
     console.log("Menjalankan embedding unit kompetensi dengan Gemini...");

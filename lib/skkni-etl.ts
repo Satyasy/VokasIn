@@ -188,39 +188,75 @@ export async function processSkkniMandiri(input: SkkniUploadInput): Promise<EtlR
 
   // 6. Simpan ke database Postgres sebagai Kandidat Menunggu Verifikasi Kaprogli/Admin
   try {
-    await pool.query(
-      `INSERT INTO dokumen_skkni (id, nomor, nama_file, diupload_pada, diupload_oleh)
-       VALUES ($1, $2, $3, now(), $4)
-       ON CONFLICT (id) DO NOTHING`,
-      [dokumenId, input.nomorDokumen, `${input.kodeUnit}.pdf`, input.uploaderId]
+    let actualDokumenId = dokumenId;
+    const docCheck = await pool.query<{ id: string }>(
+      `SELECT id FROM dokumen_skkni WHERE lower(trim(nomor)) = lower(trim($1)) LIMIT 1`,
+      [input.nomorDokumen]
     );
+    if (docCheck.rows.length > 0) {
+      actualDokumenId = docCheck.rows[0].id;
+    } else {
+      await pool.query(
+        `INSERT INTO dokumen_skkni (id, nomor, nama_file, diupload_pada, diupload_oleh)
+         VALUES ($1, $2, $3, now(), $4)
+         ON CONFLICT (id) DO NOTHING`,
+        [dokumenId, input.nomorDokumen, `${input.kodeUnit}.pdf`, input.uploaderId]
+      );
+    }
 
     const kandidatElemen = elemenList.map((e) => ({
       judul: e.judul,
       kriteriaUnjukKerja: e.kriteriaUnjukKerja.map((k) => ({ kode: k.kode, teks: k.teks })),
     }));
 
-    await pool.query(
-      `INSERT INTO unit_kompetensi_kandidat
-         (id, dokumen_skkni_id, kode_unit, judul_unit, sumber, program_keahlian_id, teks_mentah, elemen_kompetensi, parsing_uncertain, catatan, status, embedding, skor_ai, saran_program_keahlian_id)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'menunggu', $11, $12, $13)
-       ON CONFLICT (id) DO NOTHING`,
-      [
-        kandidatId,
-        dokumenId,
-        customUnit.kodeUnit,
-        customUnit.judulUnit,
-        customUnit.sumber,
-        customUnit.programKeahlianId,
-        input.elemenRawText,
-        JSON.stringify(kandidatElemen),
-        false,
-        `Diunggah mandiri oleh ${input.uploaderRole} (${input.uploaderId}) untuk modul ajar spesifik`,
-        vectorLiteral !== "null" ? vectorLiteral : null,
-        maxSimilarity,
-        saranProgramKeahlianId
-      ]
+    const existingKandidat = await pool.query<{ id: string }>(
+      `SELECT id FROM unit_kompetensi_kandidat WHERE upper(trim(kode_unit)) = upper(trim($1)) LIMIT 1`,
+      [customUnit.kodeUnit]
     );
+
+    if (existingKandidat.rows.length > 0) {
+      await pool.query(
+        `UPDATE unit_kompetensi_kandidat
+         SET judul_unit = $2, sumber = $3, program_keahlian_id = $4, teks_mentah = $5,
+             elemen_kompetensi = $6, embedding = $7, skor_ai = $8, saran_program_keahlian_id = $9,
+             dokumen_skkni_id = $10
+         WHERE id = $1`,
+        [
+          existingKandidat.rows[0].id,
+          customUnit.judulUnit,
+          customUnit.sumber,
+          customUnit.programKeahlianId,
+          input.elemenRawText,
+          JSON.stringify(kandidatElemen),
+          vectorLiteral !== "null" ? vectorLiteral : null,
+          maxSimilarity,
+          saranProgramKeahlianId,
+          actualDokumenId,
+        ]
+      );
+    } else {
+      await pool.query(
+        `INSERT INTO unit_kompetensi_kandidat
+           (id, dokumen_skkni_id, kode_unit, judul_unit, sumber, program_keahlian_id, teks_mentah, elemen_kompetensi, parsing_uncertain, catatan, status, embedding, skor_ai, saran_program_keahlian_id)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'menunggu', $11, $12, $13)
+         ON CONFLICT (id) DO NOTHING`,
+        [
+          kandidatId,
+          actualDokumenId,
+          customUnit.kodeUnit,
+          customUnit.judulUnit,
+          customUnit.sumber,
+          customUnit.programKeahlianId,
+          input.elemenRawText,
+          JSON.stringify(kandidatElemen),
+          false,
+          `Diunggah mandiri oleh ${input.uploaderRole} (${input.uploaderId}) untuk modul ajar spesifik`,
+          vectorLiteral !== "null" ? vectorLiteral : null,
+          maxSimilarity,
+          saranProgramKeahlianId,
+        ]
+      );
+    }
   } catch (err) {
     console.error("Gagal mencatat kandidat ke Postgres (fallback in-memory tetap aktif):", err);
   }

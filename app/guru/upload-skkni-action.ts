@@ -4,6 +4,13 @@ import { revalidatePath } from "next/cache";
 import { getSession } from "@/lib/auth";
 import { processSkkniMandiri } from "@/lib/skkni-etl";
 import { parseSkkniPdf, type ExtractedUnit, type ParsedSkkniDocument } from "@/lib/skkni-pdf-parser";
+import {
+  checkDuplicateSkkniUnits,
+  type DuplicateCheckResult,
+  type DuplicateUnitMatch,
+} from "@/lib/data-access-db";
+
+export type { DuplicateCheckResult, DuplicateUnitMatch };
 
 export interface UploadSkkniMandiriResponse {
   success: boolean;
@@ -24,7 +31,28 @@ export interface ImportBatchResponse {
   success: boolean;
   error?: string;
   importedCount?: number;
+  skippedCount?: number;
+  duplicateCodes?: string[];
   units?: { id: string; kodeUnit: string; judulUnit: string }[];
+}
+
+/**
+ * Server Action: Periksa apakah dokumen SKKNI atau unit kompetensi sudah pernah diunggah.
+ */
+export async function checkDuplicateSkkniUnitsAction(payload: {
+  nomorDokumen?: string;
+  kodeUnits: string[];
+}): Promise<DuplicateCheckResult> {
+  try {
+    return await checkDuplicateSkkniUnits(payload.kodeUnits, payload.nomorDokumen);
+  } catch (err) {
+    console.error("Gagal memeriksa duplikasi SKKNI:", err);
+    return {
+      hasDuplicate: false,
+      documentDuplicate: null,
+      duplicateUnits: [],
+    };
+  }
 }
 
 /**
@@ -72,6 +100,7 @@ export async function importSelectedSkkniUnitsAction(payload: {
     judulUnit: string;
     rawElemenText: string;
   }[];
+  skipDuplicateCodes?: string[];
 }): Promise<ImportBatchResponse> {
   const session = await getSession();
   if (!session) {
@@ -87,9 +116,15 @@ export async function importSelectedSkkniUnitsAction(payload: {
   }
 
   try {
+    const skipSet = new Set((payload.skipDuplicateCodes || []).map((c) => c.trim().toUpperCase()));
+    const unitsToProcess = payload.selectedUnits.filter(
+      (u) => !skipSet.has(u.kodeUnit.trim().toUpperCase())
+    );
+    const skippedCount = payload.selectedUnits.length - unitsToProcess.length;
+
     const importedUnits: { id: string; kodeUnit: string; judulUnit: string }[] = [];
 
-    for (const unit of payload.selectedUnits) {
+    for (const unit of unitsToProcess) {
       const res = await processSkkniMandiri({
         nomorDokumen: payload.nomorDokumen.trim(),
         kodeUnit: unit.kodeUnit.trim(),
@@ -115,6 +150,8 @@ export async function importSelectedSkkniUnitsAction(payload: {
     return {
       success: true,
       importedCount: importedUnits.length,
+      skippedCount,
+      duplicateCodes: payload.skipDuplicateCodes,
       units: importedUnits,
     };
   } catch (err) {
@@ -150,6 +187,22 @@ export async function uploadSkkniMandiriAction(
   if (!elemenRawText) return { success: false, error: "Tempelkan teks Elemen Kompetensi dan KUK." };
 
   try {
+    // Periksa duplikasi sebelum input manual
+    const dupCheck = await checkDuplicateSkkniUnits([kodeUnit], nomorDokumen);
+    if (dupCheck.duplicateUnits.length > 0) {
+      const dup = dupCheck.duplicateUnits[0];
+      const statusLabel =
+        dup.status === "resmi"
+          ? "katalog resmi SKKNI"
+          : dup.status === "menunggu"
+          ? "daftar kandidat menunggu verifikasi admin"
+          : "daftar kandidat SKKNI";
+      return {
+        success: false,
+        error: `Unit kompetensi "${kodeUnit}" (${dup.judulUnit}) sudah pernah diunggah sebelumnya dan terdaftar di ${statusLabel}.`,
+      };
+    }
+
     const result = await processSkkniMandiri({
       nomorDokumen,
       kodeUnit,

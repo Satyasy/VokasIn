@@ -29,8 +29,11 @@ import {
   parseSkkniPdfAction,
   importSelectedSkkniUnitsAction,
   uploadSkkniMandiriAction,
+  checkDuplicateSkkniUnitsAction,
   type UploadSkkniMandiriResponse,
+  type DuplicateCheckResult,
 } from "@/app/guru/upload-skkni-action";
+import { DuplicateDetectionDialog } from "@/components/skkni/duplicate-detection-dialog";
 import type { ExtractedUnit, ParsedSkkniDocument } from "@/lib/skkni-text-extractor";
 import { extractPdfTextInBrowser, type ParseProgress } from "@/lib/client-pdf-parser";
 import { Button } from "@/components/ui/button";
@@ -87,6 +90,11 @@ export function SkkniExtractionPageClient({
   // Search & Filter State
   const [searchQuery, setSearchQuery] = useState("");
   const [filterSelection, setFilterSelection] = useState<"all" | "selected" | "unselected">("all");
+
+  // Duplicate Detection State
+  const [duplicateResult, setDuplicateResult] = useState<DuplicateCheckResult | null>(null);
+  const [showDuplicateDialog, setShowDuplicateDialog] = useState(false);
+  const [knownDuplicateUnits, setKnownDuplicateUnits] = useState<Map<string, { status: string; judul: string }>>(new Map());
 
   // Import batch transition
   const [isImporting, startImportTransition] = useTransition();
@@ -150,6 +158,7 @@ export function SkkniExtractionPageClient({
       });
       setEditableUnits(edits);
       setIsParsing(false);
+      runDuplicateCheckForDoc(doc.nomorDokumen, doc.units);
     } catch (err: unknown) {
       console.warn("Ekstraksi browser mengalami kendala, beralih ke server parser:", err);
       try {
@@ -178,6 +187,7 @@ export function SkkniExtractionPageClient({
           edits[u.kodeUnit] = { kodeUnit: u.kodeUnit, judulUnit: u.judulUnit };
         });
         setEditableUnits(edits);
+        runDuplicateCheckForDoc(res.document.nomorDokumen, res.document.units);
       } catch (fallbackErr: unknown) {
         setParseError(
           fallbackErr instanceof Error
@@ -187,6 +197,24 @@ export function SkkniExtractionPageClient({
       } finally {
         setIsParsing(false);
       }
+    }
+  }
+
+  async function runDuplicateCheckForDoc(nomor: string, units: { kodeUnit: string }[]) {
+    try {
+      const res = await checkDuplicateSkkniUnitsAction({
+        nomorDokumen: nomor,
+        kodeUnits: units.map((u) => u.kodeUnit),
+      });
+      if (res && res.duplicateUnits) {
+        const dupMap = new Map<string, { status: string; judul: string }>();
+        res.duplicateUnits.forEach((d) => {
+          dupMap.set(d.kodeUnit.toUpperCase(), { status: d.status, judul: d.judulUnit });
+        });
+        setKnownDuplicateUnits(dupMap);
+      }
+    } catch (e) {
+      console.warn("Gagal auto-check duplikat:", e);
     }
   }
 
@@ -238,7 +266,7 @@ export function SkkniExtractionPageClient({
     setExpandedUnitCodes(next);
   }
 
-  function handleSaveImport() {
+  async function handleSaveImport(skipDuplicateCodes?: string[]) {
     if (!parsedDoc || selectedUnitCodes.size === 0) return;
 
     const unitsToImport = parsedDoc.units
@@ -252,20 +280,40 @@ export function SkkniExtractionPageClient({
         };
       });
 
+    // Jika belum ada skipDuplicateCodes, lakukan pengecekan duplikasi terlebih dahulu
+    if (!skipDuplicateCodes) {
+      try {
+        const check = await checkDuplicateSkkniUnitsAction({
+          nomorDokumen: editableNomor,
+          kodeUnits: unitsToImport.map((u) => u.kodeUnit),
+        });
+        if (check.hasDuplicate && check.duplicateUnits.length > 0) {
+          setDuplicateResult(check);
+          setShowDuplicateDialog(true);
+          return;
+        }
+      } catch (err) {
+        console.warn("Gagal cek duplikasi, melanjutkan impor langsung:", err);
+      }
+    }
+
     startImportTransition(async () => {
       const res = await importSelectedSkkniUnitsAction({
         nomorDokumen: editableNomor,
         programKeahlianId: pdfProgramId,
         selectedUnits: unitsToImport,
+        skipDuplicateCodes,
       });
 
-      if (res.success && res.importedCount) {
+      if (res.success && res.importedCount !== undefined) {
         setImportSuccess({
           count: res.importedCount,
           firstUnitId: res.units?.[0]?.id,
         });
+        setShowDuplicateDialog(false);
       } else {
         setParseError(res.error || "Gagal mengimpor unit kompetensi.");
+        setShowDuplicateDialog(false);
       }
     });
   }
@@ -565,7 +613,7 @@ export function SkkniExtractionPageClient({
                         type="button"
                         loading={isImporting}
                         disabled={isImporting || selectedUnitCodes.size === 0}
-                        onClick={handleSaveImport}
+                        onClick={() => handleSaveImport()}
                         className="w-full h-12 bg-slime-lime-500 text-slime-lime-950 font-black hover:bg-slime-lime-400 text-xs sm:text-sm rounded-2xl shadow-sm"
                       >
                         <Check className="size-4 mr-2" />
@@ -844,6 +892,12 @@ export function SkkniExtractionPageClient({
                                   <span className="font-mono text-xs sm:text-sm font-extrabold text-slime-lime-950 bg-slime-lime-100/90 px-3 py-1 rounded-lg border border-slime-lime-200">
                                     {currentEdit.kodeUnit}
                                   </span>
+                                  {knownDuplicateUnits.has(currentEdit.kodeUnit.toUpperCase()) && (
+                                    <span className="inline-flex items-center gap-1 rounded-lg bg-amber-50 px-2 py-0.5 text-[11px] font-bold text-amber-700 border border-amber-200">
+                                      <AlertCircle className="size-3 text-amber-600" />
+                                      <span>Sudah Ada di Sistem</span>
+                                    </span>
+                                  )}
                                   <span className="text-xs sm:text-sm font-semibold text-neutral-500">
                                     {unit.totalElemen} Elemen Kompetensi • {unit.totalKuk} KUK
                                   </span>
@@ -970,6 +1024,43 @@ export function SkkniExtractionPageClient({
           </div>
         </div>
       </main>
+
+      <DuplicateDetectionDialog
+        open={showDuplicateDialog}
+        onClose={() => setShowDuplicateDialog(false)}
+        result={duplicateResult}
+        totalSelected={selectedUnitCodes.size}
+        onSkipAndContinue={(skipCodes) => handleSaveImport(skipCodes)}
+        onForceImportAll={() => {
+          setShowDuplicateDialog(false);
+          startImportTransition(async () => {
+            const unitsToImport = parsedDoc!.units
+              .filter((u) => selectedUnitCodes.has(u.kodeUnit))
+              .map((u) => {
+                const edited = editableUnits[u.kodeUnit] || u;
+                return {
+                  kodeUnit: edited.kodeUnit,
+                  judulUnit: edited.judulUnit,
+                  rawElemenText: u.rawElemenText,
+                };
+              });
+            const res = await importSelectedSkkniUnitsAction({
+              nomorDokumen: editableNomor,
+              programKeahlianId: pdfProgramId,
+              selectedUnits: unitsToImport,
+            });
+            if (res.success && res.importedCount !== undefined) {
+              setImportSuccess({
+                count: res.importedCount,
+                firstUnitId: res.units?.[0]?.id,
+              });
+            } else {
+              setParseError(res.error || "Gagal mengimpor unit kompetensi.");
+            }
+          });
+        }}
+        isSubmitting={isImporting}
+      />
     </div>
   );
 }

@@ -72,8 +72,9 @@ test.describe("E2E Test Rute Baru: Ekstraksi SKKNI, Kurikulum Mapel & Bahan Ajar
       await expect(page.locator("text=Sistem Keamanan Jaringan (SKJ)").first()).toBeVisible();
 
       // Verify WorldSkills (WSOS) badges
-      await expect(page.locator("text=WSOS: Skill 39: Network Systems Administration").first()).toBeVisible();
-      await expect(page.locator("text=Passing Grade: Min. 80 (Cakap)").first()).toBeVisible();
+      await expect(page.getByText(/Rujukan WorldSkills \(WSOS\):/i).first()).toBeVisible();
+      await expect(page.getByText(/Skill 39: Network Systems Administration/i).first()).toBeVisible();
+      await expect(page.getByText(/Min\. 80 \(Cakap\)/i).first()).toBeVisible();
       await expect(page.locator("text=Lab 100% Siap").first()).toBeVisible();
 
       // Open "Sinkronkan SKKNI" modal

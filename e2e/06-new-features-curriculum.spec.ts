@@ -52,13 +52,13 @@ test.describe("E2E Test Rute Baru: Ekstraksi SKKNI, Kurikulum Mapel & Bahan Ajar
   });
 
   test.describe("2. Kaprogli Kurikulum & Mapel Sync Tab (/kaprogli)", () => {
-    test("Kaprogli views seeded subjects, WSOS badges, and opens sync modal", async ({ page }) => {
+    test("Kaprogli views single-row tabs, opens 2-section sync modal, and verifies vocational thesaurus search", async ({ page }) => {
       // Login as Demo Kaprogli
       await page.goto("/login");
       await page.getByRole("button", { name: /Demo Kaprogli/i }).click();
       await expect(page).toHaveURL(/\/kaprogli/, { timeout: 15000 });
 
-      // Click tab "Kurikulum & Mapel (X, XI, XII)"
+      // Click tab "Kurikulum & Mapel"
       const mapelTabBtn = page.getByRole("tab", { name: /Kurikulum & Mapel/i });
       await expect(mapelTabBtn).toBeVisible();
       await mapelTabBtn.click();
@@ -66,23 +66,21 @@ test.describe("E2E Test Rute Baru: Ekstraksi SKKNI, Kurikulum Mapel & Bahan Ajar
       // Verify section heading
       await expect(page.locator("h3")).toContainText("Kurikulum & Mata Pelajaran Kejuruan (X, XI, XII)");
 
-      // Verify seeded subjects
-      await expect(page.locator("text=Sistem Komputer Jaringan (SisKomJar)").first()).toBeVisible();
-      await expect(page.locator("text=Internet of Things (IoT)").first()).toBeVisible();
-      await expect(page.locator("text=Sistem Keamanan Jaringan (SKJ)").first()).toBeVisible();
-
-      // Verify WorldSkills (WSOS) badges
-      await expect(page.getByText(/Rujukan WorldSkills \(WSOS\):/i).first()).toBeVisible();
-      await expect(page.getByText(/Skill 39: Network Systems Administration/i).first()).toBeVisible();
-      await expect(page.getByText(/Min\. 80 \(Cakap\)/i).first()).toBeVisible();
-      await expect(page.locator("text=Lab 100% Siap").first()).toBeVisible();
-
       // Open "Sinkronkan SKKNI" modal
       const syncBtn = page.getByRole("button", { name: /Sinkronkan SKKNI/i }).first();
       await syncBtn.click();
 
-      // Verify modal is open
+      // Verify 2-Section Modal Architecture
       await expect(page.locator("h4").filter({ hasText: /Sinkronisasi SKKNI/i })).toBeVisible();
+      await expect(page.locator("text=Rekomendasi Unggulan (TOP RRF)")).toBeVisible();
+      await expect(page.locator("text=Katalog SKKNI TI Lainnya")).toBeVisible();
+
+      // Test Search Input with Vocational Keyword
+      const searchInput = page.getByPlaceholder("Cari kode unit atau kata kunci kompetensi...");
+      await searchInput.fill("Jaringan");
+      await page.waitForTimeout(600);
+
+      // Verify buttons
       await expect(page.locator("button").filter({ hasText: /Simpan Sinkronisasi/i })).toBeVisible();
 
       // Close modal

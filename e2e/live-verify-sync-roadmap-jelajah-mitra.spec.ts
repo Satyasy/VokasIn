@@ -20,8 +20,8 @@ test("Live verification of SKKNI synchronization across Roadmap, Jelajah, and Mi
 
   // Verify search bar filtering
   const searchInput = page.locator("input[placeholder*='Cari kode unit']");
-  await searchInput.fill("Mengoperasikan Komputer");
-  await expect(page.locator("text=Mengoperasikan Komputer").first()).toBeVisible();
+  await searchInput.fill("Instal, Konfigurasi");
+  await expect(page.locator("text=Instal, Konfigurasi dan Uji Server").first()).toBeVisible();
 
   // Verify partner badge on unit card
   await expect(page.locator("text=Dibutuhkan Mitra Industri:").first()).toBeVisible();
@@ -38,8 +38,8 @@ test("Live verification of SKKNI synchronization across Roadmap, Jelajah, and Mi
   await expect(page).toHaveURL(/\/roadmap\/pk-tkj\?highlight=/);
 
   console.log("4. Verifying Jelajah Kompetensi with pre-filled prompt...");
-  await page.goto(`${baseUrl}/jelajah-kompetensi?prompt=Mengoperasikan%20Komputer`);
-  await expect(page.locator("textarea")).toHaveValue("Mengoperasikan Komputer");
+  await page.goto(`${baseUrl}/jelajah-kompetensi?prompt=Instal%2C%20Konfigurasi%20dan%20Uji%20Server`);
+  await expect(page.locator("textarea")).toHaveValue("Instal, Konfigurasi dan Uji Server");
 
   // Wait for search result
   await expect(page.locator("text=Detail Unit").first()).toBeVisible({ timeout: 15000 });

@@ -211,3 +211,102 @@ export interface AdminAnalyticsData {
     persenTerima: number;
   };
 }
+
+export type TingkatKelas = "X" | "XI" | "XII";
+export type PredikatKktp = "perlu_bimbingan" | "cukup" | "cakap" | "mahir";
+
+export interface MataPelajaran {
+  id: string;
+  programKeahlianId: string;
+  namaMapel: string;
+  kodeMapel?: string;
+  tingkatKelas: TingkatKelas;
+  semester: number;
+  alokasiJpMingguan: number;
+  passingGradeMinimum: number;
+  bobotTeori: number;
+  bobotPraktikMingguan: number;
+  bobotPraktikKelompok: number;
+  deskripsi?: string;
+  rujukanWsos?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface MapelKompetensiSync {
+  id: string;
+  mataPelajaranId: string;
+  unitKompetensiId: string;
+  isMandatory: boolean;
+  kodeUnit?: string;
+  judulUnit?: string;
+  sumber?: string;
+}
+
+export interface GuruMataPelajaran {
+  id: string;
+  guruId: string;
+  mataPelajaranId: string;
+  tahunAjaran: string;
+}
+
+export interface JobsheetItem {
+  mingguKe: number;
+  judulPraktik: string;
+  instruksiKerja: string;
+  k3Safety: string;
+  alatDibutuhkan: string[];
+  kriteriaKuk: { kode: string; teks: string }[];
+}
+
+export interface ProyekKelompokItem {
+  judulProyek: string;
+  deskripsi: string;
+  pembagianPeran: string[];
+  kriteriaKarya: string[];
+}
+
+export interface RubrikKktpItem {
+  aspek: string;
+  indikator: string;
+  kriteria: {
+    perluBimbingan: string; // 0 - 69
+    cukup: string;          // 70 - 79
+    cakap: string;          // 80 - 89 (Passing Grade)
+    mahir: string;          // 90 - 100
+  };
+}
+
+export interface BahanAjarMapel {
+  id: string;
+  mataPelajaranId: string;
+  guruId: string;
+  judul: string;
+  tingkatKelas: TingkatKelas;
+  ringkasanTeori: string;
+  jobsheetMingguan: JobsheetItem[];
+  proyekKelompok: ProyekKelompokItem[];
+  rubrikKktp: RubrikKktpItem[];
+  instruksiK3Kritis?: string;
+  status: "draft" | "final" | "diarsipkan";
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface AssessmentInput {
+  teori: number;
+  praktikMingguan: number;
+  praktikKelompok: number;
+  k3Violation: boolean;
+  fatalError: boolean;
+  passingGrade?: number;
+}
+
+export interface AssessmentResult {
+  nilaiAkhir: number;
+  predikat: PredikatKktp;
+  isPassing: boolean;
+  catatanEvaluasi: string;
+  remedialNote?: string;
+}
+

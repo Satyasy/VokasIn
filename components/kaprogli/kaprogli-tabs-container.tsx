@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, ReactNode } from "react";
-import { Gauge, Users, Wrench, FileCheck2 } from "lucide-react";
+import { Gauge, Users, Wrench, FileCheck2, BookOpen } from "lucide-react";
 import type { Guru, JadwalPembelajaran, UnitKompetensiKandidat, ProgramKeahlian } from "@/lib/types";
+import type { MataPelajaranWithDetails } from "@/lib/data-access-db";
 import { SegmentedTabs, type TabItem } from "@/components/ui/segmented-tabs";
 import { KaprogliSupervisiTab } from "@/components/kaprogli/kaprogli-supervisi-tab";
 import { KaprogliSkkniTab } from "@/components/kaprogli/kaprogli-skkni-tab";
+import { KaprogliMapelTab } from "@/components/kaprogli/kaprogli-mapel-tab";
 
 interface KaprogliTabsContainerProps {
   guruList: Guru[];
@@ -15,6 +17,8 @@ interface KaprogliTabsContainerProps {
   inventarisNode: ReactNode;
   kandidatList: UnitKompetensiKandidat[];
   programList: ProgramKeahlian[];
+  mapelList?: MataPelajaranWithDetails[];
+  availableUnits?: { id: string; kodeUnit: string; judulUnit: string; programKeahlianId: string }[];
 }
 
 export function KaprogliTabsContainer({
@@ -25,10 +29,18 @@ export function KaprogliTabsContainer({
   inventarisNode,
   kandidatList,
   programList,
+  mapelList = [],
+  availableUnits = [],
 }: KaprogliTabsContainerProps) {
-  const [activeTab, setActiveTab] = useState<string>("delta");
+  const [activeTab, setActiveTab] = useState<string>("mapel");
 
   const tabs: TabItem[] = [
+    {
+      id: "mapel",
+      label: "Kurikulum & Mapel (X, XI, XII)",
+      count: mapelList.length,
+      icon: <BookOpen className="size-4" />,
+    },
     {
       id: "delta",
       label: "Skill Delta Score",
@@ -66,6 +78,16 @@ export function KaprogliTabsContainer({
 
       {/* Konten Tab Aktif */}
       <div>
+        {activeTab === "mapel" && (
+          <div className="animate-in fade-in duration-300">
+            <KaprogliMapelTab
+              mapelList={mapelList}
+              availableUnits={availableUnits}
+              currentProgramId={currentKaprogliProgramId}
+            />
+          </div>
+        )}
+
         {activeTab === "delta" && (
           <div className="animate-in fade-in duration-300">
             {deltaScoreNode}

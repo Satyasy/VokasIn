@@ -69,16 +69,27 @@ export default async function GuruPage({
   return (
     <main className="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-6">
       {/* Header Utama Guru */}
-      <div className="border-b border-neutral-200 pb-6 mb-6">
-        <p className="text-xs font-bold uppercase tracking-wider text-slime-lime-700">
-          Ruang Kerja Guru Produktif
-        </p>
-        <h1 className="mt-1.5 text-3xl font-extrabold tracking-tight text-neutral-900">
-          Dashboard Pembelajaran &amp; Modul Ajar
-        </h1>
-        <p className="mt-2 text-base text-neutral-600">
-          Kelola agenda mengajar harian, pantau alokasi Jam Pelajaran (JP), dan rancang perangkat ajar berbasis SKKNI resmi.
-        </p>
+      <div className="border-b border-neutral-200 pb-6 mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-wider text-slime-lime-700">
+            Ruang Kerja Guru Produktif
+          </p>
+          <h1 className="mt-1.5 text-3xl font-extrabold tracking-tight text-neutral-900">
+            Dashboard Pembelajaran &amp; Modul Ajar
+          </h1>
+          <p className="mt-2 text-base text-neutral-600 max-w-2xl">
+            Kelola agenda mengajar harian, pantau alokasi Jam Pelajaran (JP), dan rancang perangkat ajar berbasis SKKNI resmi.
+          </p>
+        </div>
+
+        <Link
+          href="/guru/bahan-ajar"
+          className="inline-flex items-center gap-2 rounded-2xl bg-slime-lime-500 px-5 py-3 text-xs font-black text-slime-lime-950 hover:bg-slime-lime-400 transition-colors shadow-xs shrink-0"
+        >
+          <BookOpenText className="size-4" />
+          <span>Bahan Ajar &amp; Jobsheet Mapel</span>
+          <ArrowRight className="size-3.5" />
+        </Link>
       </div>
 
       {/* Kontainer Tab Segmented Terpadu */}

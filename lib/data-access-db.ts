@@ -1129,3 +1129,351 @@ export async function getAdminAnalyticsData(): Promise<AdminAnalyticsData> {
   };
 }
 
+// ==============================================================================
+// MATA PELAJARAN & KKTP ENGINE DATA ACCESS
+// ==============================================================================
+
+import type {
+  MataPelajaran,
+  MapelKompetensiSync,
+  GuruMataPelajaran,
+  BahanAjarMapel,
+  TingkatKelas,
+} from "./types";
+
+export interface MataPelajaranWithDetails extends MataPelajaran {
+  totalSkkniSync: number;
+  units: { id: string; kodeUnit: string; judulUnit: string; sumber?: string }[];
+  labKesiapanPersen: number;
+  guruAssigned?: { id: string; nama: string }[];
+}
+
+export async function listUnitKompetensi(): Promise<
+  { id: string; kodeUnit: string; judulUnit: string; programKeahlianId: string }[]
+> {
+  const { rows } = await pool.query<{
+    id: string;
+    kode_unit: string;
+    judul_unit: string;
+    program_keahlian_id: string;
+  }>("SELECT id, kode_unit, judul_unit, program_keahlian_id FROM unit_kompetensi ORDER BY kode_unit");
+
+  return rows.map((r) => ({
+    id: r.id,
+    kodeUnit: r.kode_unit,
+    judulUnit: r.judul_unit,
+    programKeahlianId: r.program_keahlian_id,
+  }));
+}
+
+export async function listMataPelajaran(
+  programKeahlianId?: string
+): Promise<MataPelajaranWithDetails[]> {
+  const whereClause = programKeahlianId ? "WHERE mp.program_keahlian_id = $1" : "";
+  const params = programKeahlianId ? [programKeahlianId] : [];
+
+  const query = `
+    SELECT 
+      mp.id,
+      mp.program_keahlian_id,
+      mp.nama_mapel,
+      mp.kode_mapel,
+      mp.tingkat_kelas,
+      mp.semester,
+      mp.alokasi_jp_mingguan,
+      mp.passing_grade_minimum,
+      mp.bobot_teori,
+      mp.bobot_praktik_mingguan,
+      mp.bobot_praktik_kelompok,
+      mp.deskripsi,
+      mp.rujukan_wsos,
+      mp.created_at,
+      mp.updated_at,
+      COALESCE(
+        json_agg(
+          json_build_object(
+            'id', uk.id,
+            'kodeUnit', uk.kode_unit,
+            'judulUnit', uk.judul_unit,
+            'sumber', uk.sumber
+          )
+        ) FILTER (WHERE uk.id IS NOT NULL),
+        '[]'
+      ) as units_json,
+      COALESCE(
+        (
+          SELECT json_agg(json_build_object('id', g.id, 'nama', g.nama))
+          FROM guru_mata_pelajaran gmp
+          JOIN guru g ON g.id = gmp.guru_id
+          WHERE gmp.mata_pelajaran_id = mp.id
+        ),
+        '[]'
+      ) as guru_json
+    FROM mata_pelajaran mp
+    LEFT JOIN mapel_kompetensi_sync mks ON mks.mata_pelajaran_id = mp.id
+    LEFT JOIN unit_kompetensi uk ON uk.id = mks.unit_kompetensi_id
+    ${whereClause}
+    GROUP BY mp.id
+    ORDER BY mp.tingkat_kelas, mp.semester, mp.nama_mapel
+  `;
+
+  const { rows } = await pool.query(query, params);
+
+  return rows.map((r: any) => {
+    const units = r.units_json || [];
+    // Hitung estimasi kesiapan lab (indikator ketersediaan alat)
+    const labKesiapanPersen = units.length > 0 ? 100 : 0;
+
+    return {
+      id: r.id,
+      programKeahlianId: r.program_keahlian_id,
+      namaMapel: r.nama_mapel,
+      kodeMapel: r.kode_mapel,
+      tingkatKelas: r.tingkat_kelas,
+      semester: r.semester,
+      alokasiJpMingguan: r.alokasi_jp_mingguan,
+      passingGradeMinimum: Number(r.passing_grade_minimum || 80),
+      bobotTeori: r.bobot_teori,
+      bobotPraktikMingguan: r.bobot_praktik_mingguan,
+      bobotPraktikKelompok: r.bobot_praktik_kelompok,
+      deskripsi: r.deskripsi,
+      rujukanWsos: r.rujukan_wsos,
+      createdAt: r.created_at?.toISOString?.() || r.created_at,
+      updatedAt: r.updated_at?.toISOString?.() || r.updated_at,
+      totalSkkniSync: units.length,
+      units,
+      labKesiapanPersen,
+      guruAssigned: r.guru_json || [],
+    };
+  });
+}
+
+export async function getMataPelajaranById(
+  id: string
+): Promise<(MataPelajaranWithDetails & { bahanAjar?: BahanAjarMapel }) | null> {
+  const query = `
+    SELECT 
+      mp.id,
+      mp.program_keahlian_id,
+      mp.nama_mapel,
+      mp.kode_mapel,
+      mp.tingkat_kelas,
+      mp.semester,
+      mp.alokasi_jp_mingguan,
+      mp.passing_grade_minimum,
+      mp.bobot_teori,
+      mp.bobot_praktik_mingguan,
+      mp.bobot_praktik_kelompok,
+      mp.deskripsi,
+      mp.rujukan_wsos,
+      mp.created_at,
+      mp.updated_at,
+      COALESCE(
+        json_agg(
+          json_build_object(
+            'id', uk.id,
+            'kodeUnit', uk.kode_unit,
+            'judulUnit', uk.judul_unit,
+            'sumber', uk.sumber
+          )
+        ) FILTER (WHERE uk.id IS NOT NULL),
+        '[]'
+      ) as units_json
+    FROM mata_pelajaran mp
+    LEFT JOIN mapel_kompetensi_sync mks ON mks.mata_pelajaran_id = mp.id
+    LEFT JOIN unit_kompetensi uk ON uk.id = mks.unit_kompetensi_id
+    WHERE mp.id = $1
+    GROUP BY mp.id
+  `;
+
+  const { rows } = await pool.query(query, [id]);
+  if (!rows[0]) return null;
+
+  const r = rows[0];
+  const units = r.units_json || [];
+
+  // Ambil bahan ajar terbaru jika ada
+  const bahanAjarRes = await pool.query(
+    "SELECT * FROM bahan_ajar_mapel WHERE mata_pelajaran_id = $1 ORDER BY updated_at DESC LIMIT 1",
+    [id]
+  );
+  const ba = bahanAjarRes.rows[0];
+
+  const bahanAjar: BahanAjarMapel | undefined = ba
+    ? {
+        id: ba.id,
+        mataPelajaranId: ba.mata_pelajaran_id,
+        guruId: ba.guru_id,
+        judul: ba.judul,
+        tingkatKelas: ba.tingkat_kelas,
+        ringkasanTeori: ba.ringkasan_teori || "",
+        jobsheetMingguan: ba.jobsheet_mingguan || [],
+        proyekKelompok: ba.proyek_kelompok || [],
+        rubrikKktp: ba.rubrik_kktp || [],
+        instruksiK3Kritis: ba.instruksi_k3_kritis,
+        status: ba.status,
+        createdAt: ba.created_at?.toISOString?.() || ba.created_at,
+        updatedAt: ba.updated_at?.toISOString?.() || ba.updated_at,
+      }
+    : undefined;
+
+  return {
+    id: r.id,
+    programKeahlianId: r.program_keahlian_id,
+    namaMapel: r.nama_mapel,
+    kodeMapel: r.kode_mapel,
+    tingkatKelas: r.tingkat_kelas,
+    semester: r.semester,
+    alokasiJpMingguan: r.alokasi_jp_mingguan,
+    passingGradeMinimum: Number(r.passing_grade_minimum || 80),
+    bobotTeori: r.bobot_teori,
+    bobotPraktikMingguan: r.bobot_praktik_mingguan,
+    bobotPraktikKelompok: r.bobot_praktik_kelompok,
+    deskripsi: r.deskripsi,
+    rujukanWsos: r.rujukan_wsos,
+    createdAt: r.created_at?.toISOString?.() || r.created_at,
+    updatedAt: r.updated_at?.toISOString?.() || r.updated_at,
+    totalSkkniSync: units.length,
+    units,
+    labKesiapanPersen: units.length > 0 ? 100 : 0,
+    bahanAjar,
+  };
+}
+
+export async function syncMapelWithUnits(
+  mapelId: string,
+  unitIds: string[]
+): Promise<{ success: boolean; syncedCount: number }> {
+  // 1. Bersihkan pemetaan sebelumnya
+  await pool.query("DELETE FROM mapel_kompetensi_sync WHERE mata_pelajaran_id = $1", [mapelId]);
+
+  // 2. Masukkan unit-unit baru
+  let syncedCount = 0;
+  for (const unitId of unitIds) {
+    const syncId = `sync-${crypto.randomUUID().slice(0, 8)}`;
+    await pool.query(
+      `INSERT INTO mapel_kompetensi_sync (id, mata_pelajaran_id, unit_kompetensi_id, is_mandatory)
+       VALUES ($1, $2, $3, true)
+       ON CONFLICT (mata_pelajaran_id, unit_kompetensi_id) DO NOTHING`,
+      [syncId, mapelId, unitId]
+    );
+    syncedCount++;
+  }
+
+  return { success: true, syncedCount };
+}
+
+export async function createMataPelajaran(
+  data: Omit<MataPelajaran, "id" | "createdAt" | "updatedAt">
+): Promise<MataPelajaran> {
+  const id = `mapel-${crypto.randomUUID().slice(0, 8)}`;
+  const query = `
+    INSERT INTO mata_pelajaran (
+      id, program_keahlian_id, nama_mapel, kode_mapel, tingkat_kelas, semester,
+      alokasi_jp_mingguan, passing_grade_minimum, bobot_teori, bobot_praktik_mingguan,
+      bobot_praktik_kelompok, deskripsi, rujukan_wsos
+    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+    RETURNING *
+  `;
+  const { rows } = await pool.query(query, [
+    id,
+    data.programKeahlianId,
+    data.namaMapel,
+    data.kodeMapel || `MP-${Date.now().toString().slice(-4)}`,
+    data.tingkatKelas,
+    data.semester,
+    data.alokasiJpMingguan || 4,
+    data.passingGradeMinimum || 80.0,
+    data.bobotTeori || 20,
+    data.bobotPraktikMingguan || 40,
+    data.bobotPraktikKelompok || 40,
+    data.deskripsi || null,
+    data.rujukanWsos || null,
+  ]);
+
+  const r = rows[0];
+  return {
+    id: r.id,
+    programKeahlianId: r.program_keahlian_id,
+    namaMapel: r.nama_mapel,
+    kodeMapel: r.kode_mapel,
+    tingkatKelas: r.tingkat_kelas,
+    semester: r.semester,
+    alokasiJpMingguan: r.alokasi_jp_mingguan,
+    passingGradeMinimum: Number(r.passing_grade_minimum),
+    bobotTeori: r.bobot_teori,
+    bobotPraktikMingguan: r.bobot_praktik_mingguan,
+    bobotPraktikKelompok: r.bobot_praktik_kelompok,
+    deskripsi: r.deskripsi,
+    rujukanWsos: r.rujukan_wsos,
+  };
+}
+
+export async function listMapelForGuru(
+  guruId: string
+): Promise<MataPelajaranWithDetails[]> {
+  // Ambil program keahlian guru
+  const guruRes = await pool.query<{ program_keahlian_id: string }>(
+    "SELECT program_keahlian_id FROM guru WHERE id = $1",
+    [guruId]
+  );
+  const progId = guruRes.rows[0]?.program_keahlian_id;
+
+  // Tampilkan seluruh mata pelajaran dari program keahlian guru
+  return listMataPelajaran(progId);
+}
+
+export async function saveBahanAjarMapel(
+  data: Omit<BahanAjarMapel, "id" | "createdAt" | "updatedAt"> & { id?: string }
+): Promise<BahanAjarMapel> {
+  const id = data.id || `ba-${crypto.randomUUID().slice(0, 8)}`;
+  const query = `
+    INSERT INTO bahan_ajar_mapel (
+      id, mata_pelajaran_id, guru_id, judul, tingkat_kelas, ringkasan_teori,
+      jobsheet_mingguan, proyek_kelompok, rubrik_kktp, instruksi_k3_kritis, status, updated_at
+    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, NOW())
+    ON CONFLICT (id) DO UPDATE SET
+      judul = EXCLUDED.judul,
+      ringkasan_teori = EXCLUDED.ringkasan_teori,
+      jobsheet_mingguan = EXCLUDED.jobsheet_mingguan,
+      proyek_kelompok = EXCLUDED.proyek_kelompok,
+      rubrik_kktp = EXCLUDED.rubrik_kktp,
+      instruksi_k3_kritis = EXCLUDED.instruksi_k3_kritis,
+      status = EXCLUDED.status,
+      updated_at = NOW()
+    RETURNING *
+  `;
+
+  const { rows } = await pool.query(query, [
+    id,
+    data.mataPelajaranId,
+    data.guruId,
+    data.judul,
+    data.tingkatKelas,
+    data.ringkasanTeori || "",
+    JSON.stringify(data.jobsheetMingguan || []),
+    JSON.stringify(data.proyekKelompok || []),
+    JSON.stringify(data.rubrikKktp || []),
+    data.instruksiK3Kritis || null,
+    data.status || "draft",
+  ]);
+
+  const r = rows[0];
+  return {
+    id: r.id,
+    mataPelajaranId: r.mata_pelajaran_id,
+    guruId: r.guru_id,
+    judul: r.judul,
+    tingkatKelas: r.tingkat_kelas,
+    ringkasanTeori: r.ringkasan_teori,
+    jobsheetMingguan: r.jobsheet_mingguan,
+    proyekKelompok: r.proyek_kelompok,
+    rubrikKktp: r.rubrik_kktp,
+    instruksiK3Kritis: r.instruksi_k3_kritis,
+    status: r.status,
+    createdAt: r.created_at?.toISOString?.() || r.created_at,
+    updatedAt: r.updated_at?.toISOString?.() || r.updated_at,
+  };
+}
+
+

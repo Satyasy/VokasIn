@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS unit_kompetensi (
   -- SEBAGAI SUMBER untuk embedding (lib/embedding.ts) maupun full-text search
   -- di bawah — satu teks, dua indeks, supaya keduanya selalu konsisten.
   corpus_text TEXT,
-  embedding vector(384),
+  embedding vector(768),
   embedding_model_version TEXT,
   embedding_updated_at TIMESTAMPTZ,
   corpus_tsv tsvector GENERATED ALWAYS AS (to_tsvector('simple', coalesce(corpus_text, ''))) STORED

@@ -38,6 +38,17 @@ async function run() {
     const sql = fs.readFileSync(sqlPath, "utf8");
     console.log("Menjalankan migrasi database Mata Pelajaran & KKTP Engine...");
     await pool.query(sql);
+
+    // 5. Pastikan dimensi embedding 768 untuk Gemini Embedding
+    console.log("Memastikan tipe kolom embedding vector(768)...");
+    await pool.query("ALTER TABLE unit_kompetensi ALTER COLUMN embedding TYPE vector(768);");
+
+    // 6. Jalankan pembaruan embedding untuk unit kompetensi
+    console.log("Menjalankan embedding unit kompetensi dengan Gemini...");
+    const { embedAllUnits } = await import("../lib/data-access-db");
+    const embeddedIds = await embedAllUnits();
+    console.log(`Berhasil embed ${embeddedIds.length} unit kompetensi ke PostgreSQL!`);
+
     console.log("Seluruh migrasi BERHASIL dieksekusi!");
 
     // Verifikasi data yang baru dimasukkan

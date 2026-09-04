@@ -25,26 +25,43 @@ import { cn } from "@/lib/utils";
 import { CircularProgress } from "@/components/ui/circular-progress";
 import { KaprogliTabsContainer } from "@/components/kaprogli/kaprogli-tabs-container";
 
+export const dynamic = "force-dynamic";
 const SEMESTER = "Ganjil 2026/2027";
 
 export default async function KaprogliPage() {
-  await Promise.all([
-    ensureLabCacheFresh(),
-    ensureGuruCacheFresh(),
-  ]);
-  const session = await getSession();
-  const programList = getProgramKeahlian();
+  try {
+    await Promise.all([
+      ensureLabCacheFresh().catch((e) => console.error("ensureLabCacheFresh error:", e)),
+      ensureGuruCacheFresh().catch((e) => console.error("ensureGuruCacheFresh error:", e)),
+    ]);
+    const session = await getSession();
+    const programList = getProgramKeahlian();
 
-  const [guruList, jadwalList, kandidatList, mapelList, allUnits] = await Promise.all([
-    listAllGuru(),
-    listJadwal(),
-    listKandidat("menunggu"),
-    listMataPelajaran(),
-    listUnitKompetensi(),
-  ]);
+    const [guruList, jadwalList, kandidatList, mapelList, allUnits] = await Promise.all([
+      listAllGuru().catch((e) => {
+        console.error("listAllGuru error:", e);
+        return [];
+      }),
+      listJadwal().catch((e) => {
+        console.error("listJadwal error:", e);
+        return [];
+      }),
+      listKandidat("menunggu").catch((e) => {
+        console.error("listKandidat error:", e);
+        return [];
+      }),
+      listMataPelajaran().catch((e) => {
+        console.error("listMataPelajaran error:", e);
+        return [];
+      }),
+      listUnitKompetensi().catch((e) => {
+        console.error("listUnitKompetensi error:", e);
+        return [];
+      }),
+    ]);
 
-  const guru = session ? getGuruById(session.guruId) : undefined;
-  const currentProgramId = guru?.programKeahlianId || "pk-rpl";
+    const guru = session ? getGuruById(session.guruId) : undefined;
+    const currentProgramId = guru?.programKeahlianId || "pk-rpl";
 
   // Node 1: Skill Delta Score & Gap Kandidat
   const deltaScoreNode = (
@@ -265,4 +282,18 @@ export default async function KaprogliPage() {
       />
     </main>
   );
+  } catch (error: any) {
+    console.error("CRITICAL ERROR in KaprogliPage:", error);
+    return (
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6">
+        <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-red-900">
+          <h2 className="text-xl font-bold">Terjadi Kesalahan Memuat Halaman Kaprogli</h2>
+          <p className="mt-2 text-sm text-red-700">
+            {error?.message || String(error)}
+          </p>
+        </div>
+      </main>
+    );
+  }
 }
+

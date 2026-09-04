@@ -18,11 +18,27 @@ if (fs.existsSync(envPath)) {
 async function run() {
   const { pool } = await import("../lib/db");
   try {
+    // 1. Eksekusi skema inti
+    const schemaSql = fs.readFileSync(path.join(process.cwd(), "scripts/schema.sql"), "utf8");
+    console.log("Menjalankan migrasi skema inti...");
+    await pool.query(schemaSql);
+
+    // 2. Eksekusi tabel anchor & kolom AI
+    const anchorSql = fs.readFileSync(path.join(process.cwd(), "scripts/add_anchor_table.sql"), "utf8");
+    console.log("Menjalankan migrasi anchor & AI...");
+    await pool.query(anchorSql);
+
+    // 3. Eksekusi data seed utama (guru, skkni, jadwal)
+    const seedSql = fs.readFileSync(path.join(process.cwd(), "scripts/seed.sql"), "utf8");
+    console.log("Menjalankan data seed...");
+    await pool.query(seedSql);
+
+    // 4. Eksekusi mata pelajaran & kktp engine
     const sqlPath = path.join(process.cwd(), "scripts/add_mapel_and_kktp_engine.sql");
     const sql = fs.readFileSync(sqlPath, "utf8");
     console.log("Menjalankan migrasi database Mata Pelajaran & KKTP Engine...");
     await pool.query(sql);
-    console.log("Migrasi BERHASIL dieksekusi!");
+    console.log("Seluruh migrasi BERHASIL dieksekusi!");
 
     // Verifikasi data yang baru dimasukkan
     const res = await pool.query("SELECT id, nama_mapel, tingkat_kelas, alokasi_jp_mingguan, rujukan_wsos FROM mata_pelajaran ORDER BY tingkat_kelas, nama_mapel");

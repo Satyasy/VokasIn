@@ -508,8 +508,11 @@ export function KaprogliMapelTab({
                     })}
                   </div>
                 ) : (
-                  <div className="rounded-2xl border border-dashed border-neutral-200 p-4 text-center text-xs text-neutral-500">
-                    Tidak ditemukan rekomendasi spesifik untuk kata kunci ini.
+                  <div className="rounded-2xl border border-dashed border-neutral-200 bg-neutral-50/50 p-4 text-center text-xs text-neutral-600">
+                    <p className="font-semibold">Belum ada unit SKKNI yang cukup cocok untuk mata pelajaran ini.</p>
+                    <p className="mt-0.5 text-[11px] text-neutral-500">
+                      Pilih dari katalog di bawah atau tambahkan unit SKKNI baru melalui menu verifikasi.
+                    </p>
                   </div>
                 )}
               </div>

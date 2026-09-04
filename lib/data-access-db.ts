@@ -605,6 +605,10 @@ const STOPWORDS_ID = new Set([
   "ada", "atas", "oleh", "karena", "jika", "kalau", "maka", "serta", "para",
 ]);
 
+const SHORT_TECH_TERMS = new Set([
+  "ai", "ui", "ux", "ip", "db", "vr", "ar", "ml", "dl", "it", "os", "ci", "cd", "qa", "bi", "iot", "wan", "lan", "vpn"
+]);
+
 // plainto_tsquery MENG-AND-kan semua kata — cocok untuk 1-3 kata kunci
 // spesifik, tapi deskripsi kebutuhan bebas guru (Asisten Kebutuhan Modul)
 // biasa berisi banyak kata sekaligus, hampir tidak pernah semuanya muncul di
@@ -614,7 +618,7 @@ function buildOrTsQuery(query: string): string | null {
   const tokens = query
     .toLowerCase()
     .split(/[^\p{L}\p{N}]+/u)
-    .filter((t) => t.length >= 3 && !STOPWORDS_ID.has(t));
+    .filter((t) => (t.length >= 3 || SHORT_TECH_TERMS.has(t)) && !STOPWORDS_ID.has(t));
   if (tokens.length === 0) return null;
   // ' | ' aman disisipkan sebagai bind parameter ke to_tsquery — token sudah
   // difilter hanya huruf/angka, tidak ada karakter operator tsquery yang lolos.
@@ -636,11 +640,13 @@ export async function searchUnitKompetensiHybrid(query: string, limit = 10): Pro
     program_keahlian_id: string | null;
     program_keahlian_singkatan: string | null;
     snippet: string | null;
+    distance?: number;
   };
   const [{ rows: vecRows }, { rows: ftsRows }] = await Promise.all([
     pool.query<Row>(
       `SELECT uk.id, uk.kode_unit, uk.judul_unit,
-              pk.id AS program_keahlian_id, pk.singkatan AS program_keahlian_singkatan, NULL AS snippet
+              pk.id AS program_keahlian_id, pk.singkatan AS program_keahlian_singkatan, NULL AS snippet,
+              uk.embedding <=> $1 AS distance
        FROM unit_kompetensi uk
        LEFT JOIN program_keahlian pk ON pk.id = uk.program_keahlian_id
        WHERE uk.embedding IS NOT NULL
@@ -667,6 +673,15 @@ export async function searchUnitKompetensiHybrid(query: string, limit = 10): Pro
         ),
   ]);
 
+  const ftsIds = new Set(ftsRows.map((r) => r.id));
+  // Filter baris vektor yang terlalu jauh (cosine distance > 0.36 / kemiripan < 0.64) jika tidak cocok di FTS
+  const relevantVecRows = vecRows.filter((r) => {
+    if (r.distance !== undefined && Number(r.distance) > 0.36 && !ftsIds.has(r.id)) {
+      return false;
+    }
+    return true;
+  });
+
   const K = 60;
   const fused = new Map<string, SearchHit>();
   const addRanked = (rows: Row[]) => {
@@ -689,7 +704,7 @@ export async function searchUnitKompetensiHybrid(query: string, limit = 10): Pro
       }
     });
   };
-  addRanked(vecRows);
+  addRanked(relevantVecRows);
   addRanked(ftsRows);
 
   return [...fused.values()].sort((a, b) => b.score - a.score).slice(0, limit);

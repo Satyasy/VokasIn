@@ -254,7 +254,7 @@ export default async function KaprogliPage() {
   );
 
   return (
-    <main className="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-6">
+    <main className="mx-auto w-full max-w-7xl flex-1 px-4 sm:px-6 lg:px-8">
       {/* Header Utama Kaprogli */}
       <div className="border-b border-neutral-200 pb-6 mb-6">
         <p className="text-xs font-bold uppercase tracking-wider text-slime-lime-700">
@@ -285,7 +285,7 @@ export default async function KaprogliPage() {
   } catch (error: any) {
     console.error("CRITICAL ERROR in KaprogliPage:", error);
     return (
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6">
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
         <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-red-900">
           <h2 className="text-xl font-bold">Terjadi Kesalahan Memuat Halaman Kaprogli</h2>
           <p className="mt-2 text-sm text-red-700">

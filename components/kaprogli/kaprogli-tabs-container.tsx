@@ -42,29 +42,29 @@ export function KaprogliTabsContainer({
   const tabs: TabItem[] = [
     {
       id: "mapel",
-      label: "Kurikulum & Mapel (X, XI, XII)",
+      label: "Kurikulum & Mapel",
       count: mapelList.length,
       icon: <BookOpen className="size-4" />,
     },
     {
       id: "delta",
-      label: "Skill Delta Score",
+      label: "Skill Delta",
       icon: <Gauge className="size-4" />,
     },
     {
       id: "supervisi",
-      label: "Supervisi JP & Jadwal Guru",
+      label: "Supervisi & Jadwal",
       count: jadwalList.length,
       icon: <Users className="size-4" />,
     },
     {
       id: "inventaris",
-      label: "Inventaris Lab & Alat",
+      label: "Inventaris Lab",
       icon: <Wrench className="size-4" />,
     },
     {
       id: "skkni",
-      label: "Verifikasi & Upload SKKNI",
+      label: "Verifikasi SKKNI",
       count: kandidatList.length,
       icon: <FileCheck2 className="size-4" />,
     },

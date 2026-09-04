@@ -1,11 +1,28 @@
 "use client";
 
-import { useState, useTransition, type FormEvent } from "react";
+import { useState, useTransition, useEffect, type FormEvent } from "react";
 import Link from "next/link";
-import { SearchX, Sparkles, ArrowRight, Eye, X, BookOpen, Wrench, ExternalLink } from "lucide-react";
-import { jelajahKompetensi } from "@/app/jelajah-kompetensi/search-action";
+import {
+  SearchX,
+  Sparkles,
+  ArrowRight,
+  Eye,
+  X,
+  BookOpen,
+  Wrench,
+  ExternalLink,
+  Building2,
+  Map,
+  Loader2,
+} from "lucide-react";
+import {
+  jelajahKompetensi,
+  getUnitDetailAction,
+  type UnitDetailResult,
+} from "@/app/jelajah-kompetensi/search-action";
 import type { SearchHit } from "@/lib/data-access-db";
 import { getUnitKompetensiById, getSaranTopikForUnit } from "@/lib/data-access";
+import { getMitraByUnit } from "@/lib/mitra-industri";
 import { tingkatKecocokan, badgeVariantByTingkatKecocokan } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -32,7 +49,23 @@ export function JelajahKompetensiClient() {
   const [teks, setTeks] = useState("");
   const [hasil, setHasil] = useState<SearchHit[] | null>(null);
   const [selectedUnit, setSelectedUnit] = useState<SearchHit | null>(null);
+  const [detailData, setDetailData] = useState<UnitDetailResult | null>(null);
+  const [isLoadingDetail, setIsLoadingDetail] = useState(false);
   const [isPending, startTransition] = useTransition();
+
+  // Auto-fill dan cari jika diarahkan dari Roadmap atau Mitra Industri via query param
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const promptParam = params.get("prompt") || params.get("q");
+      if (promptParam) {
+        setTeks(promptParam);
+        startTransition(async () => {
+          setHasil(await jelajahKompetensi(promptParam));
+        });
+      }
+    }
+  }, []);
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -50,12 +83,26 @@ export function JelajahKompetensiClient() {
     });
   }
 
+  async function handleOpenDetail(hit: SearchHit) {
+    setSelectedUnit(hit);
+    setIsLoadingDetail(true);
+    try {
+      const data = await getUnitDetailAction(hit.id);
+      setDetailData(data);
+    } catch (err) {
+      console.error("Gagal memuat detail unit:", err);
+    } finally {
+      setIsLoadingDetail(false);
+    }
+  }
+
   const hasilLayak = hasil?.filter((h) => h.snippet !== null) ?? [];
   const skorTertinggi = hasilLayak[0]?.score ?? 0;
 
-  // Detail unit yang sedang dibuka popup-nya
-  const activeDetailUnit = selectedUnit ? getUnitKompetensiById(selectedUnit.id) : null;
-  const activeDetailSaran = selectedUnit ? getSaranTopikForUnit(selectedUnit.id) : [];
+  // Fallback detail unit in-memory jika detailData belum ada
+  const activeDetailUnit = detailData?.unit ?? (selectedUnit ? getUnitKompetensiById(selectedUnit.id) : null);
+  const activeDetailSaran = detailData?.saranList ?? (selectedUnit ? getSaranTopikForUnit(selectedUnit.id) : []);
+  const activeMitraList = detailData?.mitraList ?? (selectedUnit ? getMitraByUnit(selectedUnit.kodeUnit) : []);
 
   return (
     <div className="mt-8">
@@ -115,18 +162,18 @@ export function JelajahKompetensiClient() {
               <div className="flex flex-col gap-3">
                 {hasilLayak.map((h) => {
                   const tingkat = tingkatKecocokan(h.score, skorTertinggi);
-                  const unit = getUnitKompetensiById(h.id);
+                  const hitMitra = getMitraByUnit(h.kodeUnit);
                   return (
                     <Card
                       key={h.id}
-                      onClick={() => setSelectedUnit(h)}
+                      onClick={() => handleOpenDetail(h)}
                       className="cursor-pointer p-5 transition-all hover:border-slime-lime-400 hover:shadow-md active:scale-[0.99]"
                     >
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         <div className="flex flex-wrap items-center gap-2">
                           <span className="font-bold text-slime-lime-900">{h.kodeUnit}</span>
                           {h.programKeahlian && (
-                            <Badge variant="brand" className="text-xs">
+                            <Badge variant="brand" className="text-xs font-bold">
                               {h.programKeahlian}
                             </Badge>
                           )}
@@ -138,7 +185,7 @@ export function JelajahKompetensiClient() {
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation();
-                            setSelectedUnit(h);
+                            handleOpenDetail(h);
                           }}
                           className="inline-flex items-center gap-1 text-xs font-bold text-slime-lime-800 hover:underline"
                         >
@@ -153,10 +200,20 @@ export function JelajahKompetensiClient() {
                           &ldquo;{h.snippet}&rdquo;
                         </CardDescription>
                       )}
-                      {unit && (
-                        <p className="mt-2.5 text-xs font-medium text-neutral-500">
-                          Sumber SKKNI: {unit.sumber}
-                        </p>
+
+                      {/* Tampilkan Badge Mitra Industri Terkait jika ada */}
+                      {hitMitra.length > 0 && (
+                        <div className="mt-3 flex items-center gap-1.5 flex-wrap pt-2 border-t border-neutral-100">
+                          <span className="text-[11px] font-semibold text-neutral-500 flex items-center gap-1">
+                            <Building2 className="size-3 text-slime-lime-800" />
+                            Mitra Industri:
+                          </span>
+                          {hitMitra.map((m) => (
+                            <Badge key={m.id} variant="brand" className="text-[10px] font-semibold">
+                              {m.namaPerusahaan}
+                            </Badge>
+                          ))}
+                        </div>
                       )}
                     </Card>
                   );
@@ -190,6 +247,12 @@ export function JelajahKompetensiClient() {
                     <Badge variant="default" className="font-bold text-xs px-2.5 py-0.5">
                       {selectedUnit.programKeahlian}
                     </Badge>
+                  )}
+                  {isLoadingDetail && (
+                    <span className="inline-flex items-center gap-1 text-xs text-neutral-500 font-medium">
+                      <Loader2 className="size-3 animate-spin text-slime-lime-700" />
+                      Memuat detail database...
+                    </span>
                   )}
                 </div>
                 <h3 className="mt-2.5 text-xl sm:text-2xl font-extrabold text-neutral-900 leading-snug tracking-tight">
@@ -238,6 +301,71 @@ export function JelajahKompetensiClient() {
                   </h4>
                   <div className="rounded-2xl border border-slime-lime-200 bg-slime-lime-50/70 p-4 sm:p-5 text-sm leading-relaxed text-neutral-900 font-medium">
                     &ldquo;{selectedUnit.snippet}&rdquo;
+                  </div>
+                </div>
+              )}
+
+              {/* Mitra Industri yang Membutuhkan Unit Ini */}
+              {activeMitraList.length > 0 && (
+                <div className="rounded-2xl border border-slime-lime-300 bg-slime-lime-50/70 p-4 sm:p-5">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slime-lime-900 mb-3">
+                    <Building2 className="size-4 text-slime-lime-700" />
+                    <span>Dibutuhkan oleh Mitra Industri ({activeMitraList.length} Perusahaan)</span>
+                  </div>
+                  <div className="grid gap-2.5 sm:grid-cols-2">
+                    {activeMitraList.map((m) => (
+                      <div
+                        key={m.id}
+                        className="rounded-xl border border-slime-lime-200 bg-white p-3.5 flex flex-col justify-between shadow-2xs"
+                      >
+                        <div>
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="font-bold text-neutral-900 text-sm">{m.namaPerusahaan}</span>
+                            <Badge variant="brand" className="text-[10px] font-bold">{m.programSingkatan}</Badge>
+                          </div>
+                          <p className="mt-1 text-xs text-neutral-500 line-clamp-2">{m.studiKasusNyata}</p>
+                        </div>
+                        <div className="mt-3 pt-2 border-t border-neutral-100 flex items-center justify-end">
+                          <Link href="/kunjungan-industri">
+                            <Button size="sm" variant="secondary" className="h-7 text-[11px] font-semibold gap-1">
+                              <ExternalLink className="size-3" />
+                              Lihat Profil Mitra
+                            </Button>
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Elemen Kompetensi & KUK Resmi Database */}
+              {activeDetailUnit?.elemenKompetensi && activeDetailUnit.elemenKompetensi.length > 0 && (
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-3">
+                    Struktur Elemen Kompetensi &amp; KUK ({activeDetailUnit.elemenKompetensi.length} Elemen)
+                  </h4>
+                  <div className="space-y-2 rounded-2xl border border-neutral-200 bg-neutral-50/50 p-4 divide-y divide-neutral-200/70">
+                    {activeDetailUnit.elemenKompetensi.map((elem) => (
+                      <details key={elem.id} className="group py-2">
+                        <summary className="cursor-pointer list-none text-xs sm:text-sm font-bold text-neutral-800 flex items-center justify-between hover:text-neutral-950">
+                          <span className="flex items-center gap-2">
+                            <BookOpen className="size-3.5 text-slime-lime-700" />
+                            {elem.judul}
+                          </span>
+                          <span className="text-[10px] text-neutral-400 group-open:rotate-90 transition-transform">
+                            ▶
+                          </span>
+                        </summary>
+                        <ul className="mt-2 pl-6 space-y-1.5 text-xs text-neutral-600">
+                          {elem.kriteriaUnjukKerja.map((kuk) => (
+                            <li key={kuk.id} className="leading-relaxed">
+                              <span className="font-bold text-neutral-800">{kuk.kode}</span> {kuk.teks}
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    ))}
                   </div>
                 </div>
               )}
@@ -301,22 +429,37 @@ export function JelajahKompetensiClient() {
             </div>
 
             {/* Footer Modal Actions */}
-            <div className="mt-8 flex items-center justify-end gap-3 border-t border-neutral-100 pt-5">
+            <div className="mt-8 flex flex-wrap items-center justify-end gap-3 border-t border-neutral-100 pt-5">
               <Button
                 variant="secondary"
                 size="sm"
                 onClick={() => setSelectedUnit(null)}
-                className="h-10 px-5 text-xs font-bold"
+                className="h-10 px-4 text-xs font-bold"
               >
                 Tutup
               </Button>
+
+              {/* Tautan Buka di Roadmap */}
+              <Link
+                href={`/roadmap/${activeDetailUnit?.programKeahlianId || selectedUnit.programKeahlianId || 'pk-rpl'}?highlight=${selectedUnit.id}`}
+              >
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  className="h-10 px-4 text-xs font-bold gap-1.5"
+                >
+                  <Map className="size-3.5 text-slime-lime-700" />
+                  Buka di Roadmap
+                </Button>
+              </Link>
+
               <Link href={`/guru/susun/${selectedUnit.id}`}>
                 <Button
                   size="sm"
                   className="h-10 px-5 text-xs font-bold bg-slime-lime-500 text-neutral-950 hover:bg-slime-lime-400 shadow-sm"
                 >
                   <BookOpen className="size-3.5 mr-1.5" />
-                  Susun Modul Ajar dengan Unit Ini
+                  Susun Modul Ajar
                 </Button>
               </Link>
             </div>

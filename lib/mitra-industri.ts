@@ -194,3 +194,31 @@ export const MITRA_INDUSTRI_LIST: MitraIndustri[] = [
     fasilitasObservasi: ["IT Quality Assurance Lab", "Command Center Transaksi", "Usability Testing Room"],
   },
 ];
+
+/**
+ * Mengambil daftar Mitra Industri yang membutuhkan atau relevan dengan Unit SKKNI tertentu.
+ * Pencocokan mendukung perbandingan ID unit atau Kode Unit.
+ */
+export function getMitraByUnit(unitIdOrCode: string): MitraIndustri[] {
+  if (!unitIdOrCode) return [];
+  const query = unitIdOrCode.trim().toLowerCase();
+  return MITRA_INDUSTRI_LIST.filter((m) =>
+    m.unitSkkniTerkait.some(
+      (u) =>
+        u.unitId.toLowerCase() === query ||
+        u.kodeUnit.toLowerCase() === query ||
+        query.includes(u.kodeUnit.toLowerCase()) ||
+        u.kodeUnit.toLowerCase().includes(query)
+    )
+  );
+}
+
+/**
+ * Mengambil daftar Mitra Industri yang terafiliasi dengan Program Keahlian tertentu.
+ */
+export function getMitraByProgram(programKeahlianId: string): MitraIndustri[] {
+  return MITRA_INDUSTRI_LIST.filter(
+    (m) => m.programKeahlianId === programKeahlianId || m.programKeahlianId === "all"
+  );
+}
+

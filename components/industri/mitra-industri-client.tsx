@@ -11,6 +11,8 @@ import {
   ShieldCheck,
   CheckCircle2,
   Sparkles,
+  Map,
+  Compass,
 } from "lucide-react";
 import { MITRA_INDUSTRI_LIST, type MitraIndustri } from "@/lib/mitra-industri";
 import { Badge } from "@/components/ui/badge";
@@ -189,14 +191,34 @@ export function MitraIndustriClient() {
                       </p>
                     </div>
 
-                    <Link
-                      href={`/guru/susun/${u.unitId}`}
-                      className="mt-3 inline-flex items-center gap-1 text-[11px] font-bold text-slime-lime-800 hover:underline self-start"
-                    >
-                      <BookOpen className="size-3" />
-                      <span>Susun Modul dari Unit Ini</span>
-                      <ArrowRight className="size-3" />
-                    </Link>
+                    <div className="mt-3.5 flex flex-wrap items-center gap-2 pt-2 border-t border-neutral-200/60">
+                      <Link
+                        href={`/roadmap/${mitra.programKeahlianId === "all" ? "pk-tkj" : mitra.programKeahlianId}?highlight=${u.unitId}`}
+                        className="inline-flex items-center gap-1 rounded-lg bg-slime-lime-100/70 hover:bg-slime-lime-200 px-2 py-1 text-[11px] font-bold text-slime-lime-950 transition-colors"
+                        title="Lihat posisi unit ini di alur Roadmap SMK"
+                      >
+                        <Map className="size-3 text-slime-lime-800" />
+                        <span>Lihat Alur di Roadmap</span>
+                      </Link>
+
+                      <Link
+                        href={`/jelajah-kompetensi?prompt=${encodeURIComponent(u.judulUnit)}`}
+                        className="inline-flex items-center gap-1 rounded-lg border border-neutral-200 bg-white hover:bg-neutral-100 px-2 py-1 text-[11px] font-semibold text-neutral-800 transition-colors"
+                        title="Uji kesesuaian proyek portofolio Anda dengan unit industri ini"
+                      >
+                        <Compass className="size-3 text-slime-lime-700" />
+                        <span>Cocokkan Portofolio</span>
+                      </Link>
+
+                      <Link
+                        href={`/guru/susun/${u.unitId}`}
+                        className="inline-flex items-center gap-1 text-[10px] font-medium text-neutral-500 hover:text-neutral-800 ml-auto"
+                        title="Untuk Guru Produktif"
+                      >
+                        <BookOpen className="size-2.5" />
+                        <span>Susun Modul</span>
+                      </Link>
+                    </div>
                   </div>
                 ))}
               </div>

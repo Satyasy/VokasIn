@@ -19,6 +19,8 @@ import type {
   Role,
   StatusJadwal,
   SumberDayaLab,
+  UnitKompetensi,
+  ElemenKompetensi,
   UnitKompetensiKandidat,
 } from "./types";
 import { setLabCache, findLabItemInCache, setGuruCache } from "./data-access";
@@ -1296,6 +1298,183 @@ export async function listUnitKompetensi(): Promise<
     judulUnit: r.judul_unit,
     programKeahlianId: r.program_keahlian_id,
   }));
+}
+
+/**
+ * Menghitung total Unit SKKNI terdaftar di database per program keahlian.
+ */
+export async function getUnitKompetensiCountsPerProgram(): Promise<Record<string, number>> {
+  const counts: Record<string, number> = {};
+  try {
+    const { rows } = await pool.query<{ program_keahlian_id: string; total: string }>(
+      `SELECT program_keahlian_id, count(*)::text AS total
+       FROM unit_kompetensi
+       WHERE program_keahlian_id IS NOT NULL
+       GROUP BY program_keahlian_id`
+    );
+    for (const r of rows) {
+      counts[r.program_keahlian_id] = parseInt(r.total, 10) || 0;
+    }
+  } catch (err) {
+    console.error("Gagal getUnitKompetensiCountsPerProgram dari DB:", err);
+  }
+  return counts;
+}
+
+/**
+ * Mengambil seluruh Unit SKKNI resmi suatu program keahlian lengkap dengan
+ * elemen kompetensi dan kriteria unjuk kerja (KUK) untuk alur Roadmap.
+ */
+export async function getUnitKompetensiWithDetailsByProgram(
+  programKeahlianId: string
+): Promise<UnitKompetensi[]> {
+  try {
+    const { rows } = await pool.query<{
+      id: string;
+      kode_unit: string;
+      judul_unit: string;
+      dokumen_skkni: string;
+      sumber: string;
+      program_keahlian_id: string;
+      elemen_kompetensi_json: ElemenKompetensi[];
+    }>(
+      `SELECT 
+        uk.id,
+        uk.kode_unit,
+        uk.judul_unit,
+        COALESCE(doc.nomor, uk.sumber, 'SKKNI Resmi') AS dokumen_skkni,
+        COALESCE(uk.sumber, doc.nomor, '') AS sumber,
+        uk.program_keahlian_id,
+        COALESCE(
+          (
+            SELECT json_agg(
+              json_build_object(
+                'id', ek.id,
+                'judul', ek.judul,
+                'kriteriaUnjukKerja', COALESCE(
+                  (
+                    SELECT json_agg(
+                      json_build_object(
+                        'id', kuk.id,
+                        'kode', kuk.kode,
+                        'teks', kuk.teks
+                      ) ORDER BY kuk.kode
+                    )
+                    FROM kriteria_unjuk_kerja kuk
+                    WHERE kuk.elemen_kompetensi_id = ek.id
+                  ),
+                  '[]'::json
+                )
+              ) ORDER BY ek.id
+            )
+            FROM elemen_kompetensi ek
+            WHERE ek.unit_kompetensi_id = uk.id
+          ),
+          '[]'::json
+        ) AS elemen_kompetensi_json
+      FROM unit_kompetensi uk
+      LEFT JOIN dokumen_skkni doc ON doc.id = uk.dokumen_skkni_id
+      WHERE uk.program_keahlian_id = $1
+      ORDER BY uk.kode_unit ASC`,
+      [programKeahlianId]
+    );
+
+    if (rows.length > 0) {
+      return rows.map((r) => ({
+        id: r.id,
+        kodeUnit: r.kode_unit,
+        judulUnit: r.judul_unit,
+        dokumenSkkni: r.dokumen_skkni,
+        sumber: r.sumber,
+        programKeahlianId: r.program_keahlian_id,
+        elemenKompetensi: r.elemen_kompetensi_json || [],
+      }));
+    }
+  } catch (err) {
+    console.error("Gagal getUnitKompetensiWithDetailsByProgram dari DB:", err);
+  }
+
+  // Fallback resilient ke data in-memory jika DB belum ada data
+  const { getUnitKompetensiByProgram } = await import("./data-access");
+  return getUnitKompetensiByProgram(programKeahlianId);
+}
+
+/**
+ * Mengambil satu Unit SKKNI lengkap dengan elemen dan KUK berdasarkan ID unit atau kode unit.
+ */
+export async function getUnitKompetensiWithDetailsById(
+  unitId: string
+): Promise<UnitKompetensi | null> {
+  try {
+    const { rows } = await pool.query<{
+      id: string;
+      kode_unit: string;
+      judul_unit: string;
+      dokumen_skkni: string;
+      sumber: string;
+      program_keahlian_id: string;
+      elemen_kompetensi_json: ElemenKompetensi[];
+    }>(
+      `SELECT 
+        uk.id,
+        uk.kode_unit,
+        uk.judul_unit,
+        COALESCE(doc.nomor, uk.sumber, 'SKKNI Resmi') AS dokumen_skkni,
+        COALESCE(uk.sumber, doc.nomor, '') AS sumber,
+        uk.program_keahlian_id,
+        COALESCE(
+          (
+            SELECT json_agg(
+              json_build_object(
+                'id', ek.id,
+                'judul', ek.judul,
+                'kriteriaUnjukKerja', COALESCE(
+                  (
+                    SELECT json_agg(
+                      json_build_object(
+                        'id', kuk.id,
+                        'kode', kuk.kode,
+                        'teks', kuk.teks
+                      ) ORDER BY kuk.kode
+                    )
+                    FROM kriteria_unjuk_kerja kuk
+                    WHERE kuk.elemen_kompetensi_id = ek.id
+                  ),
+                  '[]'::json
+                )
+              ) ORDER BY ek.id
+            )
+            FROM elemen_kompetensi ek
+            WHERE ek.unit_kompetensi_id = uk.id
+          ),
+          '[]'::json
+        ) AS elemen_kompetensi_json
+      FROM unit_kompetensi uk
+      LEFT JOIN dokumen_skkni doc ON doc.id = uk.dokumen_skkni_id
+      WHERE uk.id = $1 OR uk.kode_unit = $1
+      LIMIT 1`,
+      [unitId]
+    );
+
+    if (rows.length > 0) {
+      const r = rows[0];
+      return {
+        id: r.id,
+        kodeUnit: r.kode_unit,
+        judulUnit: r.judul_unit,
+        dokumenSkkni: r.dokumen_skkni,
+        sumber: r.sumber,
+        programKeahlianId: r.program_keahlian_id,
+        elemenKompetensi: r.elemen_kompetensi_json || [],
+      };
+    }
+  } catch (err) {
+    console.error("Gagal getUnitKompetensiWithDetailsById dari DB:", err);
+  }
+
+  // Fallback resilient ke in-memory
+  const { getUnitKompetensiById } = await import("./data-access");
+  return getUnitKompetensiById(unitId) || null;
 }
 
 export async function listMataPelajaran(

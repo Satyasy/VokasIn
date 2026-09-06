@@ -580,12 +580,12 @@ export default function Home() {
                       <p className="mt-3.5 text-sm text-neutral-300">
                         Sumber rujukan:{" "}
                         <a
-                          href="https://peraturan.go.id/files/Permendikdasmen-no-8-tahun-2026.pdf"
+                          href="https://www.kemendikdasmen.go.id/download/file/1391"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="font-semibold text-slime-lime-300 underline underline-offset-2 hover:text-neutral-50"
                         >
-                          Pedoman Standar Kurikulum &amp; Pembelajaran Vokasi
+                          Permendikdasmen Nomor 12 Tahun 2025 (Pedoman Standar Kurikulum &amp; Pembelajaran)
                         </a>
                         .
                       </p>

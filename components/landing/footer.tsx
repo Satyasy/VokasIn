@@ -8,8 +8,8 @@ const sumber = [
     href: "https://katalog.data.go.id/dataset/standar-kompetensi-kerja-nasional-indonesia-skkni-yang-ditetapkan-s-d-tw-iii-tahun-2022",
   },
   {
-    label: "Permendikdasmen No. 8 Tahun 2026",
-    href: "https://peraturan.go.id/files/Permendikdasmen-no-8-tahun-2026.pdf",
+    label: "Permendikdasmen Nomor 12 Tahun 2025",
+    href: "https://www.kemendikdasmen.go.id/download/file/1391",
   },
   {
     label: "Statistik TBIG (JatimTimes, Mei 2026)",

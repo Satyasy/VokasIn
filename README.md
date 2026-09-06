@@ -31,7 +31,7 @@ Di jenjang SMK, terjadi kesenjangan (*mismatch*) besar antara **SKKNI resmi Kemn
 | **🎯 Klasifikasi Semantik AI (HITL)** | Klasifikasi otomatis unit kompetensi ke jurusan (RPL vs TJKT) via *cosine distance* pgvector terhadap teks jangkar. Guru/Kaprogli memvalidasi hasil akhir melalui antarmuka *Drag-and-Drop* 3 kolom. |
 | **🛠️ Resource Feasibility Checker** | Sistem otomatis memvalidasi apakah alat/bahan yang disyaratkan oleh KUK tersedia di inventaris bengkel sekolah sebelum modul ajar dicetak. |
 | **📋 Kanvas Modul Ajar & Ekspor Multi-Format** | Guru menyusun modul ajar secara visual, menyematkan catatan pedagogi, dan mengekspor dokumen resmi siap pakai berformat **DOCX** (standar Kemendikbud) atau **PDF**. |
-| **📊 Metrik Skill Delta & Alokasi JP** | Dasbor analitik untuk Kaprogli mengukur *Skill Delta Score* (rasio kesenjangan industri) serta pemantauan Jam Pelajaran (JP) sesuai regulasi **Permendikdasmen No. 8/2026**. |
+| **📊 Metrik Skill Delta & Alokasi JP** | Dasbor analitik untuk Kaprogli mengukur *Skill Delta Score* (rasio kesenjangan industri) serta pemantauan Jam Pelajaran (JP) sesuai regulasi **Permendikdasmen Nomor 12 Tahun 2025**. |
 | **🛡️ Privacy-by-Design (UU PDP No. 27/2022)** | Fitur *Jelajah Kompetensi* & *Roadmap* untuk siswa beroperasi murni di sisi klien. **Sama sekali tidak ada tabel data siswa di database**, menjamin privasi anak di bawah umur 100% aman. |
 
 ---
@@ -174,7 +174,7 @@ Akses aplikasi melalui peramban di [http://localhost:3000](http://localhost:3000
 
 ## 📜 Kepatuhan & Kebijakan Data
 - **UU No. 27 Tahun 2022 (Perlindungan Data Pribadi)**: VokasIn tidak menyimpan profil, identitas, maupun data komputasi siswa di basis data (*Zero-Student Database*).
-- **Permendikdasmen No. 8 Tahun 2026**: Struktur alokasi jam pembelajaran dan pelaporan JP guru dirancang selaras dengan panduan beban ajar kejuruan terbaru.
+- **Permendikdasmen Nomor 12 Tahun 2025**: Struktur kurikulum, alokasi jam pembelajaran, dan standar perangkat ajar kejuruan dirancang selaras dengan pedoman resmi Kemendikdasmen ([Unduh Salinan Dokumen](https://www.kemendikdasmen.go.id/download/file/1391)).
 - **Kedaulatan Konten**: Dokumen hasil susunan modul ajar adalah milik penuh institusi sekolah dan dapat diunduh kapan saja tanpa pembatasan platform.
 
 ---

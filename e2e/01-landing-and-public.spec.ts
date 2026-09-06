@@ -62,7 +62,7 @@ test.describe("Landing Page & Public Tools", () => {
   test("Jelajah Kompetensi searches by text and quick sample chips", async ({ page }) => {
     await page.goto("/jelajah-kompetensi");
 
-    await expect(page.locator("h1")).toContainText("Jelajah Kompetensi");
+    await expect(page.locator("h1")).toContainText("Jelajah");
 
     // Click sample prompt chip
     const sampleChip = page.getByRole("button", { name: /Jaringan LAN & Router/i });

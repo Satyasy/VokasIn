@@ -9,7 +9,14 @@ export async function loginAction(_prevState: string | undefined, formData: Form
   const password = String(formData.get("password") ?? "");
   if (!email || !password) return "Email dan kata sandi wajib diisi.";
 
-  const guru = await getGuruAuthByEmail(email);
+  let guru;
+  try {
+    guru = await getGuruAuthByEmail(email);
+  } catch (err) {
+    console.error("Gagal mengambil data autentikasi guru dari database:", err);
+    return "Terjadi kendala koneksi ke database. Silakan coba lagi atau gunakan Akses Cepat Mode Demo.";
+  }
+
   if (!guru || !verifyPassword(password, guru.passwordHash)) {
     return "Email atau kata sandi salah.";
   }
@@ -21,23 +28,30 @@ export async function loginAction(_prevState: string | undefined, formData: Form
   redirect(guru.role === "kaprogli" ? "/kaprogli" : guru.role === "admin" ? "/admin" : "/guru");
 }
 
-export async function demoLoginAction(role: "guru" | "kaprogli") {
+export async function demoLoginAction(role: "guru" | "kaprogli" | "admin") {
   const email =
-    role === "kaprogli"
+    role === "admin"
+      ? "admin@smk.belajar.id"
+      : role === "kaprogli"
       ? "bambang.wijaya@smk.belajar.id"
       : "siti.rahmawati@smk.belajar.id";
 
-  const guru = await getGuruAuthByEmail(email);
-  if (guru && guru.aktif) {
-    await createSession(guru.id, guru.role);
-  } else {
-    // Fallback ID & role default
-    const fallbackId = role === "kaprogli" ? "guru-02" : "guru-01";
-    const fallbackRole = role === "kaprogli" ? "kaprogli" : "guru_produktif";
+  const fallbackId = role === "admin" ? "admin-01" : role === "kaprogli" ? "guru-02" : "guru-01";
+  const fallbackRole = role === "admin" ? "admin" : role === "kaprogli" ? "kaprogli" : "guru_produktif";
+
+  try {
+    const guru = await getGuruAuthByEmail(email);
+    if (guru && guru.aktif) {
+      await createSession(guru.id, guru.role);
+    } else {
+      await createSession(fallbackId, fallbackRole);
+    }
+  } catch (err) {
+    console.warn("Koneksi DB gagal saat demo login, menggunakan sesi fallback:", err);
     await createSession(fallbackId, fallbackRole);
   }
 
-  redirect(role === "kaprogli" ? "/kaprogli" : "/guru");
+  redirect(role === "kaprogli" ? "/kaprogli" : role === "admin" ? "/admin" : "/guru");
 }
 
 export async function logoutAction() {

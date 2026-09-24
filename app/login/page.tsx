@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState, useTransition } from "react";
-import { LogIn, Eye, EyeOff, FileCheck, GraduationCap, LayoutDashboard, Sparkles } from "lucide-react";
+import { LogIn, Eye, EyeOff, FileCheck, GraduationCap, LayoutDashboard, ShieldCheck, Sparkles } from "lucide-react";
 import { loginAction, demoLoginAction } from "./actions";
 import { LandingNavbar } from "@/components/landing/navbar";
 import { Card } from "@/components/ui/card";
@@ -13,7 +13,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isDemoPending, startDemoTransition] = useTransition();
 
-  const handleDemoLogin = (role: "guru" | "kaprogli") => {
+  const handleDemoLogin = (role: "guru" | "kaprogli" | "admin") => {
     startDemoTransition(async () => {
       await demoLoginAction(role);
     });
@@ -92,12 +92,12 @@ export default function LoginPage() {
                 Coba langsung aplikasi prototipe VokasIn dengan 1 klik tanpa perlu mengetik kata sandi:
               </p>
 
-              <div className="mt-3 grid gap-2 sm:grid-cols-2">
+              <div className="mt-3 grid gap-2 sm:grid-cols-3">
                 <button
                   type="button"
                   disabled={isBusy}
                   onClick={() => handleDemoLogin("guru")}
-                  className="flex items-center justify-center gap-2 rounded-lg border border-slime-lime-300 bg-white px-3 py-2 text-xs font-bold text-neutral-900 shadow-sm transition-all hover:bg-slime-lime-100 hover:border-slime-lime-400 active:scale-95 disabled:opacity-60"
+                  className="flex items-center justify-center gap-1.5 rounded-lg border border-slime-lime-300 bg-white px-2.5 py-2 text-xs font-bold text-neutral-900 shadow-sm transition-all hover:bg-slime-lime-100 hover:border-slime-lime-400 active:scale-95 disabled:opacity-60"
                 >
                   <GraduationCap className="size-4 text-slime-lime-800 shrink-0" aria-hidden />
                   <span>Demo Guru</span>
@@ -106,10 +106,19 @@ export default function LoginPage() {
                   type="button"
                   disabled={isBusy}
                   onClick={() => handleDemoLogin("kaprogli")}
-                  className="flex items-center justify-center gap-2 rounded-lg border border-slime-lime-300 bg-white px-3 py-2 text-xs font-bold text-neutral-900 shadow-sm transition-all hover:bg-slime-lime-100 hover:border-slime-lime-400 active:scale-95 disabled:opacity-60"
+                  className="flex items-center justify-center gap-1.5 rounded-lg border border-slime-lime-300 bg-white px-2.5 py-2 text-xs font-bold text-neutral-900 shadow-sm transition-all hover:bg-slime-lime-100 hover:border-slime-lime-400 active:scale-95 disabled:opacity-60"
                 >
                   <LayoutDashboard className="size-4 text-slime-lime-800 shrink-0" aria-hidden />
                   <span>Demo Kaprogli</span>
+                </button>
+                <button
+                  type="button"
+                  disabled={isBusy}
+                  onClick={() => handleDemoLogin("admin")}
+                  className="flex items-center justify-center gap-1.5 rounded-lg border border-slime-lime-300 bg-white px-2.5 py-2 text-xs font-bold text-neutral-900 shadow-sm transition-all hover:bg-slime-lime-100 hover:border-slime-lime-400 active:scale-95 disabled:opacity-60"
+                >
+                  <ShieldCheck className="size-4 text-slime-lime-800 shrink-0" aria-hidden />
+                  <span>Demo Admin</span>
                 </button>
               </div>
             </div>

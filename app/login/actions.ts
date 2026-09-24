@@ -28,16 +28,14 @@ export async function loginAction(_prevState: string | undefined, formData: Form
   redirect(guru.role === "kaprogli" ? "/kaprogli" : guru.role === "admin" ? "/admin" : "/guru");
 }
 
-export async function demoLoginAction(role: "guru" | "kaprogli" | "admin") {
+export async function demoLoginAction(role: "guru" | "kaprogli") {
   const email =
-    role === "admin"
-      ? "admin@smk.belajar.id"
-      : role === "kaprogli"
+    role === "kaprogli"
       ? "bambang.wijaya@smk.belajar.id"
       : "siti.rahmawati@smk.belajar.id";
 
-  const fallbackId = role === "admin" ? "admin-01" : role === "kaprogli" ? "guru-02" : "guru-01";
-  const fallbackRole = role === "admin" ? "admin" : role === "kaprogli" ? "kaprogli" : "guru_produktif";
+  const fallbackId = role === "kaprogli" ? "guru-02" : "guru-01";
+  const fallbackRole = role === "kaprogli" ? "kaprogli" : "guru_produktif";
 
   try {
     const guru = await getGuruAuthByEmail(email);
@@ -51,7 +49,7 @@ export async function demoLoginAction(role: "guru" | "kaprogli" | "admin") {
     await createSession(fallbackId, fallbackRole);
   }
 
-  redirect(role === "kaprogli" ? "/kaprogli" : role === "admin" ? "/admin" : "/guru");
+  redirect(role === "kaprogli" ? "/kaprogli" : "/guru");
 }
 
 export async function logoutAction() {

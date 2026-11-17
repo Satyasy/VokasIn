@@ -44,7 +44,9 @@ jobs:
             # Ensure deployment directory exists
             if [ ! -d "/var/www/vokasin/.git" ]; then
               echo "Cloning repository for the first time..."
-              sudo chown -R ubuntu:ubuntu /var/www/vokasin
+              sudo rm -rf /var/www/vokasin
+              sudo mkdir -p /var/www/vokasin
+              sudo chown -R $USER:$USER /var/www/vokasin
               git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git /var/www/vokasin
             fi
 

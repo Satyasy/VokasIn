@@ -1,4 +1,4 @@
-name: VokasIn CI/CD & AWS EC2 Deploy
+name: VokasIn CI/CD Configuration
 
 on:
   push:
@@ -12,7 +12,7 @@ concurrency:
 jobs:
   validate-and-build:
     name: Build Verification
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -31,20 +31,15 @@ jobs:
         env:
           NODE_OPTIONS: "--max-old-space-size=2048"
 
-  deploy-to-ec2:
-    name: Deploy to AWS EC2 (t4g.small)
+  deploy-to-server:
+    name: Deploy to Server
     needs: validate-and-build
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:  
-      - name: Execute Remote SSH Deployment
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
+      - name: Create Folder Web-Application
+        run: |
             set -e
-            echo "Starting VokasIn deployment on EC2..."
+            echo "Starting VokasIn deployment on Server..."
 
             # Ensure deployment directory exists
             if [ ! -d "/var/www/vokasin/.git" ]; then
